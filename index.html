@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערך החדשות | ט4</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f0f1a;
+            --secondary: #1a1a2e;
+            --accent: #00d4ff;
+            --accent2: #7c3aed;
+            --accent3: #00ff88;
+            --text: #e0e0e0;
+            --text-bright: #ffffff;
+            --card-bg: #16213e;
+            --border: rgba(0, 212, 255, 0.15);
+            --gradient1: linear-gradient(135deg, #00d4ff, #7c3aed);
+            --gradient2: linear-gradient(135deg, #7c3aed, #00ff88);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* === ANIMATED BACKGROUND === */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-animation .circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            animation: floatCircle 20s infinite ease-in-out;
+        }
+
+        .bg-animation .circle:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            top: -200px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .bg-animation .circle:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: var(--accent2);
+            bottom: -100px;
+            left: -100px;
+            animation-delay: -7s;
+        }
+
+        .bg-animation .circle:nth-child(3) {
+            width: 300px;
+            height: 300px;
+            background: var(--accent3);
+            top: 50%;
+            left: 50%;
+            animation-delay: -14s;
+        }
+
+        @keyframes floatCircle {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.9); }
+            75% { transform: translate(40px, 20px) scale(1.05); }
+        }
+
+        /* === GRID OVERLAY === */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* === HEADER === */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 15, 26, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-section img {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            padding: 2px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text h1 {
+            font-size: 1.3rem;
+            font-weight: 900;
+            background: var(--gradient1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #ff4444;
+            font-weight: 500;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff4444;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .btn-admin {
+            background: var(--gradient1);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-admin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        /* === BREAKING NEWS TICKER === */
+        .ticker-bar {
+            background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2));
+            padding: 8px 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ticker-content {
+            display: flex;
+            animation: ticker 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        .ticker-content span {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0 50px;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* === MAIN CONTENT === */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 40px;
+        }
+
+        /* === SECTION TITLE === */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title .icon {
+            width: 35px;
+            height: 35px;
+            background: var(--gradient1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-bright);
+        }
+
+        .post-count {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        /* === NEWS GRID === */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        /* === NEWS CARD === */
+        .news-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.15);
+        }
+
+        .news-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .news-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            padding: 20px 22px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-category {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .card-category.urgent {
+            background: rgba(255, 68, 68, 0.1);
+            color: #ff4444;
+            border-color: rgba(255, 68, 68, 0.2);
+        }
+
+        .card-category.sports {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--accent3);
+            border-color: rgba(0, 255, 136, 0.2);
+        }
+
+        .card-category.tech {
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--accent2);
+            border-color: rgba(124, 58, 237, 0.2);
+        }
+
+        .card-category.entertainment {
+            background: rgba(255, 165, 0, 0.1);
+            color: #ffa500;
+            border-color: rgba(255, 165, 0, 0.2);
+        }
+
+        .card-date {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-body {
+            padding: 5px 22px 22px;
+        }
+
+        .card-body h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .card-body p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+        }
+
+        .card-footer {
+            padding: 12px 22px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .author-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--gradient1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card-actions button {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s;
+            padding: 4px;
+        }
+
+        .card-actions button:hover {
+            color: var(--accent);
+        }
+
+        .delete-btn:hover {
+            color: #ff4444 !important;
+        }
+
+        /* === EMPTY STATE === */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* === MODAL === */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 550px;
+            overflow: hidden;
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-header {
+            padding: 22px 25px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h2 {
+            font-size: 1.2rem;
+            color: var(--text-bright);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-close {
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: none;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 68, 68, 0.1);
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        /* === PASSWORD SCREEN === */
+        .password-screen {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .password-screen .lock-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .password-screen p {
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .password-input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        .password-input-group input {
+            flex: 1;
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--primary);
+            color: var(--text-bright);
+            font-family: 'Heebo', sans-serif;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 5px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .password-input-group input:focus {
+            border-color: var(--accent);
+        }
+
+        .password-input-group button {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            background: var(--gradient1);
+            color: white;
+            font-family: 'Heebo', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .password-input-group button:hover {
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .password-error {
+            color: #ff4444;
+            font-size: 0.85rem;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* === POST FORM === */
+        .post-form {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--primary);
+            color: var(--text-bright);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            -webkit-appearance: none;
+        }
+
+        .form-group select option {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn-publish {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: var(--gradient1);
+            color: white;
+            font-family: 'Heebo', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .btn-publish:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+        }
+
+        /* === TOAST NOTIFICATION === */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--card-bg);
+            border: 1px solid var(--accent);
+            padding: 14px 28px;
+            border-radius: 12px;
+            color: var(--text-bright);
+            font-size: 0.9rem;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.error {
+            border-color: #ff4444;
+        }
+
+        /* === FOOTER === */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.8rem;
+        }
+
+        footer .footer-brand {
+            background: var(--gradient1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            header { padding: 0 15px; }
+            main { padding: 20px 15px; }
+            .news-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .header-content { height: 60px; }
+            .logo-text h1 { font-size: 1.1rem; }
+            .live-badge span:last-child { display: none; }
+            .section-header { flex-direction: column; gap: 10px; align-items: flex-start; }
+        }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--primary); }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+    <div class="grid-overlay"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="logo.png" alt="ט4 לוגו" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <h1>מערך החדשות</h1>
+                    <span>ט4 ניוז</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="live-badge">
+                    <div class="live-dot"></div>
+                    <span>LIVE</span>
+                    <span>• עדכון שוטף</span>
+                </div>
+                <button class="btn-admin" onclick="openModal()">
+                    ✏️ פוסט חדש
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breaking News Ticker -->
+    <div class="ticker-bar">
+        <div class="ticker-content" id="tickerContent">
+            <span>🔴 מערך החדשות של ט4 — עדכונים חמים ישירות אליכם — הישארו מעודכנים!</span>
+            <span>🔴 מערך החדשות של ט4 — עדכונים חמים ישירות אליכם — הישארו מעודכנים!</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <div class="section-header">
+            <div class="section-title">
+                <div class="icon">📰</div>
+                <h2>חדשות אחרונות</h2>
+            </div>
+            <div class="post-count" id="postCount">0 כתבות</div>
+        </div>
+
+        <div class="news-grid" id="newsGrid">
+            <!-- Posts will be injected here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 <span class="footer-brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>📝 פרסום כתבה חדשה</h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <!-- Password Screen -->
+                <div class="password-screen" id="passwordScreen">
+                    <div class="lock-icon">🔐</div>
+                    <p>הזן את סיסמת המערכת כדי לפרסם כתבה</p>
+                    <div class="password-input-group">
+                        <input type="password" id="passwordInput" placeholder="••••••" onkeydown="if(event.key==='Enter') checkPassword()">
+                        <button onclick="checkPassword()">כניסה</button>
+                    </div>
+                    <p class="password-error" id="passwordError">❌ סיסמה שגויה, נסה שוב</p>
+                </div>
+
+                <!-- Post Form -->
+                <div class="post-form" id="postForm">
+                    <div class="form-group">
+                        <label>כותרת הכתבה</label>
+                        <input type="text" id="postTitle" placeholder="הכנס כותרת...">
+                    </div>
+                    <div class="form-group">
+                        <label>תוכן הכתבה</label>
+                        <textarea id="postContent" placeholder="כתוב את תוכן הכתבה כאן..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>קטגוריה</label>
+                            <select id="postCategory">
+                                <option value="general">📰 כללי</option>
+                                <option value="urgent">🔴 דחוף</option>
+                                <option value="sports">⚽ ספורט</option>
+                                <option value="tech">💻 טכנולוגיה</option>
+                                <option value="entertainment">🎬 בידור</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>שם הכותב</label>
+                            <input type="text" id="postAuthor" placeholder="השם שלך...">
+                        </div>
+                    </div>
+                    <button class="btn-publish" onclick="publishPost()">
+                        🚀 פרסם כתבה
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toastIcon">✅</span>
+        <span id="toastMsg">הכתבה פורסמה בהצלחה!</span>
+    </div>
+
+    <script>
+        // === DATA ===
+        let posts = JSON.parse(localStorage.getItem('t4_news_posts') || '[]');
+        let isAuthenticated = false;
+
+        // Category labels
+        const categoryLabels = {
+            general: '📰 כללי',
+            urgent: '🔴 דחוף',
+            sports: '⚽ ספורט',
+            tech: '💻 טכנולוגיה',
+            entertainment: '🎬 בידור'
+        };
+
+        // === INIT ===
+        function init() {
+            // Add sample posts if empty
+            if (posts.length === 0) {
+                posts = [
+                    {
+                        id: Date.now() - 3000,
+                        title: 'מערך החדשות של ט4 עולה לאוויר!',
+                        content: 'אנחנו שמחים להשיק את מערך החדשות הרשמי של ט4. מעכשיו תוכלו לקבל עדכונים שוטפים ישירות מהצוות שלנו. הישארו מעודכנים!',
+                        category: 'urgent',
+                        author: 'צוות ט4',
+                        date: new Date().toLocaleDateString('he-IL'),
+                        time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
+                    },
+                    {
+                        id: Date.now() - 2000,
+                        title: 'טכנולוגיה חדשה: עיצוב האתר הושלם',
+                        content: 'האתר החדש מגיע עם עיצוב מודרני וטכנולוגי, כולל מצב כהה, אנימציות חלקות ותמיכה מלאה במובייל. כל חבר צוות יכול לפרסם חדשות.',
+                        category: 'tech',
+                        author: 'צוות ט4',
+                        date: new Date().toLocaleDateString('he-IL'),
+                        time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
+                    },
+                    {
+                        id: Date.now() - 1000,
+                        title: 'ברוכים הבאים למערך החדשות',
+                        content: 'כל חברי הצוות מוזמנים להוסיף פוסטים וחדשות. פשוט לחצו על "פוסט חדש", הזינו את הסיסמה ותוכלו לפרסם מיד. בהצלחה!',
+                        category: 'general',
+                        author: 'המערכת',
+                        date: new Date().toLocaleDateString('he-IL'),
+                        time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
+                    }
+                ];
+                savePosts();
+            }
+            renderPosts();
+        }
+
+        // === RENDER POSTS ===
+        function renderPosts() {
+            const grid = document.getElementById('newsGrid');
+            const count = document.getElementById('postCount');
+
+            count.textContent = `${posts.length} כתבות`;
+
+            if (posts.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📭</div>
+                        <h3>אין כתבות עדיין</h3>
+                        <p>לחצו על "פוסט חדש" כדי לפרסם את הכתבה הראשונה</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Show newest first
+            const sorted = [...posts].reverse();
+
+            grid.innerHTML = sorted.map(post => {
+                const initials = post.author ? post.author.charAt(0) : '?';
+                return `
+                    <article class="news-card">
+                        <div class="card-header">
+                            <span class="card-category ${post.category}">${categoryLabels[post.category] || '📰 כללי'}</span>
+                            <span class="card-date">🕐 ${post.time} • ${post.date}</span>
+                        </div>
+                        <div class="card-body">
+                            <h3>${escapeHtml(post.title)}</h3>
+                            <p>${escapeHtml(post.content)}</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-author">
+                                <div class="author-avatar">${initials}</div>
+                                <span>${escapeHtml(post.author)}</span>
+                            </div>
+                            <div class="card-actions">
+                                <button onclick="sharePost('${escapeHtml(post.title)}')" title="שיתוף">📤</button>
+                                <button class="delete-btn" onclick="deletePost(${post.id})" title="מחיקה">🗑️</button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // === MODAL ===
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+            if (isAuthenticated) {
+                document.getElementById('passwordScreen').style.display = 'none';
+                document.getElementById('postForm').style.display = 'block';
+            } else {
+                document.getElementById('passwordScreen').style.display = 'block';
+                document.getElementById('postForm').style.display = 'none';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordError').style.display = 'none';
+            }
+            setTimeout(() => {
+                const input = isAuthenticated ?
+                    document.getElementById('postTitle') :
+                    document.getElementById('passwordInput');
+                input.focus();
+            }, 300);
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('modalOverlay').addEventListener('click', function (e) {
+            if (e.target === this) closeModal();
+        });
+
+        // === PASSWORD CHECK ===
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+
+            if (input.value === '123456') {
+                isAuthenticated = true;
+                document.getElementById('passwordScreen').style.display = 'none';
+                document.getElementById('postForm').style.display = 'block';
+                document.getElementById('postTitle').focus();
+                showToast('✅', 'ברוך הבא! אתה מחובר למערכת');
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+                input.style.borderColor = '#ff4444';
+                setTimeout(() => {
+                    input.style.borderColor = '';
+                }, 1500);
+            }
+        }
+
+        // === PUBLISH POST ===
+        function publishPost() {
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+            const category = document.getElementById('postCategory').value;
+            const author = document.getElementById('postAuthor').value.trim() || 'אנונימי';
+
+            if (!title) {
+                showToast('⚠️', 'נא להזין כותרת לכתבה', true);
+                document.getElementById('postTitle').focus();
+                return;
+            }
+
+            if (!content) {
+                showToast('⚠️', 'נא להזין תוכן לכתבה', true);
+                document.getElementById('postContent').focus();
+                return;
+            }
+
+            const now = new Date();
+            const post = {
+                id: Date.now(),
+                title,
+                content,
+                category,
+                author,
+                date: now.toLocaleDateString('he-IL'),
+                time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
+            };
+
+            posts.push(post);
+            savePosts();
+            renderPosts();
+            closeModal();
+
+            // Clear form
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('postAuthor').value = '';
+            document.getElementById('postCategory').value = 'general';
+
+            showToast('🎉', 'הכתבה פורסמה בהצלחה!');
+        }
+
+        // === DELETE POST ===
+        function deletePost(id) {
+            if (!isAuthenticated) {
+                showToast('🔒', 'יש להתחבר למערכת כדי למחוק', true);
+                return;
+            }
+
+            if (confirm('האם למחוק את הכתבה הזו?')) {
+                posts = posts.filter(p => p.id !== id);
+                savePosts();
+                renderPosts();
+                showToast('🗑️', 'הכתבה נמחקה');
+            }
+        }
+
+        // === SHARE POST ===
+        function sharePost(title) {
+            if (navigator.share) {
+                navigator.share({ title: `ט4 חדשות: ${title}`, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast('📋', 'הקישור הועתק!');
+            }
+        }
+
+        // === SAVE / LOAD ===
+        function savePosts() {
+            localStorage.setItem('t4_news_posts', JSON.stringify(posts));
+        }
+
+        // === TOAST ===
+        function showToast(icon, message, isError = false) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastIcon').textContent = icon;
+            document.getElementById('toastMsg').textContent = message;
+            toast.className = 'toast' + (isError ? ' error' : '');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // === ESCAPE HTML ===
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // === KEYBOARD SHORTCUTS ===
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // === START ===
+        init();
+    </script>
+
+</body>
+</html>
