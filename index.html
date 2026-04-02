@@ -962,6 +962,7 @@
 // ========================================
 const BIN_ID = '69cece9436566621a873a3a2';
 const API_KEY = '$2a$10$vb0rw5j/7dIM.sZrbGmjbuS8kVJsAqUtiFlHZL07M2qzvyLzzCETO';
+const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1489379629457346840/Fi5Jgu2r_5ll0nSCYXxMVo5JcIqWRa6__TslDN0e8XSbJuNuWeXubMjhTYlKPNkbSIQ9';
 // ========================================
 
 const API = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
@@ -970,195 +971,117 @@ const SEEN_ALERTS_KEY = 't4_seen_alerts';
 let posts = [];
 let isAuth = false;
 let sendAlert = false;
-let lastKnownAlertId = null;
 
-const catLabels = {
-    general: '📰 כללי',
-    urgent: '🔴 דחוף',
-    sports: '⚽ ספורט',
-    tech: '💻 טכנולוגיה',
-    entertainment: '🎬 בידור'
-};
-
-// 🔊 Create alert sound
-function playAlertSound() {
+// --- פונקציית מעקב אבטחה לדיסקורד ---
+async function sendSecurityLog(action, extraData = {}) {
     try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
-        // First beep
-        const osc1 = audioCtx.createOscillator();
-        const gain1 = audioCtx.createGain();
-        osc1.connect(gain1);
-        gain1.connect(audioCtx.destination);
-        osc1.frequency.value = 880;
-        osc1.type = 'sine';
-        gain1.gain.setValueAtTime(0.3, audioCtx.currentTime);
-        gain1.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-        osc1.start(audioCtx.currentTime);
-        osc1.stop(audioCtx.currentTime + 0.3);
+        // השגת IP ומיקום בסיסי משירות חיצוני
+        const ipRes = await fetch('https://ipapi.co/json/');
+        const ipData = await ipRes.json();
 
-        // Second beep
-        const osc2 = audioCtx.createOscillator();
-        const gain2 = audioCtx.createGain();
-        osc2.connect(gain2);
-        gain2.connect(audioCtx.destination);
-        osc2.frequency.value = 1100;
-        osc2.type = 'sine';
-        gain2.gain.setValueAtTime(0.3, audioCtx.currentTime + 0.35);
-        gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.65);
-        osc2.start(audioCtx.currentTime + 0.35);
-        osc2.stop(audioCtx.currentTime + 0.65);
+        const payload = {
+            embeds: [{
+                title: `🕵️ התראת מערכת: ${action}`,
+                color: action.includes('פרסום') ? 0x00ff88 : 0x7c3aed,
+                fields: [
+                    { name: "IP Address", value: ipData.ip || "Unknown", inline: true },
+                    { name: "מיקום", value: `${ipData.city}, ${ipData.country_name}`, inline: true },
+                    { name: "דפדפן", value: navigator.userAgent.substring(0, 100), inline: false },
+                    { name: "זמן", value: new Date().toLocaleString('he-IL'), inline: true }
+                ],
+                footer: { text: "מערך האבטחה - ט4 ניוז" }
+            }]
+        };
 
-        // Third beep (higher)
-        const osc3 = audioCtx.createOscillator();
-        const gain3 = audioCtx.createGain();
-        osc3.connect(gain3);
-        gain3.connect(audioCtx.destination);
-        osc3.frequency.value = 1320;
-        osc3.type = 'sine';
-        gain3.gain.setValueAtTime(0.4, audioCtx.currentTime + 0.7);
-        gain3.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.2);
-        osc3.start(audioCtx.currentTime + 0.7);
-        osc3.stop(audioCtx.currentTime + 1.2);
-    } catch(e) {
-        console.log('Sound not supported');
+        // אם יש מידע נוסף (כמו תוכן הפוסט)
+        if (extraData.title) {
+            payload.embeds[0].fields.push({ name: "כותרת הפעולה", value: extraData.title });
+        }
+
+        await fetch(DISCORD_WEBHOOK, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+    } catch (e) {
+        console.error("Security log failed", e);
     }
 }
 
-// 🔔 Show alert banner
+// 🔊 צליל התראה
+function playAlertSound() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const playTone = (freq, start, duration, volume = 0.8) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime + start);
+            gain.gain.setValueAtTime(0, audioCtx.currentTime + start);
+            gain.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + start + 0.05);
+            osc.start(audioCtx.currentTime + start);
+            osc.stop(audioCtx.currentTime + start + duration);
+        };
+        [440, 440, 550, 550].forEach((f, i) => playTone(f, i * 0.5, 0.4));
+    } catch(e) {}
+}
+
 function showAlertBanner(title, message) {
     const banner = document.getElementById('alertBanner');
     document.getElementById('alertTitle').textContent = title;
     document.getElementById('alertBody').textContent = message;
-    
     banner.classList.add('show');
     playAlertSound();
-    
-    // Also try browser notification
-    if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification('🔔 מערך החדשות ט4', {
-            body: title + '\n' + message,
-            icon: 'logo.png'
-        });
-    }
-    
-    // Auto close after 10 seconds
     setTimeout(() => closeAlert(), 10000);
 }
 
-function closeAlert() {
-    document.getElementById('alertBanner').classList.remove('show');
-}
+function closeAlert() { document.getElementById('alertBanner').classList.remove('show'); }
 
-// Get seen alerts
 function getSeenAlerts() {
-    try {
-        return JSON.parse(localStorage.getItem(SEEN_ALERTS_KEY) || '[]');
-    } catch(e) { return []; }
+    try { return JSON.parse(localStorage.getItem(SEEN_ALERTS_KEY) || '[]'); } catch(e) { return []; }
 }
 
 function markAlertSeen(alertId) {
     const seen = getSeenAlerts();
     seen.push(alertId);
-    // Keep only last 50
-    if (seen.length > 50) seen.splice(0, seen.length - 50);
-    localStorage.setItem(SEEN_ALERTS_KEY, JSON.stringify(seen));
+    localStorage.setItem(SEEN_ALERTS_KEY, JSON.stringify(seen.slice(-50)));
 }
 
-// Check for new alerts
 function checkForAlerts(newPosts) {
     const seen = getSeenAlerts();
-    
     for (const post of newPosts) {
         if (post.alert && post.alertMsg && !seen.includes(post.id)) {
             showAlertBanner(post.title, post.alertMsg);
             markAlertSeen(post.id);
-            break; // Show one at a time
+            break;
         }
     }
 }
 
-// Toggle alert in form
-function toggleAlert() {
-    sendAlert = !sendAlert;
-    const sw = document.getElementById('alertSwitch');
-    const box = document.getElementById('alertMsgBox');
-    
-    if (sendAlert) {
-        sw.classList.add('active');
-        box.classList.add('show');
-        document.getElementById('inAlertMsg').focus();
-    } else {
-        sw.classList.remove('active');
-        box.classList.remove('show');
-    }
-}
-
-// Ask for notification permission
-function requestNotificationPermission() {
-    if ('Notification' in window && Notification.permission === 'default') {
-        Notification.requestPermission();
-    }
-}
-
-// ⚡ Cache
-function loadCache() {
-    try {
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (cached) {
-            posts = JSON.parse(cached);
-            render();
-            return true;
-        }
-    } catch(e) {}
-    return false;
-}
-
-function saveCache() {
-    localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
-}
-
-// ☁️ Sync
 async function syncFromCloud() {
     setSyncStatus('syncing', 'מסנכרן...');
     try {
-        const res = await fetch(API + '/latest', {
-            headers: { 'X-Master-Key': API_KEY }
-        });
-        if (!res.ok) throw new Error('Server error');
+        const res = await fetch(API + '/latest', { headers: { 'X-Master-Key': API_KEY } });
         const data = await res.json();
         const cloudPosts = data.record || [];
-        
         if (JSON.stringify(cloudPosts) !== JSON.stringify(posts)) {
-            // Check for new alerts before updating
             checkForAlerts(cloudPosts);
             posts = cloudPosts;
-            saveCache();
+            localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
             render();
         }
         setSyncStatus('synced', 'מעודכן ✓');
-    } catch(e) {
-        console.error('Sync error:', e);
-        setSyncStatus('error', 'שגיאה');
-    }
+    } catch(e) { setSyncStatus('error', 'שגיאה'); }
 }
 
 async function saveToCloud() {
-    setSyncStatus('syncing', 'שומר...');
-    try {
-        await fetch(API, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Master-Key': API_KEY
-            },
-            body: JSON.stringify(posts)
-        });
-        setSyncStatus('synced', 'נשמר ✓');
-    } catch(e) {
-        setSyncStatus('error', 'שגיאה בשמירה');
-        throw e;
-    }
+    await fetch(API, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+        body: JSON.stringify(posts)
+    });
 }
 
 function setSyncStatus(status, text) {
@@ -1166,194 +1089,80 @@ function setSyncStatus(status, text) {
     document.getElementById('syncText').textContent = text;
 }
 
-// 🔴 Ticker
-function updateTicker() {
-    const ticker = document.getElementById('tickerContent');
-    const urgentPosts = posts.filter(p => p.category === 'urgent');
-
-    if (urgentPosts.length > 0) {
-        const urgentText = urgentPosts.map(p => `🔴 ${p.title}`).join('  ◆  ');
-        ticker.innerHTML = `
-            <span>⚡ חדשות דחופות: ${urgentText}  ◆  </span>
-            <span>⚡ חדשות דחופות: ${urgentText}  ◆  </span>
-        `;
-    } else {
-        ticker.innerHTML = `
-            <span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>
-            <span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>
-        `;
-    }
-}
-
-// Render
 function render() {
-    updateTicker();
     const grid = document.getElementById('newsGrid');
     document.getElementById('postCount').textContent = `${posts.length} כתבות`;
-
     if (posts.length === 0) {
-        grid.innerHTML = '<div class="status-msg"><div class="ico">📭</div><h3>אין כתבות</h3><p>לחץ "פוסט חדש" להוספה</p></div>';
+        grid.innerHTML = '<div class="status-msg"><h3>אין כתבות</h3></div>';
         return;
     }
-
-    grid.innerHTML = posts.map((p, i) => `
-        <article class="news-card ${p.category === 'urgent' ? 'urgent-card' : ''}" style="animation-delay:${i * 0.05}s">
-            <div class="card-header">
-                <span class="card-category ${p.category}">${catLabels[p.category] || '📰 כללי'}</span>
-                <span class="card-date">🕐 ${p.time} • ${p.date}</span>
-            </div>
-            <div class="card-body">
-                <h3>${esc(p.title)}</h3>
-                <p>${esc(p.content)}</p>
-            </div>
-            <div class="card-footer">
-                <div class="card-author">
-                    <div class="author-avatar">${p.author ? p.author[0] : '?'}</div>
-                    <span>${esc(p.author)}</span>
-                </div>
-                <div class="card-actions">
-                    <button onclick="shareFn('${esc(p.title)}')">📤</button>
-                    <button class="del" onclick="del('${p.id}')">🗑️</button>
-                </div>
-            </div>
+    grid.innerHTML = posts.map(p => `
+        <article class="news-card ${p.category === 'urgent' ? 'urgent-card' : ''}">
+            <div class="card-header"><span class="card-category ${p.category}">${p.category}</span></div>
+            <div class="card-body"><h3>${esc(p.title)}</h3><p>${esc(p.content)}</p></div>
+            <div class="card-footer"><span>${esc(p.author)}</span>
+            <button onclick="del('${p.id}')">🗑️</button></div>
         </article>
     `).join('');
 }
 
-function showSkeleton() {
-    document.getElementById('newsGrid').innerHTML = Array(3).fill(`
-        <div class="skeleton-card">
-            <div class="skeleton-line short"></div>
-            <div class="skeleton-line title"></div>
-            <div class="skeleton-line text"></div>
-            <div class="skeleton-line text2"></div>
-        </div>
-    `).join('');
-}
-
-// Modal
-function openModal() {
-    document.getElementById('modal').classList.add('active');
-    if (isAuth) {
-        document.getElementById('passScreen').style.display = 'none';
-        document.getElementById('postForm').style.display = 'block';
-    } else {
-        document.getElementById('passScreen').style.display = 'block';
-        document.getElementById('postForm').style.display = 'none';
-        document.getElementById('passIn').value = '';
-        document.getElementById('passErr').style.display = 'none';
-    }
-}
-
+function openModal() { document.getElementById('modal').classList.add('active'); }
 function closeModal() { document.getElementById('modal').classList.remove('active'); }
-document.getElementById('modal').onclick = e => { if (e.target.id === 'modal') closeModal(); };
 
 function checkPass() {
     if (document.getElementById('passIn').value === '123456') {
         isAuth = true;
         document.getElementById('passScreen').style.display = 'none';
         document.getElementById('postForm').style.display = 'block';
-        toast('✅', 'מחובר!');
     } else {
         document.getElementById('passErr').style.display = 'block';
+        sendSecurityLog("ניסיון כניסה נכשל", { title: "הוזנה סיסמה שגויה" });
     }
 }
 
-// ⚡ Publish
 async function publish() {
     const title = document.getElementById('inTitle').value.trim();
     const content = document.getElementById('inContent').value.trim();
-    const category = document.getElementById('inCat').value;
-    const author = document.getElementById('inAuthor').value.trim() || 'אנונימי';
-    const alertMsg = document.getElementById('inAlertMsg').value.trim();
-    const btn = document.getElementById('btnPub');
+    if (!title || !content) return;
 
-    if (!title || !content) { toast('⚠️', 'מלא כותרת ותוכן', true); return; }
-
-    btn.disabled = true;
-    btn.textContent = '⏳ מפרסם...';
-
-    const now = new Date();
     const newPost = {
         id: Date.now().toString(),
-        title, content, category, author,
-        date: now.toLocaleDateString('he-IL'),
-        time: now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'}),
+        title, content, 
+        category: document.getElementById('inCat').value,
+        author: document.getElementById('inAuthor').value || 'אנונימי',
+        date: new Date().toLocaleDateString('he-IL'),
+        time: new Date().toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'}),
         alert: sendAlert,
-        alertMsg: sendAlert ? (alertMsg || title) : ''
+        alertMsg: document.getElementById('inAlertMsg').value
     };
 
     posts.unshift(newPost);
-    
-    // Mark own alert as seen
-    if (sendAlert) {
-        markAlertSeen(newPost.id);
-    }
-    
-    saveCache();
     render();
     closeModal();
-    toast('🎉', sendAlert ? 'פורסם + התראה נשלחה!' : 'פורסם!');
-
-    // Reset form
-    document.getElementById('inTitle').value = '';
-    document.getElementById('inContent').value = '';
-    document.getElementById('inAuthor').value = '';
-    document.getElementById('inAlertMsg').value = '';
-    sendAlert = false;
-    document.getElementById('alertSwitch').classList.remove('active');
-    document.getElementById('alertMsgBox').classList.remove('show');
     
-    btn.disabled = false;
-    btn.textContent = '🚀 פרסם';
-
-    try { await saveToCloud(); } catch(e) { toast('⚠️', 'נשמר מקומית', true); }
-}
-
-// Delete
-async function del(id) {
-    if (!isAuth) { toast('🔒', 'התחבר קודם', true); return; }
-    if (!confirm('למחוק?')) return;
-    posts = posts.filter(p => p.id !== id);
-    saveCache();
-    render();
-    toast('🗑️', 'נמחק');
+    // שליחת לוג לדיסקורד על הפרסום
+    sendSecurityLog("פרסום פוסט חדש", { title: title });
+    
     try { await saveToCloud(); } catch(e) {}
 }
 
-function shareFn(title) {
-    if (navigator.share) {
-        navigator.share({title: 'ט4: ' + title, url: location.href});
-    } else {
-        navigator.clipboard.writeText(location.href);
-        toast('📋', 'קישור הועתק');
-    }
-}
-
-function toast(icon, msg, err = false) {
-    const t = document.getElementById('toast');
-    document.getElementById('tIcon').textContent = icon;
-    document.getElementById('tMsg').textContent = msg;
-    t.className = 'toast' + (err ? ' error' : '');
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
+function toggleAlert() {
+    sendAlert = !sendAlert;
+    document.getElementById('alertSwitch').classList.toggle('active');
+    document.getElementById('alertMsgBox').classList.toggle('show');
 }
 
 function esc(s) {
-    if (!s) return '';
     const d = document.createElement('div');
     d.textContent = s;
     return d.innerHTML;
 }
 
-document.onkeydown = e => { if (e.key === 'Escape') closeModal(); };
-
-// 🚀 STARTUP
-requestNotificationPermission();
-const hadCache = loadCache();
-if (!hadCache) showSkeleton();
+// 🚀 הפעלה
+// לוג כניסה לאתר
+sendSecurityLog("כניסה לאתר");
 syncFromCloud();
-setInterval(syncFromCloud, 15000); // Check every 15 seconds for alerts
+setInterval(syncFromCloud, 15000);
 </script>
 
 </body>
