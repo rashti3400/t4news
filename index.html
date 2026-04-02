@@ -199,16 +199,7 @@
             transition: background 0.5s;
         }
 
-        .ticker-bar.urgent {
-            background: linear-gradient(90deg, #ff0000, #ff4444, #ff0000);
-            animation: urgentPulse 2s infinite;
-            padding: 10px 0;
-        }
-
-        @keyframes urgentPulse {
-            0%, 100% { background: linear-gradient(90deg, #ff0000, #ff4444, #ff0000); }
-            50% { background: linear-gradient(90deg, #cc0000, #ff0000, #cc0000); }
-        }
+    
 
         .ticker-content {
             display: flex;
@@ -223,11 +214,6 @@
             padding: 0 50px;
         }
 
-        .ticker-bar.urgent .ticker-content span {
-            color: white;
-            font-weight: 900;
-            font-size: 0.9rem;
-        }
 
         @keyframes ticker {
             0% { transform: translateX(100%); }
