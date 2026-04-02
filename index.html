@@ -30,7 +30,6 @@
             min-height: 100vh;
         }
 
-        /* Background Animation */
         .bg-animation {
             position: fixed;
             top: 0; left: 0;
@@ -55,7 +54,6 @@
             50% { transform: translate(30px, -30px) scale(1.05); }
         }
 
-        /* Header */
         header {
             position: sticky;
             top: 0;
@@ -189,6 +187,17 @@
             box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
         }
 
+        .btn-alert {
+            background: rgba(255, 165, 0, 0.15);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            color: #ffa500;
+        }
+
+        .btn-alert:hover {
+            background: rgba(255, 165, 0, 0.25);
+            transform: translateY(-2px);
+        }
+
         /* Ticker */
         .ticker-bar {
             background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2));
@@ -196,10 +205,7 @@
             overflow: hidden;
             position: relative;
             z-index: 1;
-            transition: background 0.5s;
         }
-
-    
 
         .ticker-content {
             display: flex;
@@ -214,13 +220,11 @@
             padding: 0 50px;
         }
 
-
         @keyframes ticker {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
 
-        /* Main */
         main {
             position: relative;
             z-index: 1;
@@ -267,7 +271,6 @@
             color: var(--accent);
         }
 
-        /* News Grid */
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -390,7 +393,6 @@
         .card-actions button:hover { color: var(--accent); }
         .card-actions .del:hover { color: #ff4444; }
 
-        /* Status Messages */
         .status-msg {
             text-align: center;
             padding: 80px 20px;
@@ -401,7 +403,6 @@
         .status-msg h3 { color: rgba(255, 255, 255, 0.4); margin-bottom: 10px; }
         .status-msg p { color: rgba(255, 255, 255, 0.25); }
 
-        /* Skeleton Loading */
         .skeleton-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -424,6 +425,106 @@
         @keyframes shimmer {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            animation: alertSlideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .alert-banner.show { display: block; }
+
+        @keyframes alertSlideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .alert-inner {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-bottom: 2px solid var(--accent);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .alert-icon-big {
+            font-size: 2.5rem;
+            animation: alertBounce 1s infinite;
+        }
+
+        @keyframes alertBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .alert-text {
+            text-align: center;
+        }
+
+        .alert-text .alert-label {
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .alert-text h3 {
+            font-size: 1.3rem;
+            color: var(--text-bright);
+            font-weight: 900;
+        }
+
+        .alert-text p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
+        }
+
+        .alert-close {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 30px; height: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .alert-close:hover {
+            background: rgba(255, 68, 68, 0.1);
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
+        .alert-time {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gradient1);
+            animation: alertTimer 10s linear forwards;
+        }
+
+        @keyframes alertTimer {
+            from { width: 100%; }
+            to { width: 0%; }
         }
 
         /* Modal */
@@ -449,6 +550,8 @@
             width: 100%;
             max-width: 500px;
             animation: slideUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         @keyframes slideUp {
@@ -554,6 +657,105 @@
             gap: 15px;
         }
 
+        /* Alert Toggle */
+        .alert-section {
+            background: rgba(255, 165, 0, 0.05);
+            border: 1px solid rgba(255, 165, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 18px;
+        }
+
+        .alert-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .alert-toggle-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-toggle-info span:first-child {
+            font-size: 1.3rem;
+        }
+
+        .alert-toggle-text h4 {
+            font-size: 0.9rem;
+            color: var(--text-bright);
+            margin-bottom: 2px;
+        }
+
+        .alert-toggle-text p {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .toggle-switch {
+            width: 46px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 13px;
+            position: relative;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
+        .toggle-switch.active {
+            background: var(--accent);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(-20px);
+        }
+
+        .alert-msg-input {
+            display: none;
+            margin-top: 12px;
+        }
+
+        .alert-msg-input.show {
+            display: block;
+        }
+
+        .alert-msg-input input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            background: var(--primary);
+            color: var(--text-bright);
+            font-family: 'Heebo', sans-serif;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .alert-msg-input input:focus {
+            border-color: #ffa500;
+        }
+
+        .alert-msg-input label {
+            display: block;
+            font-size: 0.8rem;
+            color: #ffa500;
+            margin-bottom: 6px;
+        }
+
         .btn-pub {
             width: 100%;
             padding: 14px;
@@ -571,7 +773,6 @@
         .btn-pub:hover { box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3); }
         .btn-pub:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -592,7 +793,6 @@
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.error { border-color: #ff4444; }
 
-        /* Footer */
         footer {
             position: relative;
             z-index: 1;
@@ -605,7 +805,6 @@
         footer p { color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; }
         footer .brand { background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
 
-        /* Responsive */
         @media (max-width: 768px) {
             header { padding: 0 15px; }
             main { padding: 20px 15px; }
@@ -614,6 +813,9 @@
             .header-content { height: 60px; }
             .sync-badge span:last-child { display: none; }
             .live-badge { display: none; }
+            .alert-inner { flex-direction: column; gap: 10px; padding: 15px; }
+            .alert-icon-big { font-size: 2rem; }
+            .alert-text h3 { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -623,6 +825,20 @@
     <div class="circle"></div>
     <div class="circle"></div>
     <div class="circle"></div>
+</div>
+
+<!-- Alert Banner -->
+<div class="alert-banner" id="alertBanner">
+    <div class="alert-inner">
+        <span class="alert-icon-big">🔔</span>
+        <div class="alert-text">
+            <div class="alert-label">⚡ התראה ממערך החדשות</div>
+            <h3 id="alertTitle">כותרת ההתראה</h3>
+            <p id="alertBody">תוכן ההתראה</p>
+        </div>
+        <button class="alert-close" onclick="closeAlert()">✕</button>
+        <div class="alert-time"></div>
+    </div>
 </div>
 
 <header>
@@ -712,6 +928,25 @@
                         <input type="text" id="inAuthor" placeholder="השם שלך...">
                     </div>
                 </div>
+
+                <!-- Alert Section -->
+                <div class="alert-section">
+                    <div class="alert-toggle" onclick="toggleAlert()">
+                        <div class="alert-toggle-info">
+                            <span>🔔</span>
+                            <div class="alert-toggle-text">
+                                <h4>שלח התראה לכולם</h4>
+                                <p>כל מי שהאתר פתוח אצלו יקבל התראה</p>
+                            </div>
+                        </div>
+                        <div class="toggle-switch" id="alertSwitch"></div>
+                    </div>
+                    <div class="alert-msg-input" id="alertMsgBox">
+                        <label>🔔 טקסט ההתראה</label>
+                        <input type="text" id="inAlertMsg" placeholder="מה לכתוב בהתראה...">
+                    </div>
+                </div>
+
                 <button class="btn-pub" id="btnPub" onclick="publish()">🚀 פרסם</button>
             </div>
         </div>
@@ -731,8 +966,11 @@ const API_KEY = '$2a$10$vb0rw5j/7dIM.sZrbGmjbuS8kVJsAqUtiFlHZL07M2qzvyLzzCETO';
 
 const API = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 const CACHE_KEY = 't4_news_cache';
+const SEEN_ALERTS_KEY = 't4_seen_alerts';
 let posts = [];
 let isAuth = false;
+let sendAlert = false;
+let lastKnownAlertId = null;
 
 const catLabels = {
     general: '📰 כללי',
@@ -742,7 +980,128 @@ const catLabels = {
     entertainment: '🎬 בידור'
 };
 
-// ⚡ Load from local cache instantly
+// 🔊 Create alert sound
+function playAlertSound() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // First beep
+        const osc1 = audioCtx.createOscillator();
+        const gain1 = audioCtx.createGain();
+        osc1.connect(gain1);
+        gain1.connect(audioCtx.destination);
+        osc1.frequency.value = 880;
+        osc1.type = 'sine';
+        gain1.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain1.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+        osc1.start(audioCtx.currentTime);
+        osc1.stop(audioCtx.currentTime + 0.3);
+
+        // Second beep
+        const osc2 = audioCtx.createOscillator();
+        const gain2 = audioCtx.createGain();
+        osc2.connect(gain2);
+        gain2.connect(audioCtx.destination);
+        osc2.frequency.value = 1100;
+        osc2.type = 'sine';
+        gain2.gain.setValueAtTime(0.3, audioCtx.currentTime + 0.35);
+        gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.65);
+        osc2.start(audioCtx.currentTime + 0.35);
+        osc2.stop(audioCtx.currentTime + 0.65);
+
+        // Third beep (higher)
+        const osc3 = audioCtx.createOscillator();
+        const gain3 = audioCtx.createGain();
+        osc3.connect(gain3);
+        gain3.connect(audioCtx.destination);
+        osc3.frequency.value = 1320;
+        osc3.type = 'sine';
+        gain3.gain.setValueAtTime(0.4, audioCtx.currentTime + 0.7);
+        gain3.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.2);
+        osc3.start(audioCtx.currentTime + 0.7);
+        osc3.stop(audioCtx.currentTime + 1.2);
+    } catch(e) {
+        console.log('Sound not supported');
+    }
+}
+
+// 🔔 Show alert banner
+function showAlertBanner(title, message) {
+    const banner = document.getElementById('alertBanner');
+    document.getElementById('alertTitle').textContent = title;
+    document.getElementById('alertBody').textContent = message;
+    
+    banner.classList.add('show');
+    playAlertSound();
+    
+    // Also try browser notification
+    if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('🔔 מערך החדשות ט4', {
+            body: title + '\n' + message,
+            icon: 'logo.png'
+        });
+    }
+    
+    // Auto close after 10 seconds
+    setTimeout(() => closeAlert(), 10000);
+}
+
+function closeAlert() {
+    document.getElementById('alertBanner').classList.remove('show');
+}
+
+// Get seen alerts
+function getSeenAlerts() {
+    try {
+        return JSON.parse(localStorage.getItem(SEEN_ALERTS_KEY) || '[]');
+    } catch(e) { return []; }
+}
+
+function markAlertSeen(alertId) {
+    const seen = getSeenAlerts();
+    seen.push(alertId);
+    // Keep only last 50
+    if (seen.length > 50) seen.splice(0, seen.length - 50);
+    localStorage.setItem(SEEN_ALERTS_KEY, JSON.stringify(seen));
+}
+
+// Check for new alerts
+function checkForAlerts(newPosts) {
+    const seen = getSeenAlerts();
+    
+    for (const post of newPosts) {
+        if (post.alert && post.alertMsg && !seen.includes(post.id)) {
+            showAlertBanner(post.title, post.alertMsg);
+            markAlertSeen(post.id);
+            break; // Show one at a time
+        }
+    }
+}
+
+// Toggle alert in form
+function toggleAlert() {
+    sendAlert = !sendAlert;
+    const sw = document.getElementById('alertSwitch');
+    const box = document.getElementById('alertMsgBox');
+    
+    if (sendAlert) {
+        sw.classList.add('active');
+        box.classList.add('show');
+        document.getElementById('inAlertMsg').focus();
+    } else {
+        sw.classList.remove('active');
+        box.classList.remove('show');
+    }
+}
+
+// Ask for notification permission
+function requestNotificationPermission() {
+    if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+}
+
+// ⚡ Cache
 function loadCache() {
     try {
         const cached = localStorage.getItem(CACHE_KEY);
@@ -759,7 +1118,7 @@ function saveCache() {
     localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
 }
 
-// ☁️ Sync from cloud
+// ☁️ Sync
 async function syncFromCloud() {
     setSyncStatus('syncing', 'מסנכרן...');
     try {
@@ -769,7 +1128,10 @@ async function syncFromCloud() {
         if (!res.ok) throw new Error('Server error');
         const data = await res.json();
         const cloudPosts = data.record || [];
+        
         if (JSON.stringify(cloudPosts) !== JSON.stringify(posts)) {
+            // Check for new alerts before updating
+            checkForAlerts(cloudPosts);
             posts = cloudPosts;
             saveCache();
             render();
@@ -781,7 +1143,6 @@ async function syncFromCloud() {
     }
 }
 
-// ☁️ Save to cloud
 async function saveToCloud() {
     setSyncStatus('syncing', 'שומר...');
     try {
@@ -801,16 +1162,13 @@ async function saveToCloud() {
 }
 
 function setSyncStatus(status, text) {
-    const badge = document.getElementById('syncBadge');
-    const txt = document.getElementById('syncText');
-    badge.className = 'sync-badge ' + status;
-    txt.textContent = text;
+    document.getElementById('syncBadge').className = 'sync-badge ' + status;
+    document.getElementById('syncText').textContent = text;
 }
 
-// 🔴 Update ticker with urgent posts
+// 🔴 Ticker
 function updateTicker() {
     const ticker = document.getElementById('tickerContent');
-    const bar = document.getElementById('tickerBar');
     const urgentPosts = posts.filter(p => p.category === 'urgent');
 
     if (urgentPosts.length > 0) {
@@ -819,17 +1177,15 @@ function updateTicker() {
             <span>⚡ חדשות דחופות: ${urgentText}  ◆  </span>
             <span>⚡ חדשות דחופות: ${urgentText}  ◆  </span>
         `;
-        bar.classList.add('urgent');
     } else {
         ticker.innerHTML = `
             <span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>
             <span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>
         `;
-        bar.classList.remove('urgent');
     }
 }
 
-// Render posts
+// Render
 function render() {
     updateTicker();
     const grid = document.getElementById('newsGrid');
@@ -864,7 +1220,6 @@ function render() {
     `).join('');
 }
 
-// Skeleton loading
 function showSkeleton() {
     document.getElementById('newsGrid').innerHTML = Array(3).fill(`
         <div class="skeleton-card">
@@ -904,12 +1259,13 @@ function checkPass() {
     }
 }
 
-// ⚡ Optimistic publish
+// ⚡ Publish
 async function publish() {
     const title = document.getElementById('inTitle').value.trim();
     const content = document.getElementById('inContent').value.trim();
     const category = document.getElementById('inCat').value;
     const author = document.getElementById('inAuthor').value.trim() || 'אנונימי';
+    const alertMsg = document.getElementById('inAlertMsg').value.trim();
     const btn = document.getElementById('btnPub');
 
     if (!title || !content) { toast('⚠️', 'מלא כותרת ותוכן', true); return; }
@@ -918,28 +1274,43 @@ async function publish() {
     btn.textContent = '⏳ מפרסם...';
 
     const now = new Date();
-    posts.unshift({
+    const newPost = {
         id: Date.now().toString(),
         title, content, category, author,
         date: now.toLocaleDateString('he-IL'),
-        time: now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'})
-    });
+        time: now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'}),
+        alert: sendAlert,
+        alertMsg: sendAlert ? (alertMsg || title) : ''
+    };
 
+    posts.unshift(newPost);
+    
+    // Mark own alert as seen
+    if (sendAlert) {
+        markAlertSeen(newPost.id);
+    }
+    
     saveCache();
     render();
     closeModal();
-    toast('🎉', 'פורסם!');
+    toast('🎉', sendAlert ? 'פורסם + התראה נשלחה!' : 'פורסם!');
 
+    // Reset form
     document.getElementById('inTitle').value = '';
     document.getElementById('inContent').value = '';
     document.getElementById('inAuthor').value = '';
+    document.getElementById('inAlertMsg').value = '';
+    sendAlert = false;
+    document.getElementById('alertSwitch').classList.remove('active');
+    document.getElementById('alertMsgBox').classList.remove('show');
+    
     btn.disabled = false;
     btn.textContent = '🚀 פרסם';
 
-    try { await saveToCloud(); } catch(e) { toast('⚠️', 'נשמר מקומית, יסונכרן בקרוב', true); }
+    try { await saveToCloud(); } catch(e) { toast('⚠️', 'נשמר מקומית', true); }
 }
 
-// ⚡ Optimistic delete
+// Delete
 async function del(id) {
     if (!isAuth) { toast('🔒', 'התחבר קודם', true); return; }
     if (!confirm('למחוק?')) return;
@@ -978,10 +1349,11 @@ function esc(s) {
 document.onkeydown = e => { if (e.key === 'Escape') closeModal(); };
 
 // 🚀 STARTUP
+requestNotificationPermission();
 const hadCache = loadCache();
 if (!hadCache) showSkeleton();
 syncFromCloud();
-setInterval(syncFromCloud, 30000);
+setInterval(syncFromCloud, 15000); // Check every 15 seconds for alerts
 </script>
 
 </body>
