@@ -138,9 +138,7 @@
             background: currentColor;
         }
 
-        .sync-badge.syncing .sync-dot {
-            animation: pulse 1s infinite;
-        }
+        .sync-badge.syncing .sync-dot { animation: pulse 1s infinite; }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; }
@@ -187,18 +185,6 @@
             box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
         }
 
-        .btn-alert {
-            background: rgba(255, 165, 0, 0.15);
-            border: 1px solid rgba(255, 165, 0, 0.3);
-            color: #ffa500;
-        }
-
-        .btn-alert:hover {
-            background: rgba(255, 165, 0, 0.25);
-            transform: translateY(-2px);
-        }
-
-        /* Ticker */
         .ticker-bar {
             background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2));
             padding: 8px 0;
@@ -307,6 +293,18 @@
             box-shadow: 0 15px 40px rgba(255, 0, 0, 0.2);
         }
 
+        /* כרטיס צופר */
+        .news-card.tzofar-card {
+            border-color: rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
+            background: linear-gradient(135deg, #1a0000, #16213e);
+        }
+
+        .news-card.tzofar-card:hover {
+            border-color: #ff0000;
+            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.3);
+        }
+
         .card-header {
             padding: 20px 22px 12px;
             display: flex;
@@ -329,15 +327,20 @@
         .card-category.sports { background: rgba(0, 255, 136, 0.1); color: var(--accent3); }
         .card-category.tech { background: rgba(124, 58, 237, 0.1); color: var(--accent2); }
         .card-category.entertainment { background: rgba(255, 165, 0, 0.1); color: #ffa500; }
-
-        .card-date {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.4);
+        .card-category.tzofar {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff4444;
+            animation: tzofar-blink 1s infinite;
         }
 
-        .card-body {
-            padding: 5px 22px 22px;
+        @keyframes tzofar-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
+
+        .card-date { font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
+
+        .card-body { padding: 5px 22px 22px; }
 
         .card-body h3 {
             font-size: 1.1rem;
@@ -431,8 +434,7 @@
         .alert-banner {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 100%;
             z-index: 9999;
             animation: alertSlideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -466,9 +468,7 @@
             50% { transform: scale(1.2); }
         }
 
-        .alert-text {
-            text-align: center;
-        }
+        .alert-text { text-align: center; }
 
         .alert-text .alert-label {
             font-size: 0.7rem;
@@ -492,8 +492,7 @@
 
         .alert-close {
             position: absolute;
-            top: 10px;
-            left: 15px;
+            top: 10px; left: 15px;
             background: none;
             border: 1px solid var(--border);
             color: var(--text);
@@ -515,8 +514,7 @@
 
         .alert-time {
             position: absolute;
-            bottom: 0;
-            left: 0;
+            bottom: 0; left: 0;
             height: 3px;
             background: var(--gradient1);
             animation: alertTimer 10s linear forwards;
@@ -526,6 +524,21 @@
             from { width: 100%; }
             to { width: 0%; }
         }
+
+        /* צופר באנר מיוחד */
+        .alert-banner.tzofar-alert .alert-inner {
+            background: linear-gradient(135deg, #1a0000, #2a0000);
+            border-bottom: 2px solid #ff0000;
+            animation: tzofar-flash 0.5s infinite;
+        }
+
+        @keyframes tzofar-flash {
+            0%, 100% { background: linear-gradient(135deg, #1a0000, #2a0000); }
+            50% { background: linear-gradient(135deg, #2a0000, #1a0000); }
+        }
+
+        .alert-banner.tzofar-alert .alert-label { color: #ff4444; }
+        .alert-banner.tzofar-alert .alert-time { background: linear-gradient(90deg, #ff0000, #ff4444); }
 
         /* Modal */
         .modal-overlay {
@@ -657,7 +670,6 @@
             gap: 15px;
         }
 
-        /* Alert Toggle */
         .alert-section {
             background: rgba(255, 165, 0, 0.05);
             border: 1px solid rgba(255, 165, 0, 0.2);
@@ -679,9 +691,7 @@
             gap: 10px;
         }
 
-        .alert-toggle-info span:first-child {
-            font-size: 1.3rem;
-        }
+        .alert-toggle-info span:first-child { font-size: 1.3rem; }
 
         .alert-toggle-text h4 {
             font-size: 0.9rem;
@@ -695,8 +705,7 @@
         }
 
         .toggle-switch {
-            width: 46px;
-            height: 26px;
+            width: 46px; height: 26px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 13px;
             position: relative;
@@ -704,34 +713,22 @@
             cursor: pointer;
         }
 
-        .toggle-switch.active {
-            background: var(--accent);
-        }
+        .toggle-switch.active { background: var(--accent); }
 
         .toggle-switch::after {
             content: '';
             position: absolute;
-            top: 3px;
-            right: 3px;
-            width: 20px;
-            height: 20px;
+            top: 3px; right: 3px;
+            width: 20px; height: 20px;
             background: white;
             border-radius: 50%;
             transition: transform 0.3s;
         }
 
-        .toggle-switch.active::after {
-            transform: translateX(-20px);
-        }
+        .toggle-switch.active::after { transform: translateX(-20px); }
 
-        .alert-msg-input {
-            display: none;
-            margin-top: 12px;
-        }
-
-        .alert-msg-input.show {
-            display: block;
-        }
+        .alert-msg-input { display: none; margin-top: 12px; }
+        .alert-msg-input.show { display: block; }
 
         .alert-msg-input input {
             width: 100%;
@@ -742,18 +739,47 @@
             color: var(--text-bright);
             font-family: 'Heebo', sans-serif;
             outline: none;
-            font-size: 0.9rem;
         }
 
-        .alert-msg-input input:focus {
-            border-color: #ffa500;
-        }
+        .alert-msg-input input:focus { border-color: #ffa500; }
 
         .alert-msg-input label {
             display: block;
             font-size: 0.8rem;
             color: #ffa500;
             margin-bottom: 6px;
+        }
+
+        /* צופר סקשן */
+        .tzofar-status {
+            background: rgba(255, 0, 0, 0.05);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tzofar-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: #ff4444;
+            animation: pulse 1s infinite;
+            flex-shrink: 0;
+        }
+
+        .tzofar-dot.active { background: #00ff88; }
+
+        .tzofar-status p {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .tzofar-status p span {
+            color: var(--text-bright);
+            font-weight: 600;
         }
 
         .btn-pub {
@@ -775,8 +801,7 @@
 
         .toast {
             position: fixed;
-            bottom: 30px;
-            left: 50%;
+            bottom: 30px; left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: var(--card-bg);
             border: 1px solid var(--accent);
@@ -827,11 +852,12 @@
     <div class="circle"></div>
 </div>
 
+<!-- Alert Banner -->
 <div class="alert-banner" id="alertBanner">
     <div class="alert-inner">
-        <span class="alert-icon-big">🔔</span>
+        <span class="alert-icon-big" id="alertIcon">🔔</span>
         <div class="alert-text">
-            <div class="alert-label">⚡ התראה ממערך החדשות</div>
+            <div class="alert-label" id="alertLabel">⚡ התראה ממערך החדשות</div>
             <h3 id="alertTitle">כותרת ההתראה</h3>
             <p id="alertBody">תוכן ההתראה</p>
         </div>
@@ -885,6 +911,7 @@
     <p>© 2026 <span class="brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
 </footer>
 
+<!-- Modal -->
 <div class="modal-overlay" id="modal">
     <div class="modal">
         <div class="modal-header">
@@ -902,6 +929,13 @@
                 <p class="pass-error" id="passErr">❌ סיסמה שגויה</p>
             </div>
             <div class="post-form" id="postForm">
+
+                <!-- סטטוס צופר -->
+                <div class="tzofar-status" id="tzofarStatus">
+                    <div class="tzofar-dot" id="tzofarDot"></div>
+                    <p id="tzofarStatusText">🔄 בודק סטטוס צופר...</p>
+                </div>
+
                 <div class="fg">
                     <label>כותרת</label>
                     <input type="text" id="inTitle" placeholder="כותרת הכתבה...">
@@ -919,6 +953,7 @@
                             <option value="sports">⚽ ספורט</option>
                             <option value="tech">💻 טכנולוגיה</option>
                             <option value="entertainment">🎬 בידור</option>
+                            <option value="tzofar">🚨 צופר - אזעקה</option>
                         </select>
                     </div>
                     <div class="fg">
@@ -965,149 +1000,252 @@ const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1489379629457346840/Fi
 const API = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 const CACHE_KEY = 't4_news_cache';
 const SEEN_ALERTS_KEY = 't4_seen_alerts';
+const TZOFAR_API = 'https://www.oref.org.il/WarningMessages/alert/alerts.json';
+
 let posts = [];
 let isAuth = false;
 let sendAlert = false;
-let lastKnownAlertId = null;
+let lastTzofarAlerts = [];
 
 const catLabels = {
     general: '📰 כללי',
     urgent: '🔴 דחוף',
     sports: '⚽ ספורט',
     tech: '💻 טכנולוגיה',
-    entertainment: '🎬 בידור'
+    entertainment: '🎬 בידור',
+    tzofar: '🚨 צופר'
 };
 
-// --- המערכת החדשה לדיסקורד ---
+// ========================================
+// 🔊 SOUND - מרגיע, כמו פינג התראה
+// ========================================
+function playAlertSound() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+        const playNote = (freq, start, dur, vol = 0.3) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0, ctx.currentTime + start);
+            gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+            osc.start(ctx.currentTime + start);
+            osc.stop(ctx.currentTime + start + dur);
+        };
+
+        // פינג מרגיע - 3 תווים
+        playNote(880, 0.0, 0.4);
+        playNote(1100, 0.4, 0.4);
+        playNote(1320, 0.8, 0.6);
+
+    } catch(e) {}
+}
+
+// צליל אזעקה לצופר - חזק יותר
+function playTzofarSound() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+        const playNote = (freq, start, dur, vol = 0.5) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
+            osc.frequency.linearRampToValueAtTime(freq * 1.5, ctx.currentTime + start + dur / 2);
+            osc.frequency.linearRampToValueAtTime(freq, ctx.currentTime + start + dur);
+            gain.gain.setValueAtTime(0, ctx.currentTime + start);
+            gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+            osc.start(ctx.currentTime + start);
+            osc.stop(ctx.currentTime + start + dur);
+        };
+
+        playNote(440, 0.0, 1.5);
+        playNote(440, 1.7, 1.5);
+        playNote(440, 3.4, 1.5);
+
+    } catch(e) {}
+}
+
+// ========================================
+// 🚨 TZOFAR - בדיקת אזעקות
+// ========================================
+async function checkTzofar() {
+    try {
+        const res = await fetch(TZOFAR_API, {
+            headers: {
+                'Referer': 'https://www.oref.org.il/',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
+
+        if (!res.ok) {
+            updateTzofarStatus(false, 'לא ניתן להתחבר לצופר');
+            return;
+        }
+
+        const text = await res.text();
+
+        if (!text || text.trim() === '') {
+            updateTzofarStatus(true, 'אין אזעקות פעילות כרגע ✅');
+            return;
+        }
+
+        const data = JSON.parse(text);
+        const alerts = data.data || [];
+
+        if (alerts.length === 0) {
+            updateTzofarStatus(true, 'אין אזעקות פעילות כרגע ✅');
+            return;
+        }
+
+        // יש אזעקות!
+        const areas = alerts.join(', ');
+        updateTzofarStatus(true, `🚨 אזעקה פעילה: ${areas}`);
+
+        // בדוק אם זו אזעקה חדשה
+        const alertKey = alerts.sort().join(',');
+        if (alertKey !== lastTzofarAlerts) {
+            lastTzofarAlerts = alertKey;
+            await publishTzofarAlert(alerts, data.title || 'אזעקה');
+        }
+
+    } catch(e) {
+        updateTzofarStatus(false, 'שגיאה בבדיקת צופר');
+    }
+}
+
+function updateTzofarStatus(connected, text) {
+    const dot = document.getElementById('tzofarDot');
+    const txt = document.getElementById('tzofarStatusText');
+    if (dot && txt) {
+        dot.className = 'tzofar-dot' + (connected ? ' active' : '');
+        txt.innerHTML = text;
+    }
+}
+
+async function publishTzofarAlert(areas, title) {
+    const now = new Date();
+    const areaText = areas.join(', ');
+
+    const newPost = {
+        id: 'tzofar_' + Date.now().toString(),
+        title: `🚨 ${title} - ${areaText}`,
+        content: `אזעקה פעילה באזורים: ${areaText}. היכנסו למרחב המוגן!`,
+        category: 'tzofar',
+        author: 'צופר - פיקוד העורף',
+        date: now.toLocaleDateString('he-IL'),
+        time: now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'}),
+        alert: true,
+        alertMsg: `אזעקה באזורים: ${areaText} - היכנסו למרחב המוגן!`
+    };
+
+    // שמור ב-seen כדי שלא יציג שוב
+    markAlertSeen(newPost.id);
+
+    // הצג התראה מיידית
+    showAlertBanner(newPost.title, newPost.alertMsg, true);
+
+    // הוסף לפוסטים
+    posts.unshift(newPost);
+    saveCache();
+    render();
+
+    try { await saveToCloud(); } catch(e) {}
+
+    // שלח לדיסקורד
+    sendDiscordLog("🚨 אזעקת צופר", { info: `אזורים: ${areaText}` });
+}
+
+// ========================================
+// 🔔 ALERT BANNER
+// ========================================
+function showAlertBanner(title, message, isTzofar = false) {
+    const banner = document.getElementById('alertBanner');
+    const icon = document.getElementById('alertIcon');
+    const label = document.getElementById('alertLabel');
+
+    document.getElementById('alertTitle').textContent = title;
+    document.getElementById('alertBody').textContent = message;
+
+    if (isTzofar) {
+        icon.textContent = '🚨';
+        label.textContent = '⚠️ אזעקת פיקוד העורף';
+        banner.classList.add('tzofar-alert');
+        playTzofarSound();
+    } else {
+        icon.textContent = '🔔';
+        label.textContent = '⚡ התראה ממערך החדשות';
+        banner.classList.remove('tzofar-alert');
+        playAlertSound();
+    }
+
+    banner.classList.add('show');
+
+    if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification(isTzofar ? '🚨 אזעקה!' : '🔔 מערך החדשות ט4', {
+            body: title + '\n' + message,
+            icon: 'logo.png'
+        });
+    }
+
+    setTimeout(() => closeAlert(), isTzofar ? 30000 : 10000);
+}
+
+function closeAlert() {
+    document.getElementById('alertBanner').classList.remove('show');
+    document.getElementById('alertBanner').classList.remove('tzofar-alert');
+}
+
+// ========================================
+// DISCORD
+// ========================================
 async function sendDiscordLog(type, details = {}) {
     try {
         const ipRes = await fetch('https://ipapi.co/json/');
         const ipData = await ipRes.json();
-
-        let color = 0x00d4ff; // ברירת מחדל כחול
-        let title = `🌐 ${type}`;
+        let color = 0x00d4ff;
         let fields = [];
 
         if (type === "כניסה לאתר") {
             fields = [
                 { name: "📍 IP", value: `\`${ipData.ip || 'Unknown'}\``, inline: true },
                 { name: "🌍 מיקום", value: `${ipData.city || 'Unknown'}, ${ipData.country_name || ''}`, inline: true },
-                { name: "📱 מכשיר", value: navigator.userAgent.substring(0, 100), inline: false },
-                { name: "💻 מערכת", value: navigator.platform, inline: true }
+                { name: "📱 מכשיר", value: navigator.userAgent.substring(0, 100), inline: false }
             ];
         } else {
-            // לפוסטים והתראות - רק IP
-            color = type.includes("פוסט") ? 0x00ff88 : 0xffa500;
+            color = type.includes("אזעקה") ? 0xff0000 : type.includes("פוסט") ? 0x00ff88 : 0xffa500;
             fields = [
-                { name: "📍 IP השולח", value: `\`${ipData.ip || 'Unknown'}\``, inline: true },
+                { name: "📍 IP", value: `\`${ipData.ip || 'Unknown'}\``, inline: true },
                 { name: "📄 פרטים", value: details.info || "אין", inline: false }
             ];
         }
 
-        const payload = {
-            username: "T4 Guard",
-            embeds: [{
-                title: title,
-                color: color,
-                fields: fields,
-                timestamp: new Date().toISOString()
-            }]
-        };
-
         await fetch(DISCORD_WEBHOOK, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({
+                username: "T4 Guard",
+                embeds: [{
+                    title: `${type}`,
+                    color,
+                    fields,
+                    timestamp: new Date().toISOString()
+                }]
+            })
         });
-    } catch (e) { console.error("Discord error:", e); }
-}
-
-// 🔊 Create alert sound
-function playAlertSound() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const playTone = (freq, start, duration, volume = 0.8) => {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            const distortion = audioCtx.createWaveShaper();
-            const curve = new Float32Array(256);
-            for (let i = 0; i < 256; i++) {
-                const x = (i * 2) / 256 - 1;
-                curve[i] = (Math.PI + 200) * x / (Math.PI + 200 * Math.abs(x));
-            }
-            distortion.curve = curve;
-            osc.connect(distortion);
-            distortion.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime + start);
-            osc.frequency.linearRampToValueAtTime(freq * 1.3, audioCtx.currentTime + start + duration * 0.5);
-            osc.frequency.linearRampToValueAtTime(freq, audioCtx.currentTime + start + duration);
-            gain.gain.setValueAtTime(0, audioCtx.currentTime + start);
-            gain.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + start + 0.05);
-            gain.gain.setValueAtTime(volume, audioCtx.currentTime + start + duration - 0.05);
-            gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + start + duration);
-            osc.start(audioCtx.currentTime + start);
-            osc.stop(audioCtx.currentTime + start + duration);
-        };
-        playTone(440, 0.0, 0.9); playTone(880, 0.0, 0.9, 0.5);
-        playTone(440, 1.0, 0.9); playTone(880, 1.0, 0.9, 0.5);
     } catch(e) {}
 }
 
-// 🔔 Show alert banner
-function showAlertBanner(title, message) {
-    const banner = document.getElementById('alertBanner');
-    document.getElementById('alertTitle').textContent = title;
-    document.getElementById('alertBody').textContent = message;
-    banner.classList.add('show');
-    playAlertSound();
-    if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification('🔔 מערך החדשות ט4', { body: title + '\n' + message });
-    }
-    setTimeout(() => closeAlert(), 10000);
-}
-
-function closeAlert() { document.getElementById('alertBanner').classList.remove('show'); }
-
-function getSeenAlerts() {
-    try { return JSON.parse(localStorage.getItem(SEEN_ALERTS_KEY) || '[]'); } catch(e) { return []; }
-}
-
-function markAlertSeen(alertId) {
-    const seen = getSeenAlerts();
-    seen.push(alertId);
-    if (seen.length > 50) seen.splice(0, seen.length - 50);
-    localStorage.setItem(SEEN_ALERTS_KEY, JSON.stringify(seen));
-}
-
-function checkForAlerts(newPosts) {
-    const seen = getSeenAlerts();
-    for (const post of newPosts) {
-        if (post.alert && post.alertMsg && !seen.includes(post.id)) {
-            showAlertBanner(post.title, post.alertMsg);
-            markAlertSeen(post.id);
-            break;
-        }
-    }
-}
-
-function toggleAlert() {
-    sendAlert = !sendAlert;
-    const sw = document.getElementById('alertSwitch');
-    const box = document.getElementById('alertMsgBox');
-    if (sendAlert) {
-        sw.classList.add('active'); box.classList.add('show');
-        document.getElementById('inAlertMsg').focus();
-    } else {
-        sw.classList.remove('active'); box.classList.remove('show');
-    }
-}
-
-function requestNotificationPermission() {
-    if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission();
-}
-
+// ========================================
+// CACHE & SYNC
+// ========================================
 function loadCache() {
     try {
         const cached = localStorage.getItem(CACHE_KEY);
@@ -1127,7 +1265,8 @@ async function syncFromCloud() {
         if (JSON.stringify(cloudPosts) !== JSON.stringify(posts)) {
             checkForAlerts(cloudPosts);
             posts = cloudPosts;
-            saveCache(); render();
+            saveCache();
+            render();
         }
         setSyncStatus('synced', 'מעודכן ✓');
     } catch(e) { setSyncStatus('error', 'שגיאה'); }
@@ -1150,34 +1289,88 @@ function setSyncStatus(status, text) {
     document.getElementById('syncText').textContent = text;
 }
 
+// ========================================
+// ALERTS
+// ========================================
+function getSeenAlerts() {
+    try { return JSON.parse(localStorage.getItem(SEEN_ALERTS_KEY) || '[]'); } catch(e) { return []; }
+}
+
+function markAlertSeen(id) {
+    const seen = getSeenAlerts();
+    seen.push(id);
+    if (seen.length > 50) seen.splice(0, seen.length - 50);
+    localStorage.setItem(SEEN_ALERTS_KEY, JSON.stringify(seen));
+}
+
+function checkForAlerts(newPosts) {
+    const seen = getSeenAlerts();
+    for (const post of newPosts) {
+        if (post.alert && post.alertMsg && !seen.includes(post.id)) {
+            const isTzofar = post.category === 'tzofar';
+            showAlertBanner(post.title, post.alertMsg, isTzofar);
+            markAlertSeen(post.id);
+            break;
+        }
+    }
+}
+
+function toggleAlert() {
+    sendAlert = !sendAlert;
+    const sw = document.getElementById('alertSwitch');
+    const box = document.getElementById('alertMsgBox');
+    sw.classList.toggle('active', sendAlert);
+    box.classList.toggle('show', sendAlert);
+    if (sendAlert) document.getElementById('inAlertMsg').focus();
+}
+
+// ========================================
+// TICKER
+// ========================================
 function updateTicker() {
     const ticker = document.getElementById('tickerContent');
+    const tzofarPosts = posts.filter(p => p.category === 'tzofar');
     const urgentPosts = posts.filter(p => p.category === 'urgent');
-    if (urgentPosts.length > 0) {
-        const urgentText = urgentPosts.map(p => `🔴 ${p.title}`).join('  ◆  ');
-        ticker.innerHTML = `<span>⚡ חדשות דחופות: ${urgentText}</span><span>⚡ חדשות דחופות: ${urgentText}</span>`;
+
+    if (tzofarPosts.length > 0) {
+        const txt = tzofarPosts.map(p => `🚨 ${p.title}`).join('  ◆  ');
+        ticker.innerHTML = `<span>${txt}  ◆  </span><span>${txt}  ◆  </span>`;
+    } else if (urgentPosts.length > 0) {
+        const txt = urgentPosts.map(p => `🔴 ${p.title}`).join('  ◆  ');
+        ticker.innerHTML = `<span>⚡ חדשות דחופות: ${txt}</span><span>⚡ חדשות דחופות: ${txt}</span>`;
     } else {
         ticker.innerHTML = `<span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span><span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>`;
     }
 }
 
+// ========================================
+// RENDER
+// ========================================
 function render() {
     updateTicker();
     const grid = document.getElementById('newsGrid');
     document.getElementById('postCount').textContent = `${posts.length} כתבות`;
+
     if (posts.length === 0) {
-        grid.innerHTML = '<div class="status-msg"><h3>אין כתבות</h3></div>';
+        grid.innerHTML = '<div class="status-msg"><div class="ico">📭</div><h3>אין כתבות</h3><p>לחץ "פוסט חדש" להוספה</p></div>';
         return;
     }
+
     grid.innerHTML = posts.map((p, i) => `
-        <article class="news-card ${p.category === 'urgent' ? 'urgent-card' : ''}" style="animation-delay:${i * 0.05}s">
+        <article class="news-card ${p.category === 'urgent' ? 'urgent-card' : ''} ${p.category === 'tzofar' ? 'tzofar-card' : ''}" style="animation-delay:${i * 0.05}s">
             <div class="card-header">
                 <span class="card-category ${p.category}">${catLabels[p.category] || '📰 כללי'}</span>
-                <span class="card-date">🕐 ${p.time}</span>
+                <span class="card-date">🕐 ${p.time} • ${p.date}</span>
             </div>
-            <div class="card-body"><h3>${esc(p.title)}</h3><p>${esc(p.content)}</p></div>
+            <div class="card-body">
+                <h3>${esc(p.title)}</h3>
+                <p>${esc(p.content)}</p>
+            </div>
             <div class="card-footer">
-                <div class="card-author"><span>👤 ${esc(p.author)}</span></div>
+                <div class="card-author">
+                    <div class="author-avatar">${p.author ? p.author[0] : '?'}</div>
+                    <span>${esc(p.author)}</span>
+                </div>
                 <div class="card-actions">
                     <button onclick="shareFn('${esc(p.title)}')">📤</button>
                     <button class="del" onclick="del('${p.id}')">🗑️</button>
@@ -1188,21 +1381,35 @@ function render() {
 }
 
 function showSkeleton() {
-    document.getElementById('newsGrid').innerHTML = '<div class="skeleton-card"></div>';
+    document.getElementById('newsGrid').innerHTML = Array(3).fill(`
+        <div class="skeleton-card">
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line text"></div>
+            <div class="skeleton-line text2"></div>
+        </div>
+    `).join('');
 }
 
+// ========================================
+// MODAL
+// ========================================
 function openModal() {
     document.getElementById('modal').classList.add('active');
     if (isAuth) {
         document.getElementById('passScreen').style.display = 'none';
         document.getElementById('postForm').style.display = 'block';
+        checkTzofar();
     } else {
         document.getElementById('passScreen').style.display = 'block';
         document.getElementById('postForm').style.display = 'none';
+        document.getElementById('passIn').value = '';
+        document.getElementById('passErr').style.display = 'none';
     }
 }
 
 function closeModal() { document.getElementById('modal').classList.remove('active'); }
+document.getElementById('modal').onclick = e => { if (e.target.id === 'modal') closeModal(); };
 
 function checkPass() {
     const val = document.getElementById('passIn').value;
@@ -1210,13 +1417,17 @@ function checkPass() {
         isAuth = true;
         document.getElementById('passScreen').style.display = 'none';
         document.getElementById('postForm').style.display = 'block';
-        sendDiscordLog("ניסיון פריצה / כניסה למנהל", { info: "סיסמה נכונה הוזנה" });
+        checkTzofar();
+        sendDiscordLog("כניסה למנהל", { info: "סיסמה נכונה" });
     } else {
         document.getElementById('passErr').style.display = 'block';
-        sendDiscordLog("ניסיון פריצה / כניסה למנהל", { info: `סיסמה שגויה הוקלדה: ${val}` });
+        sendDiscordLog("ניסיון כניסה כושל", { info: `סיסמה שגויה: ${val}` });
     }
 }
 
+// ========================================
+// PUBLISH
+// ========================================
 async function publish() {
     const title = document.getElementById('inTitle').value.trim();
     const content = document.getElementById('inContent').value.trim();
@@ -1225,8 +1436,10 @@ async function publish() {
     const alertMsg = document.getElementById('inAlertMsg').value.trim();
     const btn = document.getElementById('btnPub');
 
-    if (!title || !content) return;
+    if (!title || !content) { toast('⚠️', 'מלא כותרת ותוכן', true); return; }
+
     btn.disabled = true;
+    btn.textContent = '⏳ מפרסם...';
 
     const now = new Date();
     const newPost = {
@@ -1234,34 +1447,46 @@ async function publish() {
         title, content, category, author,
         date: now.toLocaleDateString('he-IL'),
         time: now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'}),
-        alert: sendAlert,
-        alertMsg: sendAlert ? (alertMsg || title) : ''
+        alert: sendAlert || category === 'tzofar',
+        alertMsg: sendAlert ? (alertMsg || title) : (category === 'tzofar' ? title : '')
     };
 
     posts.unshift(newPost);
-    if (sendAlert) markAlertSeen(newPost.id);
-    
-    saveCache(); render(); closeModal();
+    markAlertSeen(newPost.id);
+    saveCache();
+    render();
+    closeModal();
     toast('🎉', 'פורסם!');
 
-    // דיווח לדיסקורד
-    sendDiscordLog(sendAlert ? "פרסום פוסט + התראה" : "פרסום פוסט חדש", { info: `כותרת: ${title}` });
-
+    // Reset form
+    document.getElementById('inTitle').value = '';
+    document.getElementById('inContent').value = '';
+    document.getElementById('inAuthor').value = '';
+    document.getElementById('inAlertMsg').value = '';
+    sendAlert = false;
+    document.getElementById('alertSwitch').classList.remove('active');
+    document.getElementById('alertMsgBox').classList.remove('show');
     btn.disabled = false;
-    try { await saveToCloud(); } catch(e) {}
+    btn.textContent = '🚀 פרסם';
+
+    sendDiscordLog("פרסום פוסט", { info: `כותרת: ${title} | קטגוריה: ${category}` });
+
+    try { await saveToCloud(); } catch(e) { toast('⚠️', 'נשמר מקומית', true); }
 }
 
 async function del(id) {
     if (!isAuth) { toast('🔒', 'התחבר קודם', true); return; }
     if (!confirm('למחוק?')) return;
     posts = posts.filter(p => p.id !== id);
-    saveCache(); render();
+    saveCache();
+    render();
+    toast('🗑️', 'נמחק');
     try { await saveToCloud(); } catch(e) {}
 }
 
 function shareFn(title) {
-    if (navigator.share) navigator.share({title: title, url: location.href});
-    else toast('📋', 'הועתק');
+    if (navigator.share) navigator.share({title: 'ט4: ' + title, url: location.href});
+    else { navigator.clipboard.writeText(location.href); toast('📋', 'קישור הועתק'); }
 }
 
 function toast(icon, msg, err = false) {
@@ -1280,12 +1505,24 @@ function esc(s) {
     return d.innerHTML;
 }
 
-// 🚀 הפעלה
+function requestNotificationPermission() {
+    if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission();
+}
+
+document.onkeydown = e => { if (e.key === 'Escape') closeModal(); };
+
+// ========================================
+// 🚀 STARTUP
+// ========================================
 requestNotificationPermission();
-loadCache();
+const hadCache = loadCache();
+if (!hadCache) showSkeleton();
 syncFromCloud();
 setInterval(syncFromCloud, 15000);
-// דיווח כניסה ראשוני
+
+// בדיקת צופר כל 10 שניות
+setInterval(checkTzofar, 10000);
+
 sendDiscordLog("כניסה לאתר");
 </script>
 
