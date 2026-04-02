@@ -25,8 +25,6 @@
             --card-bg: #16213e;
             --border: rgba(0, 212, 255, 0.15);
             --gradient1: linear-gradient(135deg, #00d4ff, #7c3aed);
-            --gradient2: linear-gradient(135deg, #7c3aed, #00ff88);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
         body {
@@ -37,7 +35,6 @@
             overflow-x: hidden;
         }
 
-        /* === ANIMATED BACKGROUND === */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -62,7 +59,6 @@
             background: var(--accent);
             top: -200px;
             right: -100px;
-            animation-delay: 0s;
         }
 
         .bg-animation .circle:nth-child(2) {
@@ -90,7 +86,6 @@
             75% { transform: translate(40px, 20px) scale(1.05); }
         }
 
-        /* === GRID OVERLAY === */
         .grid-overlay {
             position: fixed;
             top: 0;
@@ -105,7 +100,6 @@
             pointer-events: none;
         }
 
-        /* === HEADER === */
         header {
             position: sticky;
             top: 0;
@@ -139,11 +133,6 @@
             padding: 2px;
         }
 
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
         .logo-text h1 {
             font-size: 1.3rem;
             font-weight: 900;
@@ -151,7 +140,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 1.2;
         }
 
         .logo-text span {
@@ -159,7 +147,6 @@
             color: var(--accent);
             letter-spacing: 3px;
             text-transform: uppercase;
-            font-weight: 300;
         }
 
         .header-actions {
@@ -178,7 +165,6 @@
             border-radius: 20px;
             font-size: 0.8rem;
             color: #ff4444;
-            font-weight: 500;
         }
 
         .live-dot {
@@ -205,9 +191,6 @@
             font-size: 0.85rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .btn-admin:hover {
@@ -215,7 +198,22 @@
             box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
         }
 
-        /* === BREAKING NEWS TICKER === */
+        .btn-refresh {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: var(--accent3);
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .btn-refresh:hover {
+            background: rgba(0, 255, 136, 0.2);
+        }
+
         .ticker-bar {
             background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2));
             padding: 8px 0;
@@ -242,7 +240,6 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* === MAIN CONTENT === */
         main {
             position: relative;
             z-index: 1;
@@ -251,7 +248,6 @@
             padding: 30px 40px;
         }
 
-        /* === SECTION TITLE === */
         .section-header {
             display: flex;
             align-items: center;
@@ -275,12 +271,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
         }
 
         .section-title h2 {
             font-size: 1.5rem;
-            font-weight: 700;
             color: var(--text-bright);
         }
 
@@ -293,14 +287,12 @@
             color: var(--accent);
         }
 
-        /* === NEWS GRID === */
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 25px;
         }
 
-        /* === NEWS CARD === */
         .news-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -325,7 +317,7 @@
             height: 3px;
             background: var(--gradient1);
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s;
         }
 
         .news-card:hover::before {
@@ -378,9 +370,6 @@
         .card-date {
             font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
 
         .card-body {
@@ -430,11 +419,6 @@
             font-weight: 700;
         }
 
-        .card-actions {
-            display: flex;
-            gap: 10px;
-        }
-
         .card-actions button {
             background: none;
             border: none;
@@ -442,7 +426,7 @@
             cursor: pointer;
             font-size: 1rem;
             transition: color 0.3s;
-            padding: 4px;
+            padding: 4px 8px;
         }
 
         .card-actions button:hover {
@@ -453,30 +437,39 @@
             color: #ff4444 !important;
         }
 
-        /* === EMPTY STATE === */
-        .empty-state {
+        .loading, .empty-state, .error-state {
             text-align: center;
             padding: 80px 20px;
             grid-column: 1 / -1;
         }
 
-        .empty-state .empty-icon {
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading p, .empty-state p, .error-state p {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .empty-state .icon, .error-state .icon {
             font-size: 4rem;
             margin-bottom: 20px;
             opacity: 0.3;
         }
 
-        .empty-state h3 {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 10px;
-        }
+        .error-state .icon { opacity: 0.5; }
 
-        .empty-state p {
-            color: rgba(255, 255, 255, 0.25);
-        }
-
-        /* === MODAL === */
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -494,12 +487,6 @@
 
         .modal-overlay.active {
             display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .modal {
@@ -508,7 +495,6 @@
             border-radius: 20px;
             width: 100%;
             max-width: 550px;
-            overflow: hidden;
             animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -528,9 +514,6 @@
         .modal-header h2 {
             font-size: 1.2rem;
             color: var(--text-bright);
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .modal-close {
@@ -542,9 +525,6 @@
             color: var(--text);
             cursor: pointer;
             font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             transition: all 0.3s;
         }
 
@@ -558,7 +538,6 @@
             padding: 25px;
         }
 
-        /* === PASSWORD SCREEN === */
         .password-screen {
             text-align: center;
             padding: 20px 0;
@@ -572,7 +551,6 @@
         .password-screen p {
             color: rgba(255, 255, 255, 0.5);
             margin-bottom: 25px;
-            font-size: 0.9rem;
         }
 
         .password-input-group {
@@ -594,7 +572,6 @@
             text-align: center;
             letter-spacing: 5px;
             outline: none;
-            transition: border-color 0.3s;
         }
 
         .password-input-group input:focus {
@@ -610,11 +587,6 @@
             font-family: 'Heebo', sans-serif;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .password-input-group button:hover {
-            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
         }
 
         .password-error {
@@ -624,7 +596,6 @@
             display: none;
         }
 
-        /* === POST FORM === */
         .post-form {
             display: none;
         }
@@ -638,7 +609,6 @@
             margin-bottom: 6px;
             font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.6);
-            font-weight: 500;
         }
 
         .form-group input,
@@ -653,7 +623,6 @@
             font-family: 'Heebo', sans-serif;
             font-size: 0.95rem;
             outline: none;
-            transition: border-color 0.3s;
         }
 
         .form-group input:focus,
@@ -665,17 +634,6 @@
         .form-group textarea {
             min-height: 120px;
             resize: vertical;
-            line-height: 1.6;
-        }
-
-        .form-group select {
-            cursor: pointer;
-            -webkit-appearance: none;
-        }
-
-        .form-group select option {
-            background: var(--primary);
-            color: var(--text);
         }
 
         .form-row {
@@ -696,11 +654,6 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 5px;
         }
 
         .btn-publish:hover {
@@ -708,7 +661,12 @@
             box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
         }
 
-        /* === TOAST NOTIFICATION === */
+        .btn-publish:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .toast {
             position: fixed;
             bottom: 30px;
@@ -719,7 +677,6 @@
             padding: 14px 28px;
             border-radius: 12px;
             color: var(--text-bright);
-            font-size: 0.9rem;
             z-index: 2000;
             display: flex;
             align-items: center;
@@ -736,7 +693,6 @@
             border-color: #ff4444;
         }
 
-        /* === FOOTER === */
         footer {
             position: relative;
             z-index: 1;
@@ -759,7 +715,6 @@
             font-weight: 700;
         }
 
-        /* === RESPONSIVE === */
         @media (max-width: 768px) {
             header { padding: 0 15px; }
             main { padding: 20px 15px; }
@@ -768,22 +723,12 @@
             .header-content { height: 60px; }
             .logo-text h1 { font-size: 1.1rem; }
             .live-badge span:last-child { display: none; }
-            .section-header { flex-direction: column; gap: 10px; align-items: flex-start; }
+            .btn-refresh { display: none; }
         }
-
-        /* === SCROLLBAR === */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--primary); }
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent2);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
     </style>
 </head>
 <body>
 
-    <!-- Animated Background -->
     <div class="bg-animation">
         <div class="circle"></div>
         <div class="circle"></div>
@@ -791,58 +736,54 @@
     </div>
     <div class="grid-overlay"></div>
 
-    <!-- Header -->
     <header>
         <div class="header-content">
             <div class="logo-section">
-                <img src="logo.png" alt="ט4 לוגו" onerror="this.style.display='none'">
+                <img src="logo.png" alt="ט4" onerror="this.style.display='none'">
                 <div class="logo-text">
                     <h1>מערך החדשות</h1>
                     <span>ט4 ניוז</span>
                 </div>
             </div>
             <div class="header-actions">
+                <button class="btn-refresh" onclick="loadPosts()">🔄 רענן</button>
                 <div class="live-badge">
                     <div class="live-dot"></div>
                     <span>LIVE</span>
                     <span>• עדכון שוטף</span>
                 </div>
-                <button class="btn-admin" onclick="openModal()">
-                    ✏️ פוסט חדש
-                </button>
+                <button class="btn-admin" onclick="openModal()">✏️ פוסט חדש</button>
             </div>
         </div>
     </header>
 
-    <!-- Breaking News Ticker -->
     <div class="ticker-bar">
-        <div class="ticker-content" id="tickerContent">
+        <div class="ticker-content">
             <span>🔴 מערך החדשות של ט4 — עדכונים חמים ישירות אליכם — הישארו מעודכנים!</span>
             <span>🔴 מערך החדשות של ט4 — עדכונים חמים ישירות אליכם — הישארו מעודכנים!</span>
         </div>
     </div>
 
-    <!-- Main Content -->
     <main>
         <div class="section-header">
             <div class="section-title">
                 <div class="icon">📰</div>
                 <h2>חדשות אחרונות</h2>
             </div>
-            <div class="post-count" id="postCount">0 כתבות</div>
+            <div class="post-count" id="postCount">טוען...</div>
         </div>
-
         <div class="news-grid" id="newsGrid">
-            <!-- Posts will be injected here -->
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>טוען חדשות...</p>
+            </div>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer>
-        <p>© 2026 <span class="footer-brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
+        <p>© 2025 <span class="footer-brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
     </footer>
 
-    <!-- Modal -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <div class="modal-header">
@@ -850,7 +791,6 @@
                 <button class="modal-close" onclick="closeModal()">✕</button>
             </div>
             <div class="modal-body">
-                <!-- Password Screen -->
                 <div class="password-screen" id="passwordScreen">
                     <div class="lock-icon">🔐</div>
                     <p>הזן את סיסמת המערכת כדי לפרסם כתבה</p>
@@ -858,10 +798,8 @@
                         <input type="password" id="passwordInput" placeholder="••••••" onkeydown="if(event.key==='Enter') checkPassword()">
                         <button onclick="checkPassword()">כניסה</button>
                     </div>
-                    <p class="password-error" id="passwordError">❌ סיסמה שגויה, נסה שוב</p>
+                    <p class="password-error" id="passwordError">❌ סיסמה שגויה</p>
                 </div>
-
-                <!-- Post Form -->
                 <div class="post-form" id="postForm">
                     <div class="form-group">
                         <label>כותרת הכתבה</label>
@@ -869,7 +807,7 @@
                     </div>
                     <div class="form-group">
                         <label>תוכן הכתבה</label>
-                        <textarea id="postContent" placeholder="כתוב את תוכן הכתבה כאן..."></textarea>
+                        <textarea id="postContent" placeholder="כתוב את תוכן הכתבה..."></textarea>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
@@ -887,26 +825,21 @@
                             <input type="text" id="postAuthor" placeholder="השם שלך...">
                         </div>
                     </div>
-                    <button class="btn-publish" onclick="publishPost()">
-                        🚀 פרסם כתבה
-                    </button>
+                    <button class="btn-publish" id="btnPublish" onclick="publishPost()">🚀 פרסם כתבה</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Toast -->
     <div class="toast" id="toast">
         <span id="toastIcon">✅</span>
-        <span id="toastMsg">הכתבה פורסמה בהצלחה!</span>
+        <span id="toastMsg"></span>
     </div>
 
     <script>
-        // === DATA ===
-        let posts = JSON.parse(localStorage.getItem('t4_news_posts') || '[]');
+        const API_URL = '/api/posts';
         let isAuthenticated = false;
 
-        // Category labels
         const categoryLabels = {
             general: '📰 כללי',
             urgent: '🔴 דחוף',
@@ -915,93 +848,68 @@
             entertainment: '🎬 בידור'
         };
 
-        // === INIT ===
-        function init() {
-            // Add sample posts if empty
-            if (posts.length === 0) {
-                posts = [
-                    {
-                        id: Date.now() - 3000,
-                        title: 'מערך החדשות של ט4 עולה לאוויר!',
-                        content: 'אנחנו שמחים להשיק את מערך החדשות הרשמי של ט4. מעכשיו תוכלו לקבל עדכונים שוטפים ישירות מהצוות שלנו. הישארו מעודכנים!',
-                        category: 'urgent',
-                        author: 'צוות ט4',
-                        date: new Date().toLocaleDateString('he-IL'),
-                        time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
-                    },
-                    {
-                        id: Date.now() - 2000,
-                        title: 'טכנולוגיה חדשה: עיצוב האתר הושלם',
-                        content: 'האתר החדש מגיע עם עיצוב מודרני וטכנולוגי, כולל מצב כהה, אנימציות חלקות ותמיכה מלאה במובייל. כל חבר צוות יכול לפרסם חדשות.',
-                        category: 'tech',
-                        author: 'צוות ט4',
-                        date: new Date().toLocaleDateString('he-IL'),
-                        time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
-                    },
-                    {
-                        id: Date.now() - 1000,
-                        title: 'ברוכים הבאים למערך החדשות',
-                        content: 'כל חברי הצוות מוזמנים להוסיף פוסטים וחדשות. פשוט לחצו על "פוסט חדש", הזינו את הסיסמה ותוכלו לפרסם מיד. בהצלחה!',
-                        category: 'general',
-                        author: 'המערכת',
-                        date: new Date().toLocaleDateString('he-IL'),
-                        time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
-                    }
-                ];
-                savePosts();
+        // Load posts from server
+        async function loadPosts() {
+            const grid = document.getElementById('newsGrid');
+            grid.innerHTML = '<div class="loading"><div class="spinner"></div><p>טוען חדשות...</p></div>';
+
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('Server error');
+                const posts = await response.json();
+                renderPosts(posts);
+            } catch (error) {
+                console.error('Load error:', error);
+                grid.innerHTML = `
+                    <div class="error-state">
+                        <div class="icon">⚠️</div>
+                        <h3>שגיאה בטעינה</h3>
+                        <p>לא ניתן להתחבר לשרת</p>
+                    </div>
+                `;
             }
-            renderPosts();
         }
 
-        // === RENDER POSTS ===
-        function renderPosts() {
+        function renderPosts(posts) {
             const grid = document.getElementById('newsGrid');
             const count = document.getElementById('postCount');
-
             count.textContent = `${posts.length} כתבות`;
 
             if (posts.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-icon">📭</div>
+                        <div class="icon">📭</div>
                         <h3>אין כתבות עדיין</h3>
-                        <p>לחצו על "פוסט חדש" כדי לפרסם את הכתבה הראשונה</p>
+                        <p>לחצו על "פוסט חדש" להוספת כתבה</p>
                     </div>
                 `;
                 return;
             }
 
-            // Show newest first
-            const sorted = [...posts].reverse();
-
-            grid.innerHTML = sorted.map(post => {
-                const initials = post.author ? post.author.charAt(0) : '?';
-                return `
-                    <article class="news-card">
-                        <div class="card-header">
-                            <span class="card-category ${post.category}">${categoryLabels[post.category] || '📰 כללי'}</span>
-                            <span class="card-date">🕐 ${post.time} • ${post.date}</span>
+            grid.innerHTML = posts.map(post => `
+                <article class="news-card">
+                    <div class="card-header">
+                        <span class="card-category ${post.category}">${categoryLabels[post.category] || '📰 כללי'}</span>
+                        <span class="card-date">🕐 ${post.time} • ${post.date}</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>${escapeHtml(post.title)}</h3>
+                        <p>${escapeHtml(post.content)}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-author">
+                            <div class="author-avatar">${post.author ? post.author.charAt(0) : '?'}</div>
+                            <span>${escapeHtml(post.author)}</span>
                         </div>
-                        <div class="card-body">
-                            <h3>${escapeHtml(post.title)}</h3>
-                            <p>${escapeHtml(post.content)}</p>
+                        <div class="card-actions">
+                            <button onclick="sharePost('${escapeHtml(post.title)}')" title="שיתוף">📤</button>
+                            <button class="delete-btn" onclick="deletePost('${post.id}')" title="מחיקה">🗑️</button>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-author">
-                                <div class="author-avatar">${initials}</div>
-                                <span>${escapeHtml(post.author)}</span>
-                            </div>
-                            <div class="card-actions">
-                                <button onclick="sharePost('${escapeHtml(post.title)}')" title="שיתוף">📤</button>
-                                <button class="delete-btn" onclick="deletePost(${post.id})" title="מחיקה">🗑️</button>
-                            </div>
-                        </div>
-                    </article>
-                `;
-            }).join('');
+                    </div>
+                </article>
+            `).join('');
         }
 
-        // === MODAL ===
         function openModal() {
             document.getElementById('modalOverlay').classList.add('active');
             if (isAuthenticated) {
@@ -1013,143 +921,119 @@
                 document.getElementById('passwordInput').value = '';
                 document.getElementById('passwordError').style.display = 'none';
             }
-            setTimeout(() => {
-                const input = isAuthenticated ?
-                    document.getElementById('postTitle') :
-                    document.getElementById('passwordInput');
-                input.focus();
-            }, 300);
         }
 
         function closeModal() {
             document.getElementById('modalOverlay').classList.remove('active');
         }
 
-        // Close modal on overlay click
-        document.getElementById('modalOverlay').addEventListener('click', function (e) {
-            if (e.target === this) closeModal();
+        document.getElementById('modalOverlay').addEventListener('click', e => {
+            if (e.target.id === 'modalOverlay') closeModal();
         });
 
-        // === PASSWORD CHECK ===
         function checkPassword() {
             const input = document.getElementById('passwordInput');
-            const error = document.getElementById('passwordError');
-
             if (input.value === '123456') {
                 isAuthenticated = true;
                 document.getElementById('passwordScreen').style.display = 'none';
                 document.getElementById('postForm').style.display = 'block';
-                document.getElementById('postTitle').focus();
-                showToast('✅', 'ברוך הבא! אתה מחובר למערכת');
+                showToast('✅', 'מחובר למערכת');
             } else {
-                error.style.display = 'block';
+                document.getElementById('passwordError').style.display = 'block';
                 input.value = '';
-                input.focus();
-                input.style.borderColor = '#ff4444';
-                setTimeout(() => {
-                    input.style.borderColor = '';
-                }, 1500);
             }
         }
 
-        // === PUBLISH POST ===
-        function publishPost() {
+        async function publishPost() {
             const title = document.getElementById('postTitle').value.trim();
             const content = document.getElementById('postContent').value.trim();
             const category = document.getElementById('postCategory').value;
             const author = document.getElementById('postAuthor').value.trim() || 'אנונימי';
+            const btn = document.getElementById('btnPublish');
 
-            if (!title) {
-                showToast('⚠️', 'נא להזין כותרת לכתבה', true);
-                document.getElementById('postTitle').focus();
+            if (!title || !content) {
+                showToast('⚠️', 'נא למלא כותרת ותוכן', true);
                 return;
             }
 
-            if (!content) {
-                showToast('⚠️', 'נא להזין תוכן לכתבה', true);
-                document.getElementById('postContent').focus();
-                return;
+            btn.disabled = true;
+            btn.textContent = '⏳ מפרסם...';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, content, category, author })
+                });
+
+                if (!response.ok) throw new Error('Failed to publish');
+
+                closeModal();
+                document.getElementById('postTitle').value = '';
+                document.getElementById('postContent').value = '';
+                document.getElementById('postAuthor').value = '';
+                showToast('🎉', 'הכתבה פורסמה!');
+                loadPosts();
+            } catch (error) {
+                showToast('❌', 'שגיאה בפרסום', true);
             }
 
-            const now = new Date();
-            const post = {
-                id: Date.now(),
-                title,
-                content,
-                category,
-                author,
-                date: now.toLocaleDateString('he-IL'),
-                time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
-            };
-
-            posts.push(post);
-            savePosts();
-            renderPosts();
-            closeModal();
-
-            // Clear form
-            document.getElementById('postTitle').value = '';
-            document.getElementById('postContent').value = '';
-            document.getElementById('postAuthor').value = '';
-            document.getElementById('postCategory').value = 'general';
-
-            showToast('🎉', 'הכתבה פורסמה בהצלחה!');
+            btn.disabled = false;
+            btn.textContent = '🚀 פרסם כתבה';
         }
 
-        // === DELETE POST ===
-        function deletePost(id) {
+        async function deletePost(id) {
             if (!isAuthenticated) {
-                showToast('🔒', 'יש להתחבר למערכת כדי למחוק', true);
+                showToast('🔒', 'יש להתחבר למחיקה', true);
                 return;
             }
 
-            if (confirm('האם למחוק את הכתבה הזו?')) {
-                posts = posts.filter(p => p.id !== id);
-                savePosts();
-                renderPosts();
+            if (!confirm('למחוק את הכתבה?')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                if (!response.ok) throw new Error('Failed to delete');
                 showToast('🗑️', 'הכתבה נמחקה');
+                loadPosts();
+            } catch (error) {
+                showToast('❌', 'שגיאה במחיקה', true);
             }
         }
 
-        // === SHARE POST ===
         function sharePost(title) {
             if (navigator.share) {
-                navigator.share({ title: `ט4 חדשות: ${title}`, url: window.location.href });
+                navigator.share({ title: `ט4: ${title}`, url: location.href });
             } else {
-                navigator.clipboard.writeText(window.location.href);
-                showToast('📋', 'הקישור הועתק!');
+                navigator.clipboard.writeText(location.href);
+                showToast('📋', 'הקישור הועתק');
             }
         }
 
-        // === SAVE / LOAD ===
-        function savePosts() {
-            localStorage.setItem('t4_news_posts', JSON.stringify(posts));
-        }
-
-        // === TOAST ===
-        function showToast(icon, message, isError = false) {
+        function showToast(icon, msg, isError = false) {
             const toast = document.getElementById('toast');
             document.getElementById('toastIcon').textContent = icon;
-            document.getElementById('toastMsg').textContent = message;
+            document.getElementById('toastMsg').textContent = msg;
             toast.className = 'toast' + (isError ? ' error' : '');
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // === ESCAPE HTML ===
         function escapeHtml(str) {
+            if (!str) return '';
             const div = document.createElement('div');
             div.textContent = str;
             return div.innerHTML;
         }
 
-        // === KEYBOARD SHORTCUTS ===
-        document.addEventListener('keydown', function (e) {
+        document.addEventListener('keydown', e => {
             if (e.key === 'Escape') closeModal();
         });
 
-        // === START ===
-        init();
+        // Auto refresh every 30 seconds
+        setInterval(loadPosts, 30000);
+
+        // Initial load
+        loadPosts();
     </script>
 
 </body>
