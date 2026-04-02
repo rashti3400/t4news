@@ -984,60 +984,66 @@ const catLabels = {
 function playAlertSound() {
     try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
-        const playTone = (freq, start, duration, volume = 0.8) => {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            const distortion = audioCtx.createWaveShaper();
-            
-            // Add distortion for urgency
-            const curve = new Float32Array(256);
-            for (let i = 0; i < 256; i++) {
-                const x = (i * 2) / 256 - 1;
-                curve[i] = (Math.PI + 200) * x / (Math.PI + 200 * Math.abs(x));
-            }
-            distortion.curve = curve;
-            
-            osc.connect(distortion);
-            distortion.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime + start);
-            
-            // Frequency sweep up - creates alarm feel
-            osc.frequency.linearRampToValueAtTime(freq * 1.3, audioCtx.currentTime + start + duration * 0.5);
-            osc.frequency.linearRampToValueAtTime(freq, audioCtx.currentTime + start + duration);
-            
-            gain.gain.setValueAtTime(0, audioCtx.currentTime + start);
-            gain.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + start + 0.05);
-            gain.gain.setValueAtTime(volume, audioCtx.currentTime + start + duration - 0.05);
-            gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + start + duration);
-            
-            osc.start(audioCtx.currentTime + start);
-            osc.stop(audioCtx.currentTime + start + duration);
+
+        const wail = (startTime) => {
+            const duration = 2.5;
+
+            const osc1 = audioCtx.createOscillator();
+            const osc2 = audioCtx.createOscillator();
+            const osc3 = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            const gainNode2 = audioCtx.createGain();
+            const gainNode3 = audioCtx.createGain();
+            const masterGain = audioCtx.createGain();
+
+            osc1.connect(gainNode);
+            osc2.connect(gainNode2);
+            osc3.connect(gainNode3);
+            gainNode.connect(masterGain);
+            gainNode2.connect(masterGain);
+            gainNode3.connect(masterGain);
+            masterGain.connect(audioCtx.destination);
+
+            // Main siren wail - rises and falls
+            osc1.type = 'sawtooth';
+            osc1.frequency.setValueAtTime(220, audioCtx.currentTime + startTime);
+            osc1.frequency.linearRampToValueAtTime(880, audioCtx.currentTime + startTime + duration * 0.5);
+            osc1.frequency.linearRampToValueAtTime(220, audioCtx.currentTime + startTime + duration);
+
+            // Harmony layer
+            osc2.type = 'sawtooth';
+            osc2.frequency.setValueAtTime(330, audioCtx.currentTime + startTime);
+            osc2.frequency.linearRampToValueAtTime(1320, audioCtx.currentTime + startTime + duration * 0.5);
+            osc2.frequency.linearRampToValueAtTime(330, audioCtx.currentTime + startTime + duration);
+
+            // Bass layer for body
+            osc3.type = 'square';
+            osc3.frequency.setValueAtTime(110, audioCtx.currentTime + startTime);
+            osc3.frequency.linearRampToValueAtTime(440, audioCtx.currentTime + startTime + duration * 0.5);
+            osc3.frequency.linearRampToValueAtTime(110, audioCtx.currentTime + startTime + duration);
+
+            gainNode.gain.setValueAtTime(1.0, audioCtx.currentTime + startTime);
+            gainNode2.gain.setValueAtTime(0.6, audioCtx.currentTime + startTime);
+            gainNode3.gain.setValueAtTime(0.8, audioCtx.currentTime + startTime);
+
+            // Master volume envelope - punch in, hold, fade
+            masterGain.gain.setValueAtTime(0, audioCtx.currentTime + startTime);
+            masterGain.gain.linearRampToValueAtTime(1.5, audioCtx.currentTime + startTime + 0.1);
+            masterGain.gain.setValueAtTime(1.5, audioCtx.currentTime + startTime + duration - 0.3);
+            masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + startTime + duration);
+
+            osc1.start(audioCtx.currentTime + startTime);
+            osc2.start(audioCtx.currentTime + startTime);
+            osc3.start(audioCtx.currentTime + startTime);
+            osc1.stop(audioCtx.currentTime + startTime + duration);
+            osc2.stop(audioCtx.currentTime + startTime + duration);
+            osc3.stop(audioCtx.currentTime + startTime + duration);
         };
 
-        // Pattern - like pikud haoref alarm: rising wail repeated
-        // Wail 1
-        playTone(440, 0.0,  0.9);
-        playTone(880, 0.0,  0.9, 0.5);
-
-        // Wail 2
-        playTone(440, 1.0,  0.9);
-        playTone(880, 1.0,  0.9, 0.5);
-
-        // Wail 3
-        playTone(440, 2.0,  0.9);
-        playTone(880, 2.0,  0.9, 0.5);
-
-        // Wail 4 - higher for urgency
-        playTone(550, 3.0,  0.9);
-        playTone(1100, 3.0, 0.9, 0.5);
-
-        // Wail 5
-        playTone(550, 4.0,  0.9);
-        playTone(1100, 4.0, 0.9, 0.5);
+        // 3 wails back to back - like real siren
+        wail(0);
+        wail(2.6);
+        wail(5.2);
 
     } catch(e) {
         console.log('Sound error:', e);
