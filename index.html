@@ -4,16 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>מערך החדשות | ט4</title>
-    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="icon" href="logo.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
             --primary: #0f0f1a;
             --secondary: #1a1a2e;
@@ -26,90 +22,48 @@
             --border: rgba(0, 212, 255, 0.15);
             --gradient1: linear-gradient(135deg, #00d4ff, #7c3aed);
         }
-
+        
         body {
             font-family: 'Heebo', sans-serif;
             background: var(--primary);
             color: var(--text);
             min-height: 100vh;
-            overflow-x: hidden;
         }
-
+        
         .bg-animation {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 0;
-            overflow: hidden;
             pointer-events: none;
         }
-
+        
         .bg-animation .circle {
             position: absolute;
             border-radius: 50%;
             opacity: 0.05;
-            animation: floatCircle 20s infinite ease-in-out;
+            animation: float 20s infinite ease-in-out;
         }
-
-        .bg-animation .circle:nth-child(1) {
-            width: 600px;
-            height: 600px;
-            background: var(--accent);
-            top: -200px;
-            right: -100px;
-        }
-
-        .bg-animation .circle:nth-child(2) {
-            width: 400px;
-            height: 400px;
-            background: var(--accent2);
-            bottom: -100px;
-            left: -100px;
-            animation-delay: -7s;
-        }
-
-        .bg-animation .circle:nth-child(3) {
-            width: 300px;
-            height: 300px;
-            background: var(--accent3);
-            top: 50%;
-            left: 50%;
-            animation-delay: -14s;
-        }
-
-        @keyframes floatCircle {
+        
+        .circle:nth-child(1) { width: 600px; height: 600px; background: var(--accent); top: -200px; right: -100px; }
+        .circle:nth-child(2) { width: 400px; height: 400px; background: var(--accent2); bottom: -100px; left: -100px; animation-delay: -7s; }
+        .circle:nth-child(3) { width: 300px; height: 300px; background: var(--accent3); top: 50%; left: 50%; animation-delay: -14s; }
+        
+        @keyframes float {
             0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(50px, -50px) scale(1.1); }
-            50% { transform: translate(-30px, 30px) scale(0.9); }
-            75% { transform: translate(40px, 20px) scale(1.05); }
+            50% { transform: translate(30px, -30px) scale(1.05); }
         }
-
-        .grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 0;
-            pointer-events: none;
-        }
-
+        
         header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(15, 15, 26, 0.85);
+            background: rgba(15, 15, 26, 0.9);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
             padding: 0 40px;
         }
-
+        
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
@@ -118,43 +72,38 @@
             justify-content: space-between;
             height: 70px;
         }
-
+        
         .logo-section {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-
+        
         .logo-section img {
-            width: 45px;
-            height: 45px;
+            width: 45px; height: 45px;
             border-radius: 12px;
             border: 2px solid var(--accent);
-            padding: 2px;
         }
-
+        
         .logo-text h1 {
             font-size: 1.3rem;
-            font-weight: 900;
             background: var(--gradient1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
-
+        
         .logo-text span {
             font-size: 0.7rem;
             color: var(--accent);
             letter-spacing: 3px;
-            text-transform: uppercase;
         }
-
+        
         .header-actions {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-
+        
         .live-badge {
             display: flex;
             align-items: center;
@@ -166,54 +115,46 @@
             font-size: 0.8rem;
             color: #ff4444;
         }
-
+        
         .live-dot {
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             background: #ff4444;
             border-radius: 50%;
             animation: pulse 1.5s infinite;
         }
-
+        
         @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
-
-        .btn-admin {
-            background: var(--gradient1);
+        
+        .btn {
             border: none;
-            color: white;
             padding: 8px 20px;
             border-radius: 8px;
             cursor: pointer;
             font-family: 'Heebo', sans-serif;
             font-size: 0.85rem;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
-
-        .btn-admin:hover {
+        
+        .btn-primary {
+            background: var(--gradient1);
+            color: white;
+        }
+        
+        .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
         }
-
+        
         .btn-refresh {
             background: rgba(0, 255, 136, 0.1);
             border: 1px solid rgba(0, 255, 136, 0.3);
             color: var(--accent3);
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Heebo', sans-serif;
-            font-size: 0.85rem;
-            transition: all 0.3s;
         }
-
-        .btn-refresh:hover {
-            background: rgba(0, 255, 136, 0.2);
-        }
-
+        
         .ticker-bar {
             background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2));
             padding: 8px 0;
@@ -221,25 +162,25 @@
             position: relative;
             z-index: 1;
         }
-
+        
         .ticker-content {
             display: flex;
             animation: ticker 30s linear infinite;
             white-space: nowrap;
         }
-
+        
         .ticker-content span {
             color: var(--primary);
             font-weight: 700;
             font-size: 0.85rem;
             padding: 0 50px;
         }
-
+        
         @keyframes ticker {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
-
+        
         main {
             position: relative;
             z-index: 1;
@@ -247,7 +188,7 @@
             margin: 0 auto;
             padding: 30px 40px;
         }
-
+        
         .section-header {
             display: flex;
             align-items: center;
@@ -256,28 +197,27 @@
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border);
         }
-
+        
         .section-title {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-
+        
         .section-title .icon {
-            width: 35px;
-            height: 35px;
+            width: 35px; height: 35px;
             background: var(--gradient1);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
+        
         .section-title h2 {
             font-size: 1.5rem;
             color: var(--text-bright);
         }
-
+        
         .post-count {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -286,118 +226,80 @@
             font-size: 0.8rem;
             color: var(--accent);
         }
-
+        
         .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 25px;
         }
-
+        
         .news-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 16px;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
+            transition: all 0.3s;
         }
-
+        
         .news-card:hover {
             transform: translateY(-5px);
             border-color: var(--accent);
             box-shadow: 0 15px 40px rgba(0, 212, 255, 0.15);
         }
-
-        .news-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient1);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .news-card:hover::before {
-            opacity: 1;
-        }
-
+        
         .card-header {
             padding: 20px 22px 12px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
-
+        
         .card-category {
             font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             padding: 4px 12px;
             border-radius: 6px;
             background: rgba(0, 212, 255, 0.1);
             color: var(--accent);
-            border: 1px solid rgba(0, 212, 255, 0.2);
         }
-
-        .card-category.urgent {
-            background: rgba(255, 68, 68, 0.1);
-            color: #ff4444;
-            border-color: rgba(255, 68, 68, 0.2);
-        }
-
-        .card-category.sports {
-            background: rgba(0, 255, 136, 0.1);
-            color: var(--accent3);
-            border-color: rgba(0, 255, 136, 0.2);
-        }
-
-        .card-category.tech {
-            background: rgba(124, 58, 237, 0.1);
-            color: var(--accent2);
-            border-color: rgba(124, 58, 237, 0.2);
-        }
-
-        .card-category.entertainment {
-            background: rgba(255, 165, 0, 0.1);
-            color: #ffa500;
-            border-color: rgba(255, 165, 0, 0.2);
-        }
-
+        
+        .card-category.urgent { background: rgba(255, 68, 68, 0.1); color: #ff4444; }
+        .card-category.sports { background: rgba(0, 255, 136, 0.1); color: var(--accent3); }
+        .card-category.tech { background: rgba(124, 58, 237, 0.1); color: var(--accent2); }
+        .card-category.entertainment { background: rgba(255, 165, 0, 0.1); color: #ffa500; }
+        
         .card-date {
             font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.4);
         }
-
+        
         .card-body {
             padding: 5px 22px 22px;
         }
-
+        
         .card-body h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
+            font-size: 1.1rem;
             color: var(--text-bright);
             margin-bottom: 10px;
             line-height: 1.5;
         }
-
+        
         .card-body p {
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.6);
             line-height: 1.7;
         }
-
+        
         .card-footer {
             padding: 12px 22px;
             border-top: 1px solid var(--border);
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
-
+        
         .card-author {
             display: flex;
             align-items: center;
@@ -405,10 +307,9 @@
             font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.5);
         }
-
+        
         .author-avatar {
-            width: 28px;
-            height: 28px;
+            width: 28px; height: 28px;
             border-radius: 50%;
             background: var(--gradient1);
             display: flex;
@@ -418,65 +319,58 @@
             color: white;
             font-weight: 700;
         }
-
+        
         .card-actions button {
             background: none;
             border: none;
             color: rgba(255, 255, 255, 0.4);
             cursor: pointer;
             font-size: 1rem;
-            transition: color 0.3s;
             padding: 4px 8px;
+            transition: color 0.3s;
         }
-
-        .card-actions button:hover {
-            color: var(--accent);
-        }
-
-        .delete-btn:hover {
-            color: #ff4444 !important;
-        }
-
-        .loading, .empty-state, .error-state {
+        
+        .card-actions button:hover { color: var(--accent); }
+        .card-actions .delete-btn:hover { color: #ff4444; }
+        
+        .status-message {
             text-align: center;
             padding: 80px 20px;
             grid-column: 1 / -1;
         }
-
+        
+        .status-message .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+        
+        .status-message h3 {
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 10px;
+        }
+        
+        .status-message p {
+            color: rgba(255, 255, 255, 0.25);
+        }
+        
         .spinner {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border: 3px solid var(--border);
             border-top-color: var(--accent);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin: 0 auto 15px;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading p, .empty-state p, .error-state p {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .empty-state .icon, .error-state .icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
-
-        .error-state .icon { opacity: 0.5; }
-
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
         /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             z-index: 1000;
@@ -484,41 +378,37 @@
             justify-content: center;
             padding: 20px;
         }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
+        
+        .modal-overlay.active { display: flex; }
+        
         .modal {
             background: var(--secondary);
             border: 1px solid var(--border);
             border-radius: 20px;
             width: 100%;
-            max-width: 550px;
-            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 500px;
+            animation: slideUp 0.3s ease;
         }
-
+        
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
+        
         .modal-header {
-            padding: 22px 25px;
+            padding: 20px;
             border-bottom: 1px solid var(--border);
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
-
+        
         .modal-header h2 {
-            font-size: 1.2rem;
             color: var(--text-bright);
         }
-
+        
         .modal-close {
-            width: 35px;
-            height: 35px;
+            width: 35px; height: 35px;
             border-radius: 10px;
             border: 1px solid var(--border);
             background: none;
@@ -527,58 +417,53 @@
             font-size: 1.1rem;
             transition: all 0.3s;
         }
-
+        
         .modal-close:hover {
             background: rgba(255, 68, 68, 0.1);
             border-color: #ff4444;
             color: #ff4444;
         }
-
-        .modal-body {
-            padding: 25px;
-        }
-
+        
+        .modal-body { padding: 25px; }
+        
         .password-screen {
             text-align: center;
             padding: 20px 0;
         }
-
+        
         .password-screen .lock-icon {
             font-size: 3rem;
             margin-bottom: 15px;
         }
-
+        
         .password-screen p {
             color: rgba(255, 255, 255, 0.5);
             margin-bottom: 25px;
         }
-
-        .password-input-group {
+        
+        .password-group {
             display: flex;
             gap: 10px;
-            max-width: 350px;
+            max-width: 300px;
             margin: 0 auto;
         }
-
-        .password-input-group input {
+        
+        .password-group input {
             flex: 1;
-            padding: 12px 18px;
+            padding: 12px;
             border-radius: 10px;
             border: 1px solid var(--border);
             background: var(--primary);
             color: var(--text-bright);
             font-family: 'Heebo', sans-serif;
-            font-size: 1rem;
             text-align: center;
             letter-spacing: 5px;
             outline: none;
         }
-
-        .password-input-group input:focus {
-            border-color: var(--accent);
-        }
-
-        .password-input-group button {
+        
+        .password-group input:focus { border-color: var(--accent); }
+        
+        .password-group button {
             padding: 12px 24px;
             border-radius: 10px;
             border: none;
@@ -588,29 +473,27 @@
             font-weight: 700;
             cursor: pointer;
         }
-
+        
         .password-error {
             color: #ff4444;
             font-size: 0.85rem;
             margin-top: 12px;
             display: none;
         }
-
-        .post-form {
-            display: none;
-        }
-
+        
+        .post-form { display: none; }
+        
         .form-group {
             margin-bottom: 18px;
         }
-
+        
         .form-group label {
             display: block;
             margin-bottom: 6px;
             font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.6);
         }
-
+        
         .form-group input,
         .form-group textarea,
         .form-group select {
@@ -621,27 +504,26 @@
             background: var(--primary);
             color: var(--text-bright);
             font-family: 'Heebo', sans-serif;
-            font-size: 0.95rem;
             outline: none;
         }
-
+        
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             border-color: var(--accent);
         }
-
+        
         .form-group textarea {
-            min-height: 120px;
+            min-height: 100px;
             resize: vertical;
         }
-
+        
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
-
+        
         .btn-publish {
             width: 100%;
             padding: 14px;
@@ -655,18 +537,16 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-
+        
         .btn-publish:hover {
-            transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
         }
-
+        
         .btn-publish:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
         }
-
+        
         .toast {
             position: fixed;
             bottom: 30px;
@@ -681,18 +561,12 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.4s;
         }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .toast.error {
-            border-color: #ff4444;
-        }
-
+        
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.error { border-color: #ff4444; }
+        
         footer {
             position: relative;
             z-index: 1;
@@ -701,340 +575,339 @@
             border-top: 1px solid var(--border);
             margin-top: 60px;
         }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 0.8rem;
-        }
-
-        footer .footer-brand {
+        
+        footer p { color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; }
+        
+        footer .brand {
             background: var(--gradient1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             font-weight: 700;
         }
-
+        
         @media (max-width: 768px) {
             header { padding: 0 15px; }
             main { padding: 20px 15px; }
             .news-grid { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
             .header-content { height: 60px; }
-            .logo-text h1 { font-size: 1.1rem; }
-            .live-badge span:last-child { display: none; }
             .btn-refresh { display: none; }
+            .live-badge span:last-child { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-animation">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-    </div>
-    <div class="grid-overlay"></div>
+<div class="bg-animation">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+</div>
 
-    <header>
-        <div class="header-content">
-            <div class="logo-section">
-                <img src="logo.png" alt="ט4" onerror="this.style.display='none'">
-                <div class="logo-text">
-                    <h1>מערך החדשות</h1>
-                    <span>ט4 ניוז</span>
-                </div>
-            </div>
-            <div class="header-actions">
-                <button class="btn-refresh" onclick="loadPosts()">🔄 רענן</button>
-                <div class="live-badge">
-                    <div class="live-dot"></div>
-                    <span>LIVE</span>
-                    <span>• עדכון שוטף</span>
-                </div>
-                <button class="btn-admin" onclick="openModal()">✏️ פוסט חדש</button>
+<header>
+    <div class="header-content">
+        <div class="logo-section">
+            <img src="logo.png" alt="ט4" onerror="this.style.display='none'">
+            <div class="logo-text">
+                <h1>מערך החדשות</h1>
+                <span>ט4 ניוז</span>
             </div>
         </div>
-    </header>
-
-    <div class="ticker-bar">
-        <div class="ticker-content">
-            <span>🔴 מערך החדשות של ט4 — עדכונים חמים ישירות אליכם — הישארו מעודכנים!</span>
-            <span>🔴 מערך החדשות של ט4 — עדכונים חמים ישירות אליכם — הישארו מעודכנים!</span>
+        <div class="header-actions">
+            <button class="btn btn-refresh" onclick="loadPosts()">🔄 רענן</button>
+            <div class="live-badge">
+                <div class="live-dot"></div>
+                <span>LIVE</span>
+                <span>• סנכרון לכולם</span>
+            </div>
+            <button class="btn btn-primary" onclick="openModal()">✏️ פוסט חדש</button>
         </div>
     </div>
+</header>
 
-    <main>
-        <div class="section-header">
-            <div class="section-title">
-                <div class="icon">📰</div>
-                <h2>חדשות אחרונות</h2>
-            </div>
-            <div class="post-count" id="postCount">טוען...</div>
+<div class="ticker-bar">
+    <div class="ticker-content">
+        <span>🔴 מערך החדשות של ט4 — כל פוסט מסונכרן לכל המכשירים! — הישארו מעודכנים!</span>
+        <span>🔴 מערך החדשות של ט4 — כל פוסט מסונכרן לכל המכשירים! — הישארו מעודכנים!</span>
+    </div>
+</div>
+
+<main>
+    <div class="section-header">
+        <div class="section-title">
+            <div class="icon">📰</div>
+            <h2>חדשות אחרונות</h2>
         </div>
-        <div class="news-grid" id="newsGrid">
-            <div class="loading">
-                <div class="spinner"></div>
-                <p>טוען חדשות...</p>
-            </div>
+        <div class="post-count" id="postCount">טוען...</div>
+    </div>
+    <div class="news-grid" id="newsGrid">
+        <div class="status-message">
+            <div class="spinner"></div>
+            <p>טוען חדשות...</p>
         </div>
-    </main>
+    </div>
+</main>
 
-    <footer>
-        <p>© 2025 <span class="footer-brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
-    </footer>
+<footer>
+    <p>© 2025 <span class="brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
+</footer>
 
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h2>📝 פרסום כתבה חדשה</h2>
-                <button class="modal-close" onclick="closeModal()">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="password-screen" id="passwordScreen">
-                    <div class="lock-icon">🔐</div>
-                    <p>הזן את סיסמת המערכת כדי לפרסם כתבה</p>
-                    <div class="password-input-group">
-                        <input type="password" id="passwordInput" placeholder="••••••" onkeydown="if(event.key==='Enter') checkPassword()">
-                        <button onclick="checkPassword()">כניסה</button>
-                    </div>
-                    <p class="password-error" id="passwordError">❌ סיסמה שגויה</p>
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>📝 פרסום כתבה</h2>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="password-screen" id="passScreen">
+                <div class="lock-icon">🔐</div>
+                <p>הזן סיסמה לפרסום</p>
+                <div class="password-group">
+                    <input type="password" id="passInput" placeholder="••••••" onkeydown="if(event.key==='Enter')checkPass()">
+                    <button onclick="checkPass()">כניסה</button>
                 </div>
-                <div class="post-form" id="postForm">
+                <p class="password-error" id="passError">❌ סיסמה שגויה</p>
+            </div>
+            <div class="post-form" id="postForm">
+                <div class="form-group">
+                    <label>כותרת</label>
+                    <input type="text" id="inTitle" placeholder="כותרת הכתבה...">
+                </div>
+                <div class="form-group">
+                    <label>תוכן</label>
+                    <textarea id="inContent" placeholder="תוכן הכתבה..."></textarea>
+                </div>
+                <div class="form-row">
                     <div class="form-group">
-                        <label>כותרת הכתבה</label>
-                        <input type="text" id="postTitle" placeholder="הכנס כותרת...">
+                        <label>קטגוריה</label>
+                        <select id="inCategory">
+                            <option value="general">📰 כללי</option>
+                            <option value="urgent">🔴 דחוף</option>
+                            <option value="sports">⚽ ספורט</option>
+                            <option value="tech">💻 טכנולוגיה</option>
+                            <option value="entertainment">🎬 בידור</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>תוכן הכתבה</label>
-                        <textarea id="postContent" placeholder="כתוב את תוכן הכתבה..."></textarea>
+                        <label>שם הכותב</label>
+                        <input type="text" id="inAuthor" placeholder="השם שלך...">
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>קטגוריה</label>
-                            <select id="postCategory">
-                                <option value="general">📰 כללי</option>
-                                <option value="urgent">🔴 דחוף</option>
-                                <option value="sports">⚽ ספורט</option>
-                                <option value="tech">💻 טכנולוגיה</option>
-                                <option value="entertainment">🎬 בידור</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>שם הכותב</label>
-                            <input type="text" id="postAuthor" placeholder="השם שלך...">
-                        </div>
-                    </div>
-                    <button class="btn-publish" id="btnPublish" onclick="publishPost()">🚀 פרסם כתבה</button>
                 </div>
+                <button class="btn-publish" id="btnPublish" onclick="publish()">🚀 פרסם</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="toast" id="toast">
-        <span id="toastIcon">✅</span>
-        <span id="toastMsg"></span>
-    </div>
+<div class="toast" id="toast">
+    <span id="toastIcon">✅</span>
+    <span id="toastMsg"></span>
+</div>
 
-    <script>
-        const API_URL = '/api/posts';
-        let isAuthenticated = false;
+<script>
+// ========================================
+// 🔑 PUT YOUR JSONBIN VALUES HERE:
+// ========================================
+const BIN_ID = 'YOUR_BIN_ID_HERE';           // ← הדבק את ה-Bin ID שלך
+const API_KEY = 'YOUR_API_KEY_HERE';         // ← הדבק את ה-API Key שלך
+// ========================================
 
-        const categoryLabels = {
-            general: '📰 כללי',
-            urgent: '🔴 דחוף',
-            sports: '⚽ ספורט',
-            tech: '💻 טכנולוגיה',
-            entertainment: '🎬 בידור'
-        };
+const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+let posts = [];
+let isAuth = false;
 
-        // Load posts from server
-        async function loadPosts() {
-            const grid = document.getElementById('newsGrid');
-            grid.innerHTML = '<div class="loading"><div class="spinner"></div><p>טוען חדשות...</p></div>';
+const catLabels = {
+    general: '📰 כללי',
+    urgent: '🔴 דחוף', 
+    sports: '⚽ ספורט',
+    tech: '💻 טכנולוגיה',
+    entertainment: '🎬 בידור'
+};
 
-            try {
-                const response = await fetch(API_URL);
-                if (!response.ok) throw new Error('Server error');
-                const posts = await response.json();
-                renderPosts(posts);
-            } catch (error) {
-                console.error('Load error:', error);
-                grid.innerHTML = `
-                    <div class="error-state">
-                        <div class="icon">⚠️</div>
-                        <h3>שגיאה בטעינה</h3>
-                        <p>לא ניתן להתחבר לשרת</p>
-                    </div>
-                `;
-            }
-        }
-
-        function renderPosts(posts) {
-            const grid = document.getElementById('newsGrid');
-            const count = document.getElementById('postCount');
-            count.textContent = `${posts.length} כתבות`;
-
-            if (posts.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">📭</div>
-                        <h3>אין כתבות עדיין</h3>
-                        <p>לחצו על "פוסט חדש" להוספת כתבה</p>
-                    </div>
-                `;
-                return;
-            }
-
-            grid.innerHTML = posts.map(post => `
-                <article class="news-card">
-                    <div class="card-header">
-                        <span class="card-category ${post.category}">${categoryLabels[post.category] || '📰 כללי'}</span>
-                        <span class="card-date">🕐 ${post.time} • ${post.date}</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>${escapeHtml(post.title)}</h3>
-                        <p>${escapeHtml(post.content)}</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-author">
-                            <div class="author-avatar">${post.author ? post.author.charAt(0) : '?'}</div>
-                            <span>${escapeHtml(post.author)}</span>
-                        </div>
-                        <div class="card-actions">
-                            <button onclick="sharePost('${escapeHtml(post.title)}')" title="שיתוף">📤</button>
-                            <button class="delete-btn" onclick="deletePost('${post.id}')" title="מחיקה">🗑️</button>
-                        </div>
-                    </div>
-                </article>
-            `).join('');
-        }
-
-        function openModal() {
-            document.getElementById('modalOverlay').classList.add('active');
-            if (isAuthenticated) {
-                document.getElementById('passwordScreen').style.display = 'none';
-                document.getElementById('postForm').style.display = 'block';
-            } else {
-                document.getElementById('passwordScreen').style.display = 'block';
-                document.getElementById('postForm').style.display = 'none';
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('passwordError').style.display = 'none';
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('modalOverlay').classList.remove('active');
-        }
-
-        document.getElementById('modalOverlay').addEventListener('click', e => {
-            if (e.target.id === 'modalOverlay') closeModal();
+// Load posts
+async function loadPosts() {
+    const grid = document.getElementById('newsGrid');
+    grid.innerHTML = '<div class="status-message"><div class="spinner"></div><p>טוען...</p></div>';
+    
+    try {
+        const res = await fetch(API_URL + '/latest', {
+            headers: { 'X-Master-Key': API_KEY }
         });
+        const data = await res.json();
+        posts = data.record || [];
+        render();
+    } catch (e) {
+        grid.innerHTML = '<div class="status-message"><div class="icon">⚠️</div><h3>שגיאה</h3><p>בדוק את ה-API Key וה-Bin ID</p></div>';
+    }
+}
 
-        function checkPassword() {
-            const input = document.getElementById('passwordInput');
-            if (input.value === '123456') {
-                isAuthenticated = true;
-                document.getElementById('passwordScreen').style.display = 'none';
-                document.getElementById('postForm').style.display = 'block';
-                showToast('✅', 'מחובר למערכת');
-            } else {
-                document.getElementById('passwordError').style.display = 'block';
-                input.value = '';
-            }
-        }
+// Save posts
+async function savePosts() {
+    await fetch(API_URL, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': API_KEY
+        },
+        body: JSON.stringify(posts)
+    });
+}
 
-        async function publishPost() {
-            const title = document.getElementById('postTitle').value.trim();
-            const content = document.getElementById('postContent').value.trim();
-            const category = document.getElementById('postCategory').value;
-            const author = document.getElementById('postAuthor').value.trim() || 'אנונימי';
-            const btn = document.getElementById('btnPublish');
+// Render
+function render() {
+    const grid = document.getElementById('newsGrid');
+    document.getElementById('postCount').textContent = `${posts.length} כתבות`;
+    
+    if (posts.length === 0) {
+        grid.innerHTML = '<div class="status-message"><div class="icon">📭</div><h3>אין כתבות</h3><p>לחץ "פוסט חדש" להוספה</p></div>';
+        return;
+    }
+    
+    grid.innerHTML = posts.map(p => `
+        <article class="news-card">
+            <div class="card-header">
+                <span class="card-category ${p.category}">${catLabels[p.category] || '📰 כללי'}</span>
+                <span class="card-date">🕐 ${p.time} • ${p.date}</span>
+            </div>
+            <div class="card-body">
+                <h3>${esc(p.title)}</h3>
+                <p>${esc(p.content)}</p>
+            </div>
+            <div class="card-footer">
+                <div class="card-author">
+                    <div class="author-avatar">${p.author ? p.author[0] : '?'}</div>
+                    <span>${esc(p.author)}</span>
+                </div>
+                <div class="card-actions">
+                    <button onclick="share('${esc(p.title)}')">📤</button>
+                    <button class="delete-btn" onclick="del('${p.id}')">🗑️</button>
+                </div>
+            </div>
+        </article>
+    `).join('');
+}
 
-            if (!title || !content) {
-                showToast('⚠️', 'נא למלא כותרת ותוכן', true);
-                return;
-            }
+// Modal
+function openModal() {
+    document.getElementById('modal').classList.add('active');
+    if (isAuth) {
+        document.getElementById('passScreen').style.display = 'none';
+        document.getElementById('postForm').style.display = 'block';
+    } else {
+        document.getElementById('passScreen').style.display = 'block';
+        document.getElementById('postForm').style.display = 'none';
+        document.getElementById('passInput').value = '';
+        document.getElementById('passError').style.display = 'none';
+    }
+}
 
-            btn.disabled = true;
-            btn.textContent = '⏳ מפרסם...';
+function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+}
 
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ title, content, category, author })
-                });
+document.getElementById('modal').onclick = e => { if (e.target.id === 'modal') closeModal(); };
 
-                if (!response.ok) throw new Error('Failed to publish');
+// Password
+function checkPass() {
+    if (document.getElementById('passInput').value === '123456') {
+        isAuth = true;
+        document.getElementById('passScreen').style.display = 'none';
+        document.getElementById('postForm').style.display = 'block';
+        toast('✅', 'מחובר!');
+    } else {
+        document.getElementById('passError').style.display = 'block';
+    }
+}
 
-                closeModal();
-                document.getElementById('postTitle').value = '';
-                document.getElementById('postContent').value = '';
-                document.getElementById('postAuthor').value = '';
-                showToast('🎉', 'הכתבה פורסמה!');
-                loadPosts();
-            } catch (error) {
-                showToast('❌', 'שגיאה בפרסום', true);
-            }
+// Publish
+async function publish() {
+    const title = document.getElementById('inTitle').value.trim();
+    const content = document.getElementById('inContent').value.trim();
+    const category = document.getElementById('inCategory').value;
+    const author = document.getElementById('inAuthor').value.trim() || 'אנונימי';
+    const btn = document.getElementById('btnPublish');
+    
+    if (!title || !content) {
+        toast('⚠️', 'מלא כותרת ותוכן', true);
+        return;
+    }
+    
+    btn.disabled = true;
+    btn.textContent = '⏳ שומר...';
+    
+    const now = new Date();
+    posts.unshift({
+        id: Date.now().toString(),
+        title, content, category, author,
+        date: now.toLocaleDateString('he-IL'),
+        time: now.toLocaleTimeString('he-IL', {hour: '2-digit', minute: '2-digit'})
+    });
+    
+    try {
+        await savePosts();
+        render();
+        closeModal();
+        document.getElementById('inTitle').value = '';
+        document.getElementById('inContent').value = '';
+        document.getElementById('inAuthor').value = '';
+        toast('🎉', 'פורסם בהצלחה!');
+    } catch (e) {
+        toast('❌', 'שגיאה בשמירה', true);
+    }
+    
+    btn.disabled = false;
+    btn.textContent = '🚀 פרסם';
+}
 
-            btn.disabled = false;
-            btn.textContent = '🚀 פרסם כתבה';
-        }
+// Delete
+async function del(id) {
+    if (!isAuth) { toast('🔒', 'התחבר קודם', true); return; }
+    if (!confirm('למחוק?')) return;
+    
+    posts = posts.filter(p => p.id !== id);
+    await savePosts();
+    render();
+    toast('🗑️', 'נמחק');
+}
 
-        async function deletePost(id) {
-            if (!isAuthenticated) {
-                showToast('🔒', 'יש להתחבר למחיקה', true);
-                return;
-            }
+// Share
+function share(title) {
+    if (navigator.share) {
+        navigator.share({title: 'ט4: ' + title, url: location.href});
+    } else {
+        navigator.clipboard.writeText(location.href);
+        toast('📋', 'קישור הועתק');
+    }
+}
 
-            if (!confirm('למחוק את הכתבה?')) return;
+// Toast
+function toast(icon, msg, err = false) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastIcon').textContent = icon;
+    document.getElementById('toastMsg').textContent = msg;
+    t.className = 'toast' + (err ? ' error' : '');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
 
-            try {
-                const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-                if (!response.ok) throw new Error('Failed to delete');
-                showToast('🗑️', 'הכתבה נמחקה');
-                loadPosts();
-            } catch (error) {
-                showToast('❌', 'שגיאה במחיקה', true);
-            }
-        }
+// Escape HTML
+function esc(s) {
+    if (!s) return '';
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+}
 
-        function sharePost(title) {
-            if (navigator.share) {
-                navigator.share({ title: `ט4: ${title}`, url: location.href });
-            } else {
-                navigator.clipboard.writeText(location.href);
-                showToast('📋', 'הקישור הועתק');
-            }
-        }
+// Keyboard
+document.onkeydown = e => { if (e.key === 'Escape') closeModal(); };
 
-        function showToast(icon, msg, isError = false) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastIcon').textContent = icon;
-            document.getElementById('toastMsg').textContent = msg;
-            toast.className = 'toast' + (isError ? ' error' : '');
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
+// Auto refresh every 30 sec
+setInterval(loadPosts, 30000);
 
-        function escapeHtml(str) {
-            if (!str) return '';
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') closeModal();
-        });
-
-        // Auto refresh every 30 seconds
-        setInterval(loadPosts, 30000);
-
-        // Initial load
-        loadPosts();
-    </script>
+// Start
+loadPosts();
+</script>
 
 </body>
 </html>
