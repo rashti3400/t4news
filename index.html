@@ -55,9 +55,7 @@
         }
 
         header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            position: sticky; top: 0; z-index: 100;
             background: rgba(15, 15, 26, 0.9);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
@@ -65,24 +63,16 @@
         }
 
         .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 70px;
+            max-width: 1400px; margin: 0 auto;
+            display: flex; align-items: center;
+            justify-content: space-between; height: 70px;
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .logo-section { display: flex; align-items: center; gap: 15px; }
 
         .logo-section img {
             width: 45px; height: 45px;
-            border-radius: 12px;
-            border: 2px solid var(--accent);
+            border-radius: 12px; border: 2px solid var(--accent);
         }
 
         .logo-text h1 {
@@ -92,732 +82,308 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .logo-text span {
-            font-size: 0.7rem;
-            color: var(--accent);
-            letter-spacing: 3px;
-        }
+        .logo-text span { font-size: 0.7rem; color: var(--accent); letter-spacing: 3px; }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
 
         .sync-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            transition: all 0.3s;
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 14px; border-radius: 20px;
+            font-size: 0.75rem; transition: all 0.3s;
         }
 
-        .sync-badge.syncing {
-            background: rgba(255, 165, 0, 0.15);
-            border: 1px solid rgba(255, 165, 0, 0.3);
-            color: #ffa500;
-        }
+        .sync-badge.syncing { background: rgba(255, 165, 0, 0.15); border: 1px solid rgba(255, 165, 0, 0.3); color: #ffa500; }
+        .sync-badge.synced { background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); color: var(--accent3); }
+        .sync-badge.error { background: rgba(255, 68, 68, 0.1); border: 1px solid rgba(255, 68, 68, 0.3); color: #ff4444; }
 
-        .sync-badge.synced {
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            color: var(--accent3);
-        }
-
-        .sync-badge.error {
-            background: rgba(255, 68, 68, 0.1);
-            border: 1px solid rgba(255, 68, 68, 0.3);
-            color: #ff4444;
-        }
-
-        .sync-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: currentColor;
-        }
-
+        .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
         .sync-badge.syncing .sync-dot { animation: pulse 1s infinite; }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         .live-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 0, 0, 0.15);
-            border: 1px solid rgba(255, 0, 0, 0.3);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: #ff4444;
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(255, 0, 0, 0.15); border: 1px solid rgba(255, 0, 0, 0.3);
+            padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; color: #ff4444;
         }
 
-        .live-dot {
-            width: 8px; height: 8px;
-            background: #ff4444;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
+        .live-dot { width: 8px; height: 8px; background: #ff4444; border-radius: 50%; animation: pulse 1.5s infinite; }
 
         .btn {
-            border: none;
-            padding: 8px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Heebo', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.3s;
+            border: none; padding: 8px 20px; border-radius: 8px;
+            cursor: pointer; font-family: 'Heebo', sans-serif;
+            font-size: 0.85rem; font-weight: 500; transition: all 0.3s;
         }
 
-        .btn-primary {
-            background: var(--gradient1);
-            color: white;
-        }
+        .btn-primary { background: var(--gradient1); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3); }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
-        }
+        .btn-ghost { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); color: var(--text); }
+        .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); color: var(--accent); }
 
-        .btn-ghost {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            color: var(--text);
-        }
+        .btn-admin { background: linear-gradient(135deg, #ffa500, #ff6600); color: white; }
+        .btn-admin:hover { box-shadow: 0 5px 20px rgba(255, 165, 0, 0.3); }
 
-        .btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .btn-admin {
-            background: linear-gradient(135deg, #ffa500, #ff6600);
-            color: white;
-        }
-
-        .btn-admin:hover {
-            box-shadow: 0 5px 20px rgba(255, 165, 0, 0.3);
-        }
-
-        .btn-danger {
-            background: rgba(255, 68, 68, 0.1);
-            border: 1px solid rgba(255, 68, 68, 0.3);
-            color: #ff4444;
-        }
-
-        .btn-danger:hover {
-            background: rgba(255, 68, 68, 0.2);
-        }
-
-        /* Refresh Button */
         .btn-refresh {
-            background: rgba(0, 212, 255, 0.05);
-            border: 1px solid var(--border);
-            color: var(--accent);
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            position: relative;
+            background: rgba(0, 212, 255, 0.05); border: 1px solid var(--border);
+            color: var(--accent); width: 36px; height: 36px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.1rem; transition: all 0.3s;
         }
 
-        .btn-refresh:hover {
-            background: rgba(0, 212, 255, 0.15);
-            border-color: var(--accent);
-            transform: scale(1.05);
-        }
+        .btn-refresh:hover { background: rgba(0, 212, 255, 0.15); border-color: var(--accent); }
+        .btn-refresh.spinning .refresh-icon { animation: spin 0.8s linear; }
+        .btn-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
+        .refresh-icon { display: inline-block; }
 
-        .btn-refresh.spinning .refresh-icon {
-            animation: spin 0.8s linear;
-        }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .btn-refresh:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .refresh-icon {
-            display: inline-block;
-            transition: transform 0.3s;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* User Badge */
         .user-badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            background: rgba(0, 212, 255, 0.05);
-            border: 1px solid var(--border);
+            display: flex; align-items: center; gap: 10px;
+            padding: 6px 14px; border-radius: 20px;
+            background: rgba(0, 212, 255, 0.05); border: 1px solid var(--border);
         }
 
         .user-avatar-header {
-            width: 30px; height: 30px;
-            border-radius: 50%;
-            background: var(--gradient1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            color: white;
-            font-weight: 700;
+            width: 30px; height: 30px; border-radius: 50%;
+            background: var(--gradient1); display: flex;
+            align-items: center; justify-content: center;
+            font-size: 0.8rem; color: white; font-weight: 700;
         }
 
-        .user-name-header {
-            font-size: 0.85rem;
-            color: var(--text-bright);
-            font-weight: 500;
-        }
+        .user-name-header { font-size: 0.85rem; color: var(--text-bright); font-weight: 500; }
 
         .role-tag {
-            font-size: 0.6rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.6rem; padding: 2px 8px; border-radius: 10px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
         }
 
-        .role-tag.admin {
-            background: rgba(255, 165, 0, 0.15);
-            color: #ffa500;
-            border: 1px solid rgba(255, 165, 0, 0.3);
-        }
-
-        .role-tag.user {
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--accent);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-        }
-
-        .role-tag.pending {
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .role-tag.admin { background: rgba(255, 165, 0, 0.15); color: #ffa500; border: 1px solid rgba(255, 165, 0, 0.3); }
+        .role-tag.user { background: rgba(0, 212, 255, 0.1); color: var(--accent); border: 1px solid rgba(0, 212, 255, 0.2); }
+        .role-tag.pending { background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); }
 
         .guest-actions, .user-actions-header { display: flex; align-items: center; gap: 10px; }
 
         .ticker-bar {
             background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2));
-            padding: 8px 0;
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
+            padding: 8px 0; overflow: hidden; position: relative; z-index: 1;
         }
 
         .ticker-content {
-            display: flex;
-            animation: ticker 25s linear infinite;
-            white-space: nowrap;
+            display: flex; animation: ticker 25s linear infinite; white-space: nowrap;
         }
 
-        .ticker-content span {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.85rem;
-            padding: 0 50px;
-        }
+        .ticker-content span { color: var(--primary); font-weight: 700; font-size: 0.85rem; padding: 0 50px; }
 
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        main {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 30px 40px;
-        }
+        main { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 30px 40px; }
 
         .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid var(--border);
         }
 
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .section-title { display: flex; align-items: center; gap: 12px; }
 
         .section-title .icon {
-            width: 35px; height: 35px;
-            background: var(--gradient1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 35px; height: 35px; background: var(--gradient1);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
         }
 
-        .section-title h2 {
-            font-size: 1.5rem;
-            color: var(--text-bright);
-        }
+        .section-title h2 { font-size: 1.5rem; color: var(--text-bright); }
 
-        .section-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .section-right { display: flex; align-items: center; gap: 12px; }
 
         .post-count {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--accent);
+            background: var(--card-bg); border: 1px solid var(--border);
+            padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; color: var(--accent);
         }
 
-        .last-sync {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.3);
-        }
+        .last-sync { font-size: 0.7rem; color: rgba(255, 255, 255, 0.3); }
 
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-        }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; }
 
         .news-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s;
-            animation: cardIn 0.4s ease;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 16px; overflow: hidden; transition: all 0.3s; animation: cardIn 0.4s ease;
         }
 
-        @keyframes cardIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes cardIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .news-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.15);
-        }
+        .news-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 15px 40px rgba(0, 212, 255, 0.15); }
+        .news-card.urgent-card { border-color: rgba(255, 68, 68, 0.3); box-shadow: 0 0 20px rgba(255, 0, 0, 0.1); }
+        .news-card.urgent-card:hover { border-color: #ff4444; box-shadow: 0 15px 40px rgba(255, 0, 0, 0.2); }
+        .news-card.tzofar-card { border-color: rgba(255, 0, 0, 0.5); box-shadow: 0 0 25px rgba(255, 0, 0, 0.2); background: linear-gradient(135deg, #1a0000, #16213e); }
+        .news-card.tzofar-card:hover { border-color: #ff0000; box-shadow: 0 15px 40px rgba(255, 0, 0, 0.3); }
 
-        .news-card.urgent-card {
-            border-color: rgba(255, 68, 68, 0.3);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
-        }
-
-        .news-card.urgent-card:hover {
-            border-color: #ff4444;
-            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.2);
-        }
-
-        .news-card.tzofar-card {
-            border-color: rgba(255, 0, 0, 0.5);
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
-            background: linear-gradient(135deg, #1a0000, #16213e);
-        }
-
-        .news-card.tzofar-card:hover {
-            border-color: #ff0000;
-            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.3);
-        }
-
-        .card-header {
-            padding: 20px 22px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .card-header { padding: 20px 22px 12px; display: flex; justify-content: space-between; align-items: center; }
 
         .card-category {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 4px 12px;
-            border-radius: 6px;
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--accent);
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; padding: 4px 12px; border-radius: 6px;
+            background: rgba(0, 212, 255, 0.1); color: var(--accent);
         }
 
         .card-category.urgent { background: rgba(255, 68, 68, 0.1); color: #ff4444; }
         .card-category.sports { background: rgba(0, 255, 136, 0.1); color: var(--accent3); }
         .card-category.tech { background: rgba(124, 58, 237, 0.1); color: var(--accent2); }
         .card-category.entertainment { background: rgba(255, 165, 0, 0.1); color: #ffa500; }
-        .card-category.tzofar {
-            background: rgba(255, 0, 0, 0.2);
-            color: #ff4444;
-            animation: tzofar-blink 1s infinite;
-        }
+        .card-category.tzofar { background: rgba(255, 0, 0, 0.2); color: #ff4444; animation: tzofar-blink 1s infinite; }
 
-        @keyframes tzofar-blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+        @keyframes tzofar-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
         .card-date { font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
-
         .card-body { padding: 5px 22px 22px; }
-
-        .card-body h3 {
-            font-size: 1.1rem;
-            color: var(--text-bright);
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-
-        .card-body p {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.7;
-        }
+        .card-body h3 { font-size: 1.1rem; color: var(--text-bright); margin-bottom: 10px; line-height: 1.5; }
+        .card-body p { font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); line-height: 1.7; }
 
         .card-footer {
-            padding: 12px 22px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 12px 22px; border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        .card-author {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
+        .card-author { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); }
 
         .author-avatar {
-            width: 28px; height: 28px;
-            border-radius: 50%;
-            background: var(--gradient1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            color: white;
-            font-weight: 700;
+            width: 28px; height: 28px; border-radius: 50%; background: var(--gradient1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; color: white; font-weight: 700;
         }
 
         .card-actions { display: flex; gap: 4px; }
 
         .card-actions button {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.4);
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 4px 8px;
-            transition: color 0.3s;
-            border-radius: 6px;
+            background: none; border: none; color: rgba(255, 255, 255, 0.4);
+            cursor: pointer; font-size: 1rem; padding: 4px 8px;
+            transition: color 0.3s; border-radius: 6px;
         }
 
         .card-actions button:hover { color: var(--accent); background: rgba(0, 212, 255, 0.05); }
         .card-actions .del:hover { color: #ff4444; background: rgba(255, 68, 68, 0.05); }
 
-        /* Comments */
         .comments-section {
-            border-top: 1px solid var(--border);
-            background: rgba(0, 0, 0, 0.15);
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
+            border-top: 1px solid var(--border); background: rgba(0, 0, 0, 0.15);
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
         }
 
-        .comments-section.open {
-            max-height: 600px;
-            overflow-y: auto;
-        }
-
+        .comments-section.open { max-height: 600px; overflow-y: auto; }
         .comments-inner { padding: 15px 22px; }
-
-        .comments-title {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .comments-title { font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
 
         .comment-item {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
+            display: flex; gap: 10px; margin-bottom: 12px; padding: 10px;
+            background: rgba(255, 255, 255, 0.03); border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .comment-avatar {
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            background: var(--accent2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            color: white;
-            font-weight: 700;
-            flex-shrink: 0;
+            width: 32px; height: 32px; border-radius: 50%; background: var(--accent2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; color: white; font-weight: 700; flex-shrink: 0;
         }
 
         .comment-content { flex: 1; }
-
-        .comment-meta {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-
-        .comment-author-name {
-            font-size: 0.8rem;
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .comment-time {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .comment-text {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.5;
-        }
+        .comment-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+        .comment-author-name { font-size: 0.8rem; color: var(--accent); font-weight: 600; }
+        .comment-time { font-size: 0.7rem; color: rgba(255, 255, 255, 0.3); }
+        .comment-text { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.5; }
 
         .comment-delete {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            font-size: 0.8rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            transition: all 0.3s;
+            background: none; border: none; color: rgba(255, 255, 255, 0.2);
+            cursor: pointer; font-size: 0.8rem; padding: 2px 6px; border-radius: 4px; transition: all 0.3s;
         }
 
         .comment-delete:hover { color: #ff4444; background: rgba(255, 68, 68, 0.1); }
 
         .comment-form {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-            padding-top: 12px;
+            display: flex; gap: 8px; margin-top: 12px; padding-top: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .comment-input {
-            flex: 1;
-            padding: 10px 14px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: var(--primary);
-            color: var(--text-bright);
-            font-family: 'Heebo', sans-serif;
-            font-size: 0.85rem;
-            outline: none;
+            flex: 1; padding: 10px 14px; border-radius: 10px;
+            border: 1px solid var(--border); background: var(--primary);
+            color: var(--text-bright); font-family: 'Heebo', sans-serif;
+            font-size: 0.85rem; outline: none;
         }
 
         .comment-input:focus { border-color: var(--accent); }
 
         .comment-send {
-            padding: 10px 18px;
-            border-radius: 10px;
-            border: none;
-            background: var(--gradient1);
-            color: white;
-            font-family: 'Heebo', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.3s;
+            padding: 10px 18px; border-radius: 10px; border: none;
+            background: var(--gradient1); color: white; font-family: 'Heebo', sans-serif;
+            font-weight: 600; cursor: pointer; font-size: 0.85rem; transition: all 0.3s;
         }
 
         .comment-send:hover { box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3); }
 
-        .no-comments {
-            text-align: center;
-            padding: 15px;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 0.85rem;
-        }
+        .no-comments { text-align: center; padding: 15px; color: rgba(255, 255, 255, 0.3); font-size: 0.85rem; }
 
-        .login-to-comment {
-            text-align: center;
-            padding: 12px;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 0.8rem;
-        }
+        .login-to-comment { text-align: center; padding: 12px; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; }
+        .login-to-comment a { color: var(--accent); cursor: pointer; text-decoration: underline; }
 
-        .login-to-comment a {
-            color: var(--accent);
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        .status-msg {
-            text-align: center;
-            padding: 80px 20px;
-            grid-column: 1 / -1;
-        }
-
+        .status-msg { text-align: center; padding: 80px 20px; grid-column: 1 / -1; }
         .status-msg .ico { font-size: 4rem; margin-bottom: 20px; opacity: 0.3; }
         .status-msg h3 { color: rgba(255, 255, 255, 0.4); margin-bottom: 10px; }
         .status-msg p { color: rgba(255, 255, 255, 0.25); }
 
         .skeleton-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 22px;
-            animation: shimmer 1.5s infinite;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 16px; padding: 22px; animation: shimmer 1.5s infinite;
         }
 
-        .skeleton-line {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            margin-bottom: 12px;
-        }
-
+        .skeleton-line { background: rgba(255, 255, 255, 0.05); border-radius: 6px; margin-bottom: 12px; }
         .skeleton-line.short { width: 40%; height: 14px; }
         .skeleton-line.title { width: 80%; height: 20px; }
         .skeleton-line.text { width: 100%; height: 14px; }
         .skeleton-line.text2 { width: 70%; height: 14px; }
 
-        @keyframes shimmer {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+        @keyframes shimmer { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        /* Alert Banner */
         .alert-banner {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%;
-            z-index: 9999;
-            animation: alertSlideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: none; position: fixed; top: 0; left: 0; width: 100%;
+            z-index: 9999; animation: alertSlideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .alert-banner.show { display: block; }
 
-        @keyframes alertSlideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
-        }
+        @keyframes alertSlideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
 
         .alert-inner {
             background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border-bottom: 2px solid var(--accent);
-            padding: 20px 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            position: relative;
+            border-bottom: 2px solid var(--accent); padding: 20px 30px;
+            display: flex; align-items: center; justify-content: center; gap: 20px; position: relative;
         }
 
-        .alert-icon-big {
-            font-size: 2.5rem;
-            animation: alertBounce 1s infinite;
-        }
+        .alert-icon-big { font-size: 2.5rem; animation: alertBounce 1s infinite; }
 
-        @keyframes alertBounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
+        @keyframes alertBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
         .alert-text { text-align: center; }
-
-        .alert-text .alert-label {
-            font-size: 0.7rem;
-            color: var(--accent);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .alert-text h3 {
-            font-size: 1.3rem;
-            color: var(--text-bright);
-            font-weight: 900;
-        }
-
-        .alert-text p {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 4px;
-        }
+        .alert-text .alert-label { font-size: 0.7rem; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px; }
+        .alert-text h3 { font-size: 1.3rem; color: var(--text-bright); font-weight: 900; }
+        .alert-text p { font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); margin-top: 4px; }
 
         .alert-close {
-            position: absolute;
-            top: 10px; left: 15px;
-            background: none;
-            border: 1px solid var(--border);
-            color: var(--text);
-            width: 30px; height: 30px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
+            position: absolute; top: 10px; left: 15px; background: none;
+            border: 1px solid var(--border); color: var(--text);
+            width: 30px; height: 30px; border-radius: 8px; cursor: pointer;
+            font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s;
         }
 
-        .alert-close:hover {
-            background: rgba(255, 68, 68, 0.1);
-            border-color: #ff4444;
-            color: #ff4444;
-        }
+        .alert-close:hover { background: rgba(255, 68, 68, 0.1); border-color: #ff4444; color: #ff4444; }
 
         .alert-time {
-            position: absolute;
-            bottom: 0; left: 0;
-            height: 3px;
-            background: var(--gradient1);
-            animation: alertTimer 10s linear forwards;
+            position: absolute; bottom: 0; left: 0; height: 3px;
+            background: var(--gradient1); animation: alertTimer 10s linear forwards;
         }
 
-        @keyframes alertTimer {
-            from { width: 100%; }
-            to { width: 0%; }
-        }
+        @keyframes alertTimer { from { width: 100%; } to { width: 0%; } }
 
         .alert-banner.tzofar-alert .alert-inner {
             background: linear-gradient(135deg, #1a0000, #2a0000);
-            border-bottom: 2px solid #ff0000;
-            animation: tzofar-flash 0.5s infinite;
+            border-bottom: 2px solid #ff0000; animation: tzofar-flash 0.5s infinite;
         }
 
         @keyframes tzofar-flash {
@@ -828,335 +394,168 @@
         .alert-banner.tzofar-alert .alert-label { color: #ff4444; }
         .alert-banner.tzofar-alert .alert-time { background: linear-gradient(90deg, #ff0000, #ff4444); }
 
-        /* Modals */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px); z-index: 1000;
+            align-items: center; justify-content: center; padding: 20px;
         }
 
         .modal-overlay.active { display: flex; }
 
         .modal {
-            background: var(--secondary);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 500px;
-            animation: slideUp 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
+            background: var(--secondary); border: 1px solid var(--border);
+            border-radius: 20px; width: 100%; max-width: 500px;
+            animation: slideUp 0.3s ease; max-height: 90vh; overflow-y: auto;
         }
 
         .modal.wide { max-width: 700px; }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 20px; border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
         }
 
         .modal-header h2 { color: var(--text-bright); }
 
         .modal-close {
-            width: 35px; height: 35px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: none;
-            color: var(--text);
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.3s;
+            width: 35px; height: 35px; border-radius: 10px;
+            border: 1px solid var(--border); background: none;
+            color: var(--text); cursor: pointer; font-size: 1.1rem; transition: all 0.3s;
         }
 
-        .modal-close:hover {
-            background: rgba(255, 68, 68, 0.1);
-            border-color: #ff4444;
-            color: #ff4444;
-        }
+        .modal-close:hover { background: rgba(255, 68, 68, 0.1); border-color: #ff4444; color: #ff4444; }
 
         .modal-body { padding: 25px; }
 
-        /* Auth Modal */
-        .auth-tabs {
-            display: flex;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 20px;
-        }
+        .auth-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
 
         .auth-tab {
-            flex: 1;
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.4);
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s;
+            flex: 1; padding: 12px; text-align: center; cursor: pointer;
+            font-size: 0.9rem; font-weight: 600; color: rgba(255, 255, 255, 0.4);
+            border-bottom: 2px solid transparent; transition: all 0.3s;
         }
 
         .auth-tab:hover { color: rgba(255, 255, 255, 0.7); }
-
-        .auth-tab.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-        }
+        .auth-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
         .auth-form { display: none; }
         .auth-form.active { display: block; }
 
         .auth-error {
-            background: rgba(255, 68, 68, 0.1);
-            border: 1px solid rgba(255, 68, 68, 0.2);
-            color: #ff4444;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            margin-bottom: 15px;
-            display: none;
+            background: rgba(255, 68, 68, 0.1); border: 1px solid rgba(255, 68, 68, 0.2);
+            color: #ff4444; padding: 10px 15px; border-radius: 8px;
+            font-size: 0.85rem; margin-bottom: 15px; display: none;
         }
 
         .auth-success {
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            color: var(--accent3);
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            margin-bottom: 15px;
-            display: none;
+            background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.2);
+            color: var(--accent3); padding: 10px 15px; border-radius: 8px;
+            font-size: 0.85rem; margin-bottom: 15px; display: none;
         }
 
         .pending-banner {
-            background: rgba(255, 165, 0, 0.1);
-            border: 1px solid rgba(255, 165, 0, 0.2);
-            border-radius: 12px;
-            padding: 15px 20px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.2);
+            border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; gap: 12px;
         }
 
         .pending-banner .pending-icon { font-size: 1.5rem; }
         .pending-banner .pending-text h4 { color: #ffa500; font-size: 0.9rem; margin-bottom: 2px; }
         .pending-banner .pending-text p { color: rgba(255, 255, 255, 0.4); font-size: 0.8rem; }
 
-        /* Admin Panel */
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+        .admin-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
 
         .admin-stat {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border);
+            border-radius: 12px; padding: 15px; text-align: center;
         }
 
         .admin-stat .stat-num {
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: var(--gradient1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem; font-weight: 900;
+            background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .admin-stat .stat-label {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.4);
-            margin-top: 4px;
+        .admin-stat .stat-label { font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); margin-top: 4px; }
+
+        .admin-error {
+            background: rgba(255, 68, 68, 0.1); border: 1px solid rgba(255, 68, 68, 0.2);
+            color: #ff4444; padding: 12px 15px; border-radius: 8px;
+            font-size: 0.85rem; margin-bottom: 15px; text-align: center;
         }
 
         .user-list { display: flex; flex-direction: column; gap: 10px; }
 
         .user-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            transition: all 0.3s;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 18px; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border); border-radius: 12px; transition: all 0.3s;
         }
 
         .user-row:hover { border-color: var(--accent); }
-
-        .user-row-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .user-row-info { display: flex; align-items: center; gap: 12px; }
 
         .user-row-avatar {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: var(--gradient1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 0.9rem;
+            width: 40px; height: 40px; border-radius: 50%; background: var(--gradient1);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 0.9rem;
         }
 
-        .user-row-details h4 {
-            font-size: 0.9rem;
-            color: var(--text-bright);
-            margin-bottom: 2px;
-        }
-
-        .user-row-details p {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .user-row-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
+        .user-row-details h4 { font-size: 0.9rem; color: var(--text-bright); margin-bottom: 2px; }
+        .user-row-details p { font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
+        .user-row-actions { display: flex; gap: 8px; align-items: center; }
 
         .user-row-actions button {
-            padding: 6px 14px;
-            border-radius: 8px;
-            border: none;
-            font-family: 'Heebo', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            padding: 6px 14px; border-radius: 8px; border: none;
+            font-family: 'Heebo', sans-serif; font-size: 0.75rem;
+            font-weight: 600; cursor: pointer; transition: all 0.3s;
         }
 
-        .btn-approve {
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            color: var(--accent3);
-        }
-
+        .btn-approve { background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); color: var(--accent3); }
         .btn-approve:hover { background: rgba(0, 255, 136, 0.2); }
-
-        .btn-revoke {
-            background: rgba(255, 165, 0, 0.1);
-            border: 1px solid rgba(255, 165, 0, 0.3);
-            color: #ffa500;
-        }
-
+        .btn-revoke { background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.3); color: #ffa500; }
         .btn-revoke:hover { background: rgba(255, 165, 0, 0.2); }
-
-        .btn-make-admin {
-            background: rgba(124, 58, 237, 0.1);
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            color: var(--accent2);
-        }
-
+        .btn-make-admin { background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.3); color: var(--accent2); }
         .btn-make-admin:hover { background: rgba(124, 58, 237, 0.2); }
-
-        .btn-del-user {
-            background: rgba(255, 68, 68, 0.1);
-            border: 1px solid rgba(255, 68, 68, 0.3);
-            color: #ff4444;
-        }
-
+        .btn-del-user { background: rgba(255, 68, 68, 0.1); border: 1px solid rgba(255, 68, 68, 0.3); color: #ff4444; }
         .btn-del-user:hover { background: rgba(255, 68, 68, 0.2); }
 
-        /* Post Form */
         .fg { margin-bottom: 18px; }
         .fg label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
 
         .fg input, .fg textarea, .fg select {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: var(--primary);
-            color: var(--text-bright);
-            font-family: 'Heebo', sans-serif;
-            outline: none;
+            width: 100%; padding: 12px 16px; border-radius: 10px;
+            border: 1px solid var(--border); background: var(--primary);
+            color: var(--text-bright); font-family: 'Heebo', sans-serif; outline: none;
         }
 
         .fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--accent); }
         .fg textarea { min-height: 100px; resize: vertical; }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
         .alert-section {
-            background: rgba(255, 165, 0, 0.05);
-            border: 1px solid rgba(255, 165, 0, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 18px;
+            background: rgba(255, 165, 0, 0.05); border: 1px solid rgba(255, 165, 0, 0.2);
+            border-radius: 12px; padding: 15px; margin-bottom: 18px;
         }
 
-        .alert-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-        }
-
-        .alert-toggle-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        .alert-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .alert-toggle-info { display: flex; align-items: center; gap: 10px; }
         .alert-toggle-info span:first-child { font-size: 1.3rem; }
-
-        .alert-toggle-text h4 {
-            font-size: 0.9rem;
-            color: var(--text-bright);
-            margin-bottom: 2px;
-        }
-
-        .alert-toggle-text p {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.4);
-        }
+        .alert-toggle-text h4 { font-size: 0.9rem; color: var(--text-bright); margin-bottom: 2px; }
+        .alert-toggle-text p { font-size: 0.7rem; color: rgba(255, 255, 255, 0.4); }
 
         .toggle-switch {
-            width: 46px; height: 26px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 13px;
-            position: relative;
-            transition: background 0.3s;
-            cursor: pointer;
+            width: 46px; height: 26px; background: rgba(255, 255, 255, 0.1);
+            border-radius: 13px; position: relative; transition: background 0.3s; cursor: pointer;
         }
 
         .toggle-switch.active { background: var(--accent); }
 
         .toggle-switch::after {
-            content: '';
-            position: absolute;
-            top: 3px; right: 3px;
-            width: 20px; height: 20px;
-            background: white;
-            border-radius: 50%;
-            transition: transform 0.3s;
+            content: ''; position: absolute; top: 3px; right: 3px;
+            width: 20px; height: 20px; background: white;
+            border-radius: 50%; transition: transform 0.3s;
         }
 
         .toggle-switch.active::after { transform: translateX(-20px); }
@@ -1165,94 +564,45 @@
         .alert-msg-input.show { display: block; }
 
         .alert-msg-input input {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 165, 0, 0.3);
-            background: var(--primary);
-            color: var(--text-bright);
-            font-family: 'Heebo', sans-serif;
-            outline: none;
+            width: 100%; padding: 10px 14px; border-radius: 8px;
+            border: 1px solid rgba(255, 165, 0, 0.3); background: var(--primary);
+            color: var(--text-bright); font-family: 'Heebo', sans-serif; outline: none;
         }
 
         .alert-msg-input input:focus { border-color: #ffa500; }
-
-        .alert-msg-input label {
-            display: block;
-            font-size: 0.8rem;
-            color: #ffa500;
-            margin-bottom: 6px;
-        }
+        .alert-msg-input label { display: block; font-size: 0.8rem; color: #ffa500; margin-bottom: 6px; }
 
         .tzofar-status {
-            background: rgba(255, 0, 0, 0.05);
-            border: 1px solid rgba(255, 0, 0, 0.2);
-            border-radius: 12px;
-            padding: 12px 15px;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            background: rgba(255, 0, 0, 0.05); border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 12px; padding: 12px 15px; margin-bottom: 18px;
+            display: flex; align-items: center; gap: 12px;
         }
 
-        .tzofar-dot {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            background: #ff4444;
-            animation: pulse 1s infinite;
-            flex-shrink: 0;
-        }
-
+        .tzofar-dot { width: 10px; height: 10px; border-radius: 50%; background: #ff4444; animation: pulse 1s infinite; flex-shrink: 0; }
         .tzofar-dot.active { background: #00ff88; }
-
         .tzofar-status p { font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); }
-        .tzofar-status p span { color: var(--text-bright); font-weight: 600; }
 
         .btn-pub {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: none;
-            background: var(--gradient1);
-            color: white;
-            font-family: 'Heebo', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
+            width: 100%; padding: 14px; border-radius: 12px; border: none;
+            background: var(--gradient1); color: white; font-family: 'Heebo', sans-serif;
+            font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s;
         }
 
         .btn-pub:hover { box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3); }
         .btn-pub:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .toast {
-            position: fixed;
-            bottom: 30px; left: 50%;
+            position: fixed; bottom: 30px; left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: var(--card-bg);
-            border: 1px solid var(--accent);
-            padding: 14px 28px;
-            border-radius: 12px;
-            color: var(--text-bright);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: transform 0.4s;
+            background: var(--card-bg); border: 1px solid var(--accent);
+            padding: 14px 28px; border-radius: 12px; color: var(--text-bright);
+            z-index: 2000; display: flex; align-items: center; gap: 10px; transition: transform 0.4s;
         }
 
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.error { border-color: #ff4444; }
 
-        footer {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 30px;
-            border-top: 1px solid var(--border);
-            margin-top: 60px;
-        }
-
+        footer { position: relative; z-index: 1; text-align: center; padding: 30px; border-top: 1px solid var(--border); margin-top: 60px; }
         footer p { color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; }
         footer .brand { background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
 
@@ -1283,7 +633,6 @@
     <div class="circle"></div>
 </div>
 
-<!-- Alert Banner -->
 <div class="alert-banner" id="alertBanner">
     <div class="alert-inner">
         <span class="alert-icon-big" id="alertIcon">🔔</span>
@@ -1311,24 +660,17 @@
                 <div class="sync-dot"></div>
                 <span id="syncText">מחובר</span>
             </div>
-
-            <!-- Refresh Button -->
             <button class="btn-refresh" id="btnRefresh" onclick="manualRefresh()" title="רענן עכשיו">
                 <span class="refresh-icon">🔄</span>
             </button>
-
             <div class="live-badge">
                 <div class="live-dot"></div>
                 <span>LIVE</span>
             </div>
-
-            <!-- Guest Actions -->
             <div class="guest-actions" id="guestActions">
                 <button class="btn btn-ghost" onclick="openAuthModal('login')">🔑 התחבר</button>
                 <button class="btn btn-primary" onclick="openAuthModal('register')">📝 הרשם</button>
             </div>
-
-            <!-- User Actions -->
             <div class="user-actions-header" id="userActionsHeader" style="display:none">
                 <div class="user-badge" id="headerUserBadge">
                     <div class="user-avatar-header" id="headerAvatar">?</div>
@@ -1343,7 +685,6 @@
     </div>
 </header>
 
-<!-- Pending Banner -->
 <div class="pending-banner" id="pendingBanner" style="display:none; max-width:1400px; margin:15px auto 0; padding:15px 40px;">
     <span class="pending-icon">⏳</span>
     <div class="pending-text">
@@ -1418,7 +759,7 @@
                 </div>
                 <div class="fg">
                     <label>אימות סיסמה</label>
-                    <input type="password" id="regPassword2" placeholder="הזן שוב את הסיסמה..." onkeydown="if(event.key==='Enter')doRegister()">
+                    <input type="password" id="regPassword2" placeholder="הזן שוב..." onkeydown="if(event.key==='Enter')doRegister()">
                 </div>
                 <button class="btn-pub" onclick="doRegister()">📝 הרשם</button>
             </div>
@@ -1492,6 +833,7 @@
             <button class="modal-close" onclick="closeAdminPanel()">✕</button>
         </div>
         <div class="modal-body">
+            <div id="adminError"></div>
             <div class="admin-stats" id="adminStats"></div>
             <h3 style="color:var(--text-bright); margin-bottom:15px; font-size:1rem;">👥 רשימת משתמשים</h3>
             <div class="user-list" id="userList">
@@ -1511,7 +853,7 @@
 // 🔧 CONFIGURATION
 // ========================================
 const BIN_ID = '69cece9436566621a873a3a2';
-const USERS_BIN_ID = 'PUT_YOUR_USERS_BIN_ID_HERE';
+const USERS_BIN_ID = 'PUT_YOUR_USERS_BIN_ID_HERE';  // ⚠️ שים כאן את ה-BIN ID של המשתמשים
 const API_KEY = '$2a$10$vb0rw5j/7dIM.sZrbGmjbuS8kVJsAqUtiFlHZL07M2qzvyLzzCETO';
 const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1489379629457346840/Fi5Jgu2r_5ll0nSCYXxMVo5JcIqWRa6__TslDN0e8XSbJuNuWeXubMjhTYlKPNkbSIQ9';
 const MASTER_PASSWORD = '123456';
@@ -1533,15 +875,10 @@ let editingPostId = null;
 let lastTzofarAlerts = [];
 let cachedIP = null;
 let isRefreshing = false;
-let lastSyncTime = null;
 
 const catLabels = {
-    general: '📰 כללי',
-    urgent: '🔴 דחוף',
-    sports: '⚽ ספורט',
-    tech: '💻 טכנולוגיה',
-    entertainment: '🎬 בידור',
-    tzofar: '🚨 צופר'
+    general: '📰 כללי', urgent: '🔴 דחוף', sports: '⚽ ספורט',
+    tech: '💻 טכנולוגיה', entertainment: '🎬 בידור', tzofar: '🚨 צופר'
 };
 
 // ========================================
@@ -1564,18 +901,15 @@ async function getIP() {
 async function manualRefresh() {
     if (isRefreshing) return;
     isRefreshing = true;
-
     const btn = document.getElementById('btnRefresh');
     btn.classList.add('spinning');
     btn.disabled = true;
-
     try {
         await syncFromCloud();
         toast('✅', 'רוענן בהצלחה!');
     } catch(e) {
         toast('⚠️', 'שגיאה ברענון', true);
     }
-
     setTimeout(() => {
         btn.classList.remove('spinning');
         btn.disabled = false;
@@ -1584,15 +918,12 @@ async function manualRefresh() {
 }
 
 function updateLastSyncTime() {
-    lastSyncTime = new Date();
     const el = document.getElementById('lastSync');
-    if (el) {
-        el.textContent = `עודכן: ${lastSyncTime.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
-    }
+    if (el) el.textContent = `עודכן: ${new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
 }
 
 // ========================================
-// 👤 AUTH & USERS
+// 👤 AUTH HELPERS
 // ========================================
 function isLoggedIn() { return currentUser !== null; }
 function isAdmin() { return currentUser && currentUser.role === 'admin' && currentUser.approved; }
@@ -1600,8 +931,8 @@ function isApproved() { return currentUser && currentUser.approved; }
 
 function loadSession() {
     try {
-        const session = localStorage.getItem(SESSION_KEY);
-        if (session) { currentUser = JSON.parse(session); return true; }
+        const s = localStorage.getItem(SESSION_KEY);
+        if (s) { currentUser = JSON.parse(s); return true; }
     } catch(e) {}
     return false;
 }
@@ -1621,31 +952,144 @@ function updateAuthUI() {
     if (isLoggedIn()) {
         guestEl.style.display = 'none';
         userEl.style.display = 'flex';
-        document.getElementById('headerAvatar').textContent = currentUser.displayName ? currentUser.displayName[0] : '?';
+        document.getElementById('headerAvatar').textContent = (currentUser.displayName || '?')[0];
         document.getElementById('headerName').textContent = currentUser.displayName || currentUser.username;
 
         const roleEl = document.getElementById('headerRole');
         if (isAdmin()) {
-            roleEl.textContent = '👑 מנהל';
-            roleEl.className = 'role-tag admin';
-            btnPost.style.display = '';
-            btnAdmin.style.display = '';
+            roleEl.textContent = '👑 מנהל'; roleEl.className = 'role-tag admin';
+            btnPost.style.display = ''; btnAdmin.style.display = '';
         } else if (isApproved()) {
-            roleEl.textContent = '✅ מאושר';
-            roleEl.className = 'role-tag user';
-            btnPost.style.display = 'none';
-            btnAdmin.style.display = 'none';
+            roleEl.textContent = '✅ מאושר'; roleEl.className = 'role-tag user';
+            btnPost.style.display = 'none'; btnAdmin.style.display = 'none';
         } else {
-            roleEl.textContent = '⏳ ממתין';
-            roleEl.className = 'role-tag pending';
-            btnPost.style.display = 'none';
-            btnAdmin.style.display = 'none';
+            roleEl.textContent = '⏳ ממתין'; roleEl.className = 'role-tag pending';
+            btnPost.style.display = 'none'; btnAdmin.style.display = 'none';
         }
         pendingEl.style.display = (!currentUser.approved) ? 'flex' : 'none';
     } else {
         guestEl.style.display = 'flex';
         userEl.style.display = 'none';
         pendingEl.style.display = 'none';
+    }
+}
+
+// ========================================
+// 👥 USERS DATABASE - תיקון מרכזי!
+// ========================================
+function getRealUsers() {
+    return users.filter(u => u && u.id && u.username && u.username !== 'init');
+}
+
+function loadUsersCache() {
+    try {
+        const cached = localStorage.getItem(USERS_CACHE_KEY);
+        if (cached) {
+            const parsed = JSON.parse(cached);
+            if (Array.isArray(parsed)) { users = parsed; return true; }
+        }
+    } catch(e) { console.error('loadUsersCache error:', e); }
+    return false;
+}
+
+function saveUsersCache() {
+    try { localStorage.setItem(USERS_CACHE_KEY, JSON.stringify(users)); } catch(e) {}
+}
+
+async function loadUsersFromCloud() {
+    try {
+        console.log('📡 Loading users from cloud...');
+        const res = await fetch(USERS_API + '/latest', {
+            headers: { 'X-Master-Key': API_KEY }
+        });
+
+        if (!res.ok) {
+            console.error('❌ Users API error:', res.status, res.statusText);
+            loadUsersCache();
+            return false;
+        }
+
+        const data = await res.json();
+        console.log('📦 Users API response:', data);
+
+        // טיפול בפורמטים שונים של JSONBin
+        let rawUsers = null;
+
+        if (data && data.record) {
+            rawUsers = data.record;
+        } else if (Array.isArray(data)) {
+            rawUsers = data;
+        } else if (data && typeof data === 'object') {
+            // אולי המערך עטוף באובייקט
+            const keys = Object.keys(data);
+            for (const key of keys) {
+                if (Array.isArray(data[key])) {
+                    rawUsers = data[key];
+                    break;
+                }
+            }
+        }
+
+        if (!rawUsers) {
+            console.warn('⚠️ Could not parse users, raw data:', data);
+            rawUsers = [];
+        }
+
+        if (!Array.isArray(rawUsers)) {
+            console.warn('⚠️ Users is not array, wrapping:', rawUsers);
+            rawUsers = [rawUsers];
+        }
+
+        // סנן ערכים ריקים או פגומים
+        users = rawUsers.filter(u => u && typeof u === 'object' && u.id);
+
+        console.log('✅ Loaded users:', users.length, users);
+        saveUsersCache();
+
+        // עדכן את המשתמש הנוכחי אם צריך
+        if (currentUser && currentUser.id !== 'master_admin') {
+            const updated = users.find(u => u.id === currentUser.id);
+            if (updated) {
+                currentUser.role = updated.role;
+                currentUser.approved = updated.approved;
+                currentUser.displayName = updated.displayName;
+                saveSession();
+                updateAuthUI();
+            }
+        }
+
+        return true;
+    } catch(e) {
+        console.error('❌ loadUsersFromCloud error:', e);
+        loadUsersCache();
+        return false;
+    }
+}
+
+async function saveUsersToCloud() {
+    try {
+        console.log('💾 Saving users to cloud:', users.length, 'users');
+        const res = await fetch(USERS_API, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': API_KEY
+            },
+            body: JSON.stringify(users)
+        });
+
+        if (!res.ok) {
+            console.error('❌ Save users error:', res.status);
+            throw new Error('Save failed');
+        }
+
+        console.log('✅ Users saved successfully');
+        saveUsersCache();
+        return true;
+    } catch(e) {
+        console.error('❌ saveUsersToCloud error:', e);
+        saveUsersCache();
+        return false;
     }
 }
 
@@ -1680,27 +1124,24 @@ async function doLogin() {
     const errEl = document.getElementById('loginError');
 
     if (!username || !password) {
-        errEl.textContent = '❌ מלא את כל השדות';
-        errEl.style.display = 'block';
-        return;
+        errEl.textContent = '❌ מלא את כל השדות'; errEl.style.display = 'block'; return;
     }
 
+    // Master admin
     if (username === 'admin' && password === MASTER_PASSWORD) {
         currentUser = { id: 'master_admin', username: 'admin', displayName: 'מנהל ראשי', role: 'admin', approved: true };
-        saveSession();
-        updateAuthUI();
-        closeAuthModal();
+        saveSession(); updateAuthUI(); closeAuthModal();
         toast('👑', 'ברוך הבא, מנהל ראשי!');
         sendDiscordLog("כניסת מנהל ראשי", { info: "Master password" });
         return;
     }
 
+    // טען משתמשים מהענן
     await loadUsersFromCloud();
 
     const user = users.find(u => u.username === username && u.password === password);
     if (!user) {
-        errEl.textContent = '❌ שם משתמש או סיסמה שגויים';
-        errEl.style.display = 'block';
+        errEl.textContent = '❌ שם משתמש או סיסמה שגויים'; errEl.style.display = 'block';
         sendDiscordLog("ניסיון התחברות כושל", { info: `משתמש: ${username}` });
         return;
     }
@@ -1709,13 +1150,9 @@ async function doLogin() {
     await saveUsersToCloud();
 
     currentUser = { id: user.id, username: user.username, displayName: user.displayName, role: user.role, approved: user.approved };
-    saveSession();
-    updateAuthUI();
-    closeAuthModal();
-    render();
-
+    saveSession(); updateAuthUI(); closeAuthModal(); render();
     toast('👋', `ברוך הבא, ${user.displayName}!`);
-    sendDiscordLog("התחברות", { info: `${user.displayName} (${user.role === 'admin' ? 'מנהל' : user.approved ? 'מאושר' : 'ממתין'})` });
+    sendDiscordLog("התחברות", { info: `${user.displayName} (${user.role})` });
 }
 
 async function doRegister() {
@@ -1733,10 +1170,10 @@ async function doRegister() {
         errEl.textContent = '❌ מלא את כל השדות'; errEl.style.display = 'block'; return;
     }
     if (username.length < 3) {
-        errEl.textContent = '❌ שם משתמש חייב להכיל לפחות 3 תווים'; errEl.style.display = 'block'; return;
+        errEl.textContent = '❌ שם משתמש - לפחות 3 תווים'; errEl.style.display = 'block'; return;
     }
     if (password.length < 4) {
-        errEl.textContent = '❌ סיסמה חייבת להכיל לפחות 4 תווים'; errEl.style.display = 'block'; return;
+        errEl.textContent = '❌ סיסמה - לפחות 4 תווים'; errEl.style.display = 'block'; return;
     }
     if (password !== password2) {
         errEl.textContent = '❌ הסיסמאות לא תואמות'; errEl.style.display = 'block'; return;
@@ -1751,34 +1188,40 @@ async function doRegister() {
         errEl.textContent = '❌ שם משתמש כבר קיים'; errEl.style.display = 'block'; return;
     }
 
-    const isFirstUser = users.filter(u => u.username !== 'init').length === 0;
+    const realUsers = getRealUsers();
+    const isFirstUser = realUsers.length === 0;
+
     const newUser = {
-        id: Date.now().toString(), username, displayName, password,
+        id: Date.now().toString(),
+        username, displayName, password,
         role: isFirstUser ? 'admin' : 'user',
         approved: isFirstUser,
         createdAt: new Date().toLocaleString('he-IL'),
         lastLogin: new Date().toLocaleString('he-IL')
     };
 
-    users = users.filter(u => u.username !== 'init');
+    // הסר את ה-init הדמה
+    users = users.filter(u => u.username !== 'init' && u.id !== 'init');
     users.push(newUser);
-    await saveUsersToCloud();
+
+    const saved = await saveUsersToCloud();
+    if (!saved) {
+        errEl.textContent = '❌ שגיאה בשמירה, נסה שוב'; errEl.style.display = 'block'; return;
+    }
 
     if (isFirstUser) {
-        successEl.textContent = '🎉 נרשמת כמנהל ראשי! מתחבר...';
-        successEl.style.display = 'block';
+        successEl.textContent = '🎉 נרשמת כמנהל ראשי! מתחבר...'; successEl.style.display = 'block';
         currentUser = { id: newUser.id, username: newUser.username, displayName: newUser.displayName, role: 'admin', approved: true };
         saveSession();
         setTimeout(() => { closeAuthModal(); updateAuthUI(); render(); toast('👑', 'ברוך הבא, מנהל!'); }, 1500);
     } else {
-        successEl.textContent = '✅ נרשמת בהצלחה! ממתין לאישור מנהל';
-        successEl.style.display = 'block';
+        successEl.textContent = '✅ נרשמת! ממתין לאישור מנהל'; successEl.style.display = 'block';
         currentUser = { id: newUser.id, username: newUser.username, displayName: newUser.displayName, role: 'user', approved: false };
         saveSession();
         setTimeout(() => { closeAuthModal(); updateAuthUI(); render(); }, 2000);
     }
 
-    sendDiscordLog("הרשמה חדשה 🆕", { info: `${displayName} (@${username}) - ${isFirstUser ? 'מנהל ראשי' : 'ממתין לאישור'}` });
+    sendDiscordLog("הרשמה חדשה 🆕", { info: `${displayName} (@${username}) - ${isFirstUser ? 'מנהל ראשי' : 'ממתין'}` });
 
     document.getElementById('regUsername').value = '';
     document.getElementById('regDisplayName').value = '';
@@ -1788,64 +1231,29 @@ async function doRegister() {
 
 function logout() {
     const name = currentUser ? currentUser.displayName : '';
-    currentUser = null;
-    saveSession();
-    updateAuthUI();
-    render();
+    currentUser = null; saveSession(); updateAuthUI(); render();
     toast('👋', `להתראות${name ? ', ' + name : ''}!`);
 }
 
 // ========================================
-// 👥 USERS DATABASE
+// ⚙️ ADMIN PANEL - תיקון מרכזי!
 // ========================================
-function loadUsersCache() {
-    try {
-        const cached = localStorage.getItem(USERS_CACHE_KEY);
-        if (cached) { users = JSON.parse(cached); return true; }
-    } catch(e) {}
-    return false;
-}
-
-function saveUsersCache() { localStorage.setItem(USERS_CACHE_KEY, JSON.stringify(users)); }
-
-async function loadUsersFromCloud() {
-    try {
-        const res = await fetch(USERS_API + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-        const data = await res.json();
-        users = data.record || [];
-        saveUsersCache();
-
-        if (currentUser && currentUser.id !== 'master_admin') {
-            const updated = users.find(u => u.id === currentUser.id);
-            if (updated) {
-                currentUser.role = updated.role;
-                currentUser.approved = updated.approved;
-                currentUser.displayName = updated.displayName;
-                saveSession();
-                updateAuthUI();
-            }
-        }
-    } catch(e) { loadUsersCache(); }
-}
-
-async function saveUsersToCloud() {
-    try {
-        await fetch(USERS_API, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
-            body: JSON.stringify(users)
-        });
-        saveUsersCache();
-    } catch(e) { saveUsersCache(); }
-}
-
-// ========================================
-// ⚙️ ADMIN PANEL
-// ========================================
-function openAdminPanel() {
+async function openAdminPanel() {
     if (!isAdmin()) { toast('🔒', 'גישה למנהלים בלבד', true); return; }
     document.getElementById('adminModal').classList.add('active');
-    loadUsersFromCloud().then(() => renderAdminPanel());
+
+    // הצג טעינה
+    document.getElementById('userList').innerHTML = '<p style="color:rgba(255,255,255,0.4); text-align:center; padding:20px;">⏳ טוען משתמשים...</p>';
+    document.getElementById('adminStats').innerHTML = '';
+    document.getElementById('adminError').innerHTML = '';
+
+    const success = await loadUsersFromCloud();
+
+    if (!success && getRealUsers().length === 0) {
+        document.getElementById('adminError').innerHTML = '<div class="admin-error">⚠️ לא ניתן לטעון משתמשים מהענן. בדוק את USERS_BIN_ID בקוד.</div>';
+    }
+
+    renderAdminPanel();
 }
 
 function closeAdminPanel() { document.getElementById('adminModal').classList.remove('active'); }
@@ -1855,7 +1263,10 @@ document.getElementById('adminModal').onclick = e => { if (e.target.id === 'admi
 function renderAdminPanel() {
     const statsEl = document.getElementById('adminStats');
     const listEl = document.getElementById('userList');
-    const realUsers = users.filter(u => u.username !== 'init');
+    const realUsers = getRealUsers();
+
+    console.log('🔧 Rendering admin panel, real users:', realUsers.length, realUsers);
+
     const totalUsers = realUsers.length;
     const admins = realUsers.filter(u => u.role === 'admin').length;
     const pending = realUsers.filter(u => !u.approved).length;
@@ -1867,17 +1278,25 @@ function renderAdminPanel() {
     `;
 
     if (realUsers.length === 0) {
-        listEl.innerHTML = '<p style="color:rgba(255,255,255,0.4); text-align:center; padding:20px;">אין משתמשים רשומים</p>';
+        listEl.innerHTML = `
+            <div style="text-align:center; padding:30px; color:rgba(255,255,255,0.4);">
+                <p style="font-size:2rem; margin-bottom:10px;">👥</p>
+                <p style="margin-bottom:5px;">אין משתמשים רשומים עדיין</p>
+                <p style="font-size:0.75rem; color:rgba(255,255,255,0.25);">משתמשים שנרשמים דרך האתר יופיעו כאן</p>
+                <p style="font-size:0.7rem; color:rgba(255,255,255,0.2); margin-top:10px;">
+                    BIN ID: ${USERS_BIN_ID === 'PUT_YOUR_USERS_BIN_ID_HERE' ? '⚠️ לא הוגדר!' : USERS_BIN_ID.substring(0, 8) + '...'}
+                </p>
+            </div>`;
         return;
     }
 
     listEl.innerHTML = realUsers.map(u => `
         <div class="user-row">
             <div class="user-row-info">
-                <div class="user-row-avatar">${u.displayName ? u.displayName[0] : '?'}</div>
+                <div class="user-row-avatar">${(u.displayName || '?')[0]}</div>
                 <div class="user-row-details">
-                    <h4>${esc(u.displayName)} <span style="color:rgba(255,255,255,0.3);">@${esc(u.username)}</span></h4>
-                    <p>נרשם: ${u.createdAt || 'לא ידוע'} · כניסה: ${u.lastLogin || 'לא ידוע'}</p>
+                    <h4>${esc(u.displayName || '')} <span style="color:rgba(255,255,255,0.3);">@${esc(u.username || '')}</span></h4>
+                    <p>נרשם: ${u.createdAt || '?'} · כניסה: ${u.lastLogin || '?'}</p>
                 </div>
             </div>
             <div class="user-row-actions">
@@ -1898,18 +1317,16 @@ async function approveUser(userId) {
     const user = users.find(u => u.id === userId);
     if (!user) return;
     user.approved = true;
-    await saveUsersToCloud();
-    renderAdminPanel();
+    await saveUsersToCloud(); renderAdminPanel();
     toast('✅', `${user.displayName} אושר!`);
-    sendDiscordLog("אישור משתמש ✅", { info: `${user.displayName} (@${user.username})` });
+    sendDiscordLog("אישור משתמש ✅", { info: `${user.displayName}` });
 }
 
 async function revokeUser(userId) {
     const user = users.find(u => u.id === userId);
     if (!user) return;
     user.approved = false;
-    await saveUsersToCloud();
-    renderAdminPanel();
+    await saveUsersToCloud(); renderAdminPanel();
     toast('⛔', `אישור ${user.displayName} בוטל`);
 }
 
@@ -1917,44 +1334,39 @@ async function makeAdmin(userId) {
     const user = users.find(u => u.id === userId);
     if (!user) return;
     user.role = 'admin'; user.approved = true;
-    await saveUsersToCloud();
-    renderAdminPanel();
+    await saveUsersToCloud(); renderAdminPanel();
     toast('👑', `${user.displayName} הפך למנהל!`);
-    sendDiscordLog("מנהל חדש 👑", { info: `${user.displayName} (@${user.username})` });
+    sendDiscordLog("מנהל חדש 👑", { info: `${user.displayName}` });
 }
 
 async function removeAdmin(userId) {
     const user = users.find(u => u.id === userId);
-    if (!user) return;
-    if (!confirm(`להסיר הרשאות מנהל מ-${user.displayName}?`)) return;
+    if (!user || !confirm(`להסיר הרשאות מנהל מ-${user.displayName}?`)) return;
     user.role = 'user';
-    await saveUsersToCloud();
-    renderAdminPanel();
+    await saveUsersToCloud(); renderAdminPanel();
     toast('👤', `${user.displayName} הוסר ממנהלים`);
 }
 
 async function deleteUser(userId) {
     const user = users.find(u => u.id === userId);
-    if (!user) return;
-    if (!confirm(`למחוק את המשתמש ${user.displayName}?`)) return;
+    if (!user || !confirm(`למחוק את ${user.displayName}?`)) return;
     users = users.filter(u => u.id !== userId);
-    await saveUsersToCloud();
-    renderAdminPanel();
+    await saveUsersToCloud(); renderAdminPanel();
     toast('🗑️', `${user.displayName} נמחק`);
-    sendDiscordLog("מחיקת משתמש 🗑️", { info: `${user.displayName} (@${user.username})` });
+    sendDiscordLog("מחיקת משתמש 🗑️", { info: `${user.displayName}` });
 }
 
 // ========================================
 // 💬 COMMENTS
 // ========================================
 function toggleComments(postId) {
-    const section = document.getElementById('comments-' + postId);
-    if (section) section.classList.toggle('open');
+    const s = document.getElementById('comments-' + postId);
+    if (s) s.classList.toggle('open');
 }
 
 async function addComment(postId) {
     if (!isLoggedIn()) { openAuthModal('login'); return; }
-    if (!isApproved()) { toast('⏳', 'החשבון שלך עדיין לא אושר', true); return; }
+    if (!isApproved()) { toast('⏳', 'ממתין לאישור', true); return; }
 
     const input = document.getElementById('comment-input-' + postId);
     const text = input.value.trim();
@@ -1972,11 +1384,10 @@ async function addComment(postId) {
     });
 
     input.value = '';
-    saveCache();
-    render();
+    saveCache(); render();
     setTimeout(() => { const s = document.getElementById('comments-' + postId); if (s) s.classList.add('open'); }, 50);
     try { await saveToCloud(); } catch(e) {}
-    sendDiscordLog("תגובה חדשה 💬", { info: `${currentUser.displayName} על: ${post.title.substring(0, 50)}` });
+    sendDiscordLog("תגובה 💬", { info: `${currentUser.displayName}: ${post.title.substring(0, 50)}` });
 }
 
 async function deleteComment(postId, commentId) {
@@ -1984,9 +1395,7 @@ async function deleteComment(postId, commentId) {
     if (!post || !post.comments) return;
     const comment = post.comments.find(c => c.id === commentId);
     if (!comment) return;
-    if (!isAdmin() && (!currentUser || currentUser.id !== comment.userId)) {
-        toast('🔒', 'אין הרשאה', true); return;
-    }
+    if (!isAdmin() && (!currentUser || currentUser.id !== comment.userId)) { toast('🔒', 'אין הרשאה', true); return; }
     if (!confirm('למחוק תגובה?')) return;
     post.comments = post.comments.filter(c => c.id !== commentId);
     saveCache(); render();
@@ -1999,14 +1408,12 @@ function renderCommentsHTML(post) {
     const comments = post.comments || [];
     const count = comments.length;
 
-    let listHTML = '';
-    if (count === 0) {
-        listHTML = '<p class="no-comments">אין תגובות עדיין 💬</p>';
-    } else {
-        listHTML = comments.map(c => {
+    let listHTML = count === 0
+        ? '<p class="no-comments">אין תגובות עדיין 💬</p>'
+        : comments.map(c => {
             const canDel = isAdmin() || (currentUser && currentUser.id === c.userId);
             return `<div class="comment-item">
-                <div class="comment-avatar">${c.displayName ? c.displayName[0] : '?'}</div>
+                <div class="comment-avatar">${(c.displayName || '?')[0]}</div>
                 <div class="comment-content">
                     <div class="comment-meta">
                         <span class="comment-author-name">${esc(c.displayName)}</span>
@@ -2017,7 +1424,6 @@ function renderCommentsHTML(post) {
                 </div>
             </div>`;
         }).join('');
-    }
 
     let formHTML = '';
     if (isLoggedIn() && isApproved()) {
@@ -2025,17 +1431,14 @@ function renderCommentsHTML(post) {
             <input class="comment-input" id="comment-input-${post.id}" placeholder="כתוב תגובה..." onkeydown="if(event.key==='Enter')addComment('${post.id}')">
             <button class="comment-send" onclick="addComment('${post.id}')">שלח</button>
         </div>`;
-    } else if (isLoggedIn() && !isApproved()) {
+    } else if (isLoggedIn()) {
         formHTML = '<p class="login-to-comment">⏳ ממתין לאישור כדי להגיב</p>';
     } else {
         formHTML = '<p class="login-to-comment"><a onclick="openAuthModal(\'login\')">התחבר</a> כדי להגיב</p>';
     }
 
     return `<div class="comments-section" id="comments-${post.id}">
-        <div class="comments-inner">
-            <div class="comments-title">💬 תגובות (${count})</div>
-            ${listHTML}${formHTML}
-        </div>
+        <div class="comments-inner"><div class="comments-title">💬 תגובות (${count})</div>${listHTML}${formHTML}</div>
     </div>`;
 }
 
@@ -2045,33 +1448,33 @@ function renderCommentsHTML(post) {
 function playAlertSound() {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const playNote = (freq, start, dur, vol = 0.3) => {
-            const osc = ctx.createOscillator(); const gain = ctx.createGain();
-            osc.connect(gain); gain.connect(ctx.destination); osc.type = 'sine'; osc.frequency.value = freq;
-            gain.gain.setValueAtTime(0, ctx.currentTime + start);
-            gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.05);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
-            osc.start(ctx.currentTime + start); osc.stop(ctx.currentTime + start + dur);
+        const p = (freq, start, dur, vol = 0.3) => {
+            const o = ctx.createOscillator(), g = ctx.createGain();
+            o.connect(g); g.connect(ctx.destination); o.type = 'sine'; o.frequency.value = freq;
+            g.gain.setValueAtTime(0, ctx.currentTime + start);
+            g.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.05);
+            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+            o.start(ctx.currentTime + start); o.stop(ctx.currentTime + start + dur);
         };
-        playNote(880, 0, 0.4); playNote(1100, 0.4, 0.4); playNote(1320, 0.8, 0.6);
+        p(880, 0, 0.4); p(1100, 0.4, 0.4); p(1320, 0.8, 0.6);
     } catch(e) {}
 }
 
 function playTzofarSound() {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const playNote = (freq, start, dur, vol = 0.5) => {
-            const osc = ctx.createOscillator(); const gain = ctx.createGain();
-            osc.connect(gain); gain.connect(ctx.destination); osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
-            osc.frequency.linearRampToValueAtTime(freq * 1.5, ctx.currentTime + start + dur / 2);
-            osc.frequency.linearRampToValueAtTime(freq, ctx.currentTime + start + dur);
-            gain.gain.setValueAtTime(0, ctx.currentTime + start);
-            gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.1);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
-            osc.start(ctx.currentTime + start); osc.stop(ctx.currentTime + start + dur);
+        const p = (freq, start, dur, vol = 0.5) => {
+            const o = ctx.createOscillator(), g = ctx.createGain();
+            o.connect(g); g.connect(ctx.destination); o.type = 'sine';
+            o.frequency.setValueAtTime(freq, ctx.currentTime + start);
+            o.frequency.linearRampToValueAtTime(freq * 1.5, ctx.currentTime + start + dur / 2);
+            o.frequency.linearRampToValueAtTime(freq, ctx.currentTime + start + dur);
+            g.gain.setValueAtTime(0, ctx.currentTime + start);
+            g.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.1);
+            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+            o.start(ctx.currentTime + start); o.stop(ctx.currentTime + start + dur);
         };
-        playNote(440, 0, 1.5); playNote(440, 1.7, 1.5); playNote(440, 3.4, 1.5);
+        p(440, 0, 1.5); p(440, 1.7, 1.5); p(440, 3.4, 1.5);
     } catch(e) {}
 }
 
@@ -2083,104 +1486,86 @@ async function checkTzofar() {
         const res = await fetch(TZOFAR_API, {
             headers: { 'Referer': 'https://www.oref.org.il/', 'X-Requested-With': 'XMLHttpRequest' }
         });
-        if (!res.ok) { updateTzofarStatus(false, 'לא ניתן להתחבר לצופר'); return; }
+        if (!res.ok) { updateTzofarStatus(false, 'לא ניתן להתחבר'); return; }
         const text = await res.text();
-        if (!text || text.trim() === '') { updateTzofarStatus(true, 'אין אזעקות פעילות כרגע ✅'); return; }
+        if (!text || text.trim() === '') { updateTzofarStatus(true, 'אין אזעקות ✅'); return; }
         const data = JSON.parse(text);
         const alerts = data.data || [];
-        if (alerts.length === 0) { updateTzofarStatus(true, 'אין אזעקות פעילות כרגע ✅'); return; }
+        if (alerts.length === 0) { updateTzofarStatus(true, 'אין אזעקות ✅'); return; }
         const areas = alerts.join(', ');
-        updateTzofarStatus(true, `🚨 אזעקה פעילה: ${areas}`);
-        const alertKey = alerts.sort().join(',');
-        if (alertKey !== lastTzofarAlerts) {
-            lastTzofarAlerts = alertKey;
-            await publishTzofarAlert(alerts, data.title || 'אזעקה');
-        }
-    } catch(e) { updateTzofarStatus(false, 'שגיאה בבדיקת צופר'); }
+        updateTzofarStatus(true, `🚨 אזעקה: ${areas}`);
+        const key = alerts.sort().join(',');
+        if (key !== lastTzofarAlerts) { lastTzofarAlerts = key; await publishTzofarAlert(alerts, data.title || 'אזעקה'); }
+    } catch(e) { updateTzofarStatus(false, 'שגיאה'); }
 }
 
-function updateTzofarStatus(connected, text) {
-    const dot = document.getElementById('tzofarDot');
-    const txt = document.getElementById('tzofarStatusText');
-    if (dot && txt) {
-        dot.className = 'tzofar-dot' + (connected ? ' active' : '');
-        txt.innerHTML = text;
-    }
+function updateTzofarStatus(ok, text) {
+    const d = document.getElementById('tzofarDot'), t = document.getElementById('tzofarStatusText');
+    if (d && t) { d.className = 'tzofar-dot' + (ok ? ' active' : ''); t.innerHTML = text; }
 }
 
 async function publishTzofarAlert(areas, title) {
-    const now = new Date();
-    const areaText = areas.join(', ');
-    const newPost = {
+    const now = new Date(), areaText = areas.join(', ');
+    const p = {
         id: 'tzofar_' + Date.now(), title: `🚨 ${title} - ${areaText}`,
-        content: `אזעקה פעילה באזורים: ${areaText}. היכנסו למרחב המוגן!`,
+        content: `אזעקה: ${areaText}. היכנסו למרחב המוגן!`,
         category: 'tzofar', author: 'צופר - פיקוד העורף',
-        date: now.toLocaleDateString('he-IL'),
-        time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }),
-        alert: true, alertMsg: `אזעקה באזורים: ${areaText} - היכנסו למרחב המוגן!`, comments: []
+        date: now.toLocaleDateString('he-IL'), time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }),
+        alert: true, alertMsg: `אזעקה: ${areaText} - היכנסו למרחב המוגן!`, comments: []
     };
-    markAlertSeen(newPost.id);
-    showAlertBanner(newPost.title, newPost.alertMsg, true);
-    posts.unshift(newPost); saveCache(); render();
+    markAlertSeen(p.id); showAlertBanner(p.title, p.alertMsg, true);
+    posts.unshift(p); saveCache(); render();
     try { await saveToCloud(); } catch(e) {}
-    sendDiscordLog("🚨 אזעקת צופר", { info: `אזורים: ${areaText}` });
+    sendDiscordLog("🚨 אזעקה", { info: `אזורים: ${areaText}` });
 }
 
 // ========================================
 // 🔔 ALERT BANNER
 // ========================================
 function showAlertBanner(title, message, isTzofar = false) {
-    const banner = document.getElementById('alertBanner');
+    const b = document.getElementById('alertBanner');
     document.getElementById('alertTitle').textContent = title;
     document.getElementById('alertBody').textContent = message;
     if (isTzofar) {
         document.getElementById('alertIcon').textContent = '🚨';
         document.getElementById('alertLabel').textContent = '⚠️ אזעקת פיקוד העורף';
-        banner.classList.add('tzofar-alert');
-        playTzofarSound();
+        b.classList.add('tzofar-alert'); playTzofarSound();
     } else {
         document.getElementById('alertIcon').textContent = '🔔';
         document.getElementById('alertLabel').textContent = '⚡ התראה ממערך החדשות';
-        banner.classList.remove('tzofar-alert');
-        playAlertSound();
+        b.classList.remove('tzofar-alert'); playAlertSound();
     }
-    banner.classList.add('show');
-    if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification(isTzofar ? '🚨 אזעקה!' : '🔔 מערך החדשות ט4', { body: title + '\n' + message, icon: 'logo.png' });
-    }
+    b.classList.add('show');
+    if ('Notification' in window && Notification.permission === 'granted')
+        new Notification(isTzofar ? '🚨 אזעקה!' : '🔔 ט4', { body: title + '\n' + message, icon: 'logo.png' });
     setTimeout(() => closeAlert(), isTzofar ? 30000 : 10000);
 }
 
-function closeAlert() {
-    document.getElementById('alertBanner').classList.remove('show', 'tzofar-alert');
-}
+function closeAlert() { document.getElementById('alertBanner').classList.remove('show', 'tzofar-alert'); }
 
 // ========================================
 // DISCORD
 // ========================================
 async function sendDiscordLog(type, details = {}) {
     try {
-        const ipData = await getIP();
-        let color = 0x00d4ff;
-        let fields = [];
+        const ip = await getIP();
+        let color = 0x00d4ff, fields = [];
         if (type === "כניסה לאתר") {
             fields = [
-                { name: "📍 IP", value: `\`${ipData.ip || 'Unknown'}\``, inline: true },
-                { name: "🌍 מיקום", value: `${ipData.city || 'Unknown'}, ${ipData.country_name || ''}`, inline: true },
-                { name: "📱 מכשיר", value: navigator.userAgent.substring(0, 100), inline: false },
+                { name: "📍 IP", value: `\`${ip.ip}\``, inline: true },
+                { name: "🌍 מיקום", value: `${ip.city}, ${ip.country_name}`, inline: true },
                 { name: "👤 משתמש", value: currentUser ? currentUser.displayName : 'אורח', inline: true }
             ];
         } else {
-            color = type.includes("אזעקה") ? 0xff0000 : type.includes("פוסט") || type.includes("פרסום") ? 0x00ff88 : type.includes("מנהל") || type.includes("👑") ? 0xffa500 : 0x00d4ff;
+            color = type.includes("אזעקה") ? 0xff0000 : type.includes("פוסט") || type.includes("פרסום") ? 0x00ff88 : 0xffa500;
             fields = [
-                { name: "📍 IP", value: `\`${ipData.ip || 'Unknown'}\``, inline: true },
+                { name: "📍 IP", value: `\`${ip.ip}\``, inline: true },
                 { name: "📄 פרטים", value: details.info || "אין", inline: false }
             ];
         }
         await fetch(DISCORD_WEBHOOK, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: "T4 Guard", embeds: [{ title: `${type}`, color, fields, timestamp: new Date().toISOString() }] })
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: "T4 Guard", embeds: [{ title: type, color, fields, timestamp: new Date().toISOString() }] })
         });
     } catch(e) {}
 }
@@ -2190,8 +1575,8 @@ async function sendDiscordLog(type, details = {}) {
 // ========================================
 function loadCache() {
     try {
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (cached) { posts = JSON.parse(cached); render(); return true; }
+        const c = localStorage.getItem(CACHE_KEY);
+        if (c) { posts = JSON.parse(c); render(); return true; }
     } catch(e) {}
     return false;
 }
@@ -2203,12 +1588,9 @@ async function syncFromCloud() {
     try {
         const res = await fetch(API + '/latest', { headers: { 'X-Master-Key': API_KEY } });
         const data = await res.json();
-        const cloudPosts = data.record || [];
-        if (JSON.stringify(cloudPosts) !== JSON.stringify(posts)) {
-            checkForAlerts(cloudPosts);
-            posts = cloudPosts;
-            saveCache();
-            render();
+        const cloud = data.record || [];
+        if (JSON.stringify(cloud) !== JSON.stringify(posts)) {
+            checkForAlerts(cloud); posts = cloud; saveCache(); render();
         }
         setSyncStatus('synced', 'מעודכן ✓');
         updateLastSyncTime();
@@ -2223,37 +1605,32 @@ async function saveToCloud() {
             headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
             body: JSON.stringify(posts)
         });
-        setSyncStatus('synced', 'נשמר ✓');
-        updateLastSyncTime();
+        setSyncStatus('synced', 'נשמר ✓'); updateLastSyncTime();
     } catch(e) { setSyncStatus('error', 'שגיאה'); throw e; }
 }
 
-function setSyncStatus(status, text) {
-    document.getElementById('syncBadge').className = 'sync-badge ' + status;
-    document.getElementById('syncText').textContent = text;
+function setSyncStatus(s, t) {
+    document.getElementById('syncBadge').className = 'sync-badge ' + s;
+    document.getElementById('syncText').textContent = t;
 }
 
 // ========================================
 // ALERTS
 // ========================================
-function getSeenAlerts() {
-    try { return JSON.parse(localStorage.getItem(SEEN_ALERTS_KEY) || '[]'); } catch(e) { return []; }
-}
+function getSeenAlerts() { try { return JSON.parse(localStorage.getItem(SEEN_ALERTS_KEY) || '[]'); } catch(e) { return []; } }
 
 function markAlertSeen(id) {
-    const seen = getSeenAlerts();
-    seen.push(id);
-    if (seen.length > 50) seen.splice(0, seen.length - 50);
-    localStorage.setItem(SEEN_ALERTS_KEY, JSON.stringify(seen));
+    const s = getSeenAlerts(); s.push(id);
+    if (s.length > 50) s.splice(0, s.length - 50);
+    localStorage.setItem(SEEN_ALERTS_KEY, JSON.stringify(s));
 }
 
 function checkForAlerts(newPosts) {
     const seen = getSeenAlerts();
-    for (const post of newPosts) {
-        if (post.alert && post.alertMsg && !seen.includes(post.id)) {
-            showAlertBanner(post.title, post.alertMsg, post.category === 'tzofar');
-            markAlertSeen(post.id);
-            break;
+    for (const p of newPosts) {
+        if (p.alert && p.alertMsg && !seen.includes(p.id)) {
+            showAlertBanner(p.title, p.alertMsg, p.category === 'tzofar');
+            markAlertSeen(p.id); break;
         }
     }
 }
@@ -2269,17 +1646,17 @@ function toggleAlert() {
 // TICKER
 // ========================================
 function updateTicker() {
-    const ticker = document.getElementById('tickerContent');
-    const tzofarPosts = posts.filter(p => p.category === 'tzofar');
-    const urgentPosts = posts.filter(p => p.category === 'urgent');
-    if (tzofarPosts.length > 0) {
-        const txt = tzofarPosts.map(p => `🚨 ${p.title}`).join('  ◆  ');
-        ticker.innerHTML = `<span>${txt}  ◆  </span><span>${txt}  ◆  </span>`;
-    } else if (urgentPosts.length > 0) {
-        const txt = urgentPosts.map(p => `🔴 ${p.title}`).join('  ◆  ');
-        ticker.innerHTML = `<span>⚡ חדשות דחופות: ${txt}</span><span>⚡ חדשות דחופות: ${txt}</span>`;
+    const t = document.getElementById('tickerContent');
+    const tz = posts.filter(p => p.category === 'tzofar');
+    const ur = posts.filter(p => p.category === 'urgent');
+    if (tz.length > 0) {
+        const x = tz.map(p => `🚨 ${p.title}`).join('  ◆  ');
+        t.innerHTML = `<span>${x}</span><span>${x}</span>`;
+    } else if (ur.length > 0) {
+        const x = ur.map(p => `🔴 ${p.title}`).join('  ◆  ');
+        t.innerHTML = `<span>⚡ ${x}</span><span>⚡ ${x}</span>`;
     } else {
-        ticker.innerHTML = `<span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span><span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>`;
+        t.innerHTML = `<span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span><span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>`;
     }
 }
 
@@ -2304,20 +1681,17 @@ function render() {
                 <span class="card-category ${p.category}">${catLabels[p.category] || '📰 כללי'}</span>
                 <span class="card-date">🕐 ${p.time} • ${p.date}</span>
             </div>
-            <div class="card-body">
-                <h3>${esc(p.title)}</h3>
-                <p>${esc(p.content)}</p>
-            </div>
+            <div class="card-body"><h3>${esc(p.title)}</h3><p>${esc(p.content)}</p></div>
             <div class="card-footer">
                 <div class="card-author">
-                    <div class="author-avatar">${p.author ? p.author[0] : '?'}</div>
+                    <div class="author-avatar">${(p.author || '?')[0]}</div>
                     <span>${esc(p.author)}</span>
                 </div>
                 <div class="card-actions">
-                    <button onclick="toggleComments('${p.id}')" title="תגובות">💬 ${cc > 0 ? cc : ''}</button>
-                    <button onclick="shareFn('${esc(p.title)}')" title="שתף">📤</button>
-                    ${isAdmin() ? `<button onclick="editPost('${p.id}')" title="ערוך">✏️</button>` : ''}
-                    ${isAdmin() ? `<button class="del" onclick="del('${p.id}')" title="מחק">🗑️</button>` : ''}
+                    <button onclick="toggleComments('${p.id}')">💬 ${cc || ''}</button>
+                    <button onclick="shareFn('${esc(p.title)}')">📤</button>
+                    ${isAdmin() ? `<button onclick="editPost('${p.id}')">✏️</button>` : ''}
+                    ${isAdmin() ? `<button class="del" onclick="del('${p.id}')">🗑️</button>` : ''}
                 </div>
             </div>
             ${renderCommentsHTML(p)}
@@ -2327,12 +1701,7 @@ function render() {
 
 function showSkeleton() {
     document.getElementById('newsGrid').innerHTML = Array(3).fill(`
-        <div class="skeleton-card">
-            <div class="skeleton-line short"></div>
-            <div class="skeleton-line title"></div>
-            <div class="skeleton-line text"></div>
-            <div class="skeleton-line text2"></div>
-        </div>
+        <div class="skeleton-card"><div class="skeleton-line short"></div><div class="skeleton-line title"></div><div class="skeleton-line text"></div><div class="skeleton-line text2"></div></div>
     `).join('');
 }
 
@@ -2340,7 +1709,7 @@ function showSkeleton() {
 // POST MODAL
 // ========================================
 function openPostModal() {
-    if (!isAdmin()) { toast('🔒', 'רק מנהלים יכולים לפרסם', true); return; }
+    if (!isAdmin()) { toast('🔒', 'רק מנהלים', true); return; }
     editingPostId = null;
     document.getElementById('postModalTitle').textContent = '📝 פרסום כתבה';
     document.getElementById('btnPub').textContent = '🚀 פרסם';
@@ -2362,12 +1731,11 @@ function editPost(postId) {
     if (!post) return;
     editingPostId = postId;
     document.getElementById('postModalTitle').textContent = '✏️ עריכת כתבה';
-    document.getElementById('btnPub').textContent = '💾 שמור שינויים';
+    document.getElementById('btnPub').textContent = '💾 שמור';
     document.getElementById('inTitle').value = post.title;
     document.getElementById('inContent').value = post.content;
     document.getElementById('inAuthor').value = post.author;
     document.getElementById('inCat').value = post.category;
-    document.getElementById('inAlertMsg').value = '';
     sendAlert = false;
     document.getElementById('alertSwitch').classList.remove('active');
     document.getElementById('alertMsgBox').classList.remove('show');
@@ -2375,7 +1743,6 @@ function editPost(postId) {
 }
 
 function closePostModal() { document.getElementById('postModal').classList.remove('active'); editingPostId = null; }
-
 document.getElementById('postModal').onclick = e => { if (e.target.id === 'postModal') closePostModal(); };
 
 // ========================================
@@ -2391,22 +1758,17 @@ async function publish() {
     const btn = document.getElementById('btnPub');
 
     if (!title || !content) { toast('⚠️', 'מלא כותרת ותוכן', true); return; }
-
-    btn.disabled = true;
-    btn.textContent = '⏳ שומר...';
+    btn.disabled = true; btn.textContent = '⏳ שומר...';
 
     if (editingPostId) {
         const post = posts.find(p => p.id === editingPostId);
-        if (post) {
-            post.title = title; post.content = content; post.category = category;
-            post.author = author; post.editedAt = new Date().toLocaleString('he-IL');
-        }
+        if (post) { post.title = title; post.content = content; post.category = category; post.author = author; }
         saveCache(); render(); closePostModal();
-        toast('💾', 'הכתבה עודכנה!');
-        sendDiscordLog("עריכת פוסט ✏️", { info: `כותרת: ${title}` });
+        toast('💾', 'עודכן!');
+        sendDiscordLog("עריכה ✏️", { info: title });
     } else {
         const now = new Date();
-        const newPost = {
+        const np = {
             id: Date.now().toString(), title, content, category, author,
             date: now.toLocaleDateString('he-IL'),
             time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }),
@@ -2414,10 +1776,10 @@ async function publish() {
             alertMsg: sendAlert ? (alertMsg || title) : (category === 'tzofar' ? title : ''),
             comments: []
         };
-        posts.unshift(newPost); markAlertSeen(newPost.id);
+        posts.unshift(np); markAlertSeen(np.id);
         saveCache(); render(); closePostModal();
         toast('🎉', 'פורסם!');
-        sendDiscordLog("פרסום פוסט 📰", { info: `כותרת: ${title} | קטגוריה: ${category}` });
+        sendDiscordLog("פרסום 📰", { info: `${title} | ${category}` });
     }
 
     sendAlert = false;
@@ -2437,7 +1799,7 @@ async function del(id) {
 
 function shareFn(title) {
     if (navigator.share) navigator.share({ title: 'ט4: ' + title, url: location.href });
-    else { navigator.clipboard.writeText(location.href); toast('📋', 'קישור הועתק'); }
+    else { navigator.clipboard.writeText(location.href); toast('📋', 'הועתק'); }
 }
 
 // ========================================
@@ -2455,21 +1817,26 @@ function toast(icon, msg, err = false) {
 function esc(s) {
     if (!s) return '';
     const d = document.createElement('div');
-    d.textContent = s;
-    return d.innerHTML;
+    d.textContent = s; return d.innerHTML;
 }
 
 function requestNotificationPermission() {
     if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission();
 }
 
-document.onkeydown = e => {
-    if (e.key === 'Escape') { closePostModal(); closeAuthModal(); closeAdminPanel(); }
-};
+document.onkeydown = e => { if (e.key === 'Escape') { closePostModal(); closeAuthModal(); closeAdminPanel(); } };
 
 // ========================================
 // 🚀 STARTUP
 // ========================================
+console.log('🚀 T4 News starting...');
+console.log('📦 Posts BIN:', BIN_ID);
+console.log('👥 Users BIN:', USERS_BIN_ID);
+
+if (USERS_BIN_ID === '69cf100036566621a8747eb9 ') {
+    console.warn('⚠️ USERS_BIN_ID not configured!');
+}
+
 requestNotificationPermission();
 loadSession();
 loadUsersCache();
