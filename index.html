@@ -101,7 +101,7 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .sync-badge {
@@ -184,6 +184,95 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
         }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-admin {
+            background: linear-gradient(135deg, #ffa500, #ff6600);
+            color: white;
+        }
+
+        .btn-admin:hover {
+            box-shadow: 0 5px 20px rgba(255, 165, 0, 0.3);
+        }
+
+        .btn-danger {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 68, 68, 0.2);
+        }
+
+        /* ========== USER BADGE ========== */
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .user-avatar-header {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: var(--gradient1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .user-name-header {
+            font-size: 0.85rem;
+            color: var(--text-bright);
+            font-weight: 500;
+        }
+
+        .role-tag {
+            font-size: 0.6rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .role-tag.admin {
+            background: rgba(255, 165, 0, 0.15);
+            color: #ffa500;
+            border: 1px solid rgba(255, 165, 0, 0.3);
+        }
+
+        .role-tag.user {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .role-tag.pending {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .guest-actions, .user-actions-header { display: flex; align-items: center; gap: 10px; }
 
         .ticker-bar {
             background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2));
@@ -382,6 +471,8 @@
             font-weight: 700;
         }
 
+        .card-actions { display: flex; gap: 4px; }
+
         .card-actions button {
             background: none;
             border: none;
@@ -390,10 +481,155 @@
             font-size: 1rem;
             padding: 4px 8px;
             transition: color 0.3s;
+            border-radius: 6px;
         }
 
-        .card-actions button:hover { color: var(--accent); }
-        .card-actions .del:hover { color: #ff4444; }
+        .card-actions button:hover { color: var(--accent); background: rgba(0, 212, 255, 0.05); }
+        .card-actions .del:hover { color: #ff4444; background: rgba(255, 68, 68, 0.05); }
+
+        /* ========== COMMENTS ========== */
+        .comments-section {
+            border-top: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.15);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .comments-section.open {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .comments-inner { padding: 15px 22px; }
+
+        .comments-title {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comment-avatar {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: var(--accent2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .comment-content { flex: 1; }
+
+        .comment-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .comment-author-name {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .comment-time {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .comment-text {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        .comment-delete {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .comment-delete:hover { color: #ff4444; background: rgba(255, 68, 68, 0.1); }
+
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--primary);
+            color: var(--text-bright);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .comment-input:focus { border-color: var(--accent); }
+
+        .comment-send {
+            padding: 10px 18px;
+            border-radius: 10px;
+            border: none;
+            background: var(--gradient1);
+            color: white;
+            font-family: 'Heebo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .comment-send:hover { box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3); }
+
+        .no-comments {
+            text-align: center;
+            padding: 15px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.85rem;
+        }
+
+        .login-to-comment {
+            text-align: center;
+            padding: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.8rem;
+        }
+
+        .login-to-comment a {
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: underline;
+        }
 
         .status-msg {
             text-align: center;
@@ -429,6 +665,7 @@
             50% { opacity: 0.5; }
         }
 
+        /* ========== ALERT BANNER ========== */
         .alert-banner {
             display: none;
             position: fixed;
@@ -537,6 +774,7 @@
         .alert-banner.tzofar-alert .alert-label { color: #ff4444; }
         .alert-banner.tzofar-alert .alert-time { background: linear-gradient(90deg, #ff0000, #ff4444); }
 
+        /* ========== MODALS ========== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -562,6 +800,8 @@
             max-height: 90vh;
             overflow-y: auto;
         }
+
+        .modal.wide { max-width: 700px; }
 
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -597,52 +837,196 @@
 
         .modal-body { padding: 25px; }
 
-        .pass-screen { text-align: center; padding: 20px 0; }
-        .pass-screen .lock { font-size: 3rem; margin-bottom: 15px; }
-        .pass-screen p { color: rgba(255, 255, 255, 0.5); margin-bottom: 25px; }
-
-        .pass-group {
+        /* ========== AUTH MODAL ========== */
+        .auth-tabs {
             display: flex;
-            gap: 10px;
-            max-width: 300px;
-            margin: 0 auto;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
         }
 
-        .pass-group input {
+        .auth-tab {
             flex: 1;
             padding: 12px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: var(--primary);
-            color: var(--text-bright);
-            font-family: 'Heebo', sans-serif;
             text-align: center;
-            letter-spacing: 5px;
-            outline: none;
-        }
-
-        .pass-group input:focus { border-color: var(--accent); }
-
-        .pass-group button {
-            padding: 12px 24px;
-            border-radius: 10px;
-            border: none;
-            background: var(--gradient1);
-            color: white;
-            font-family: 'Heebo', sans-serif;
-            font-weight: 700;
             cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
         }
 
-        .pass-error {
+        .auth-tab:hover { color: rgba(255, 255, 255, 0.7); }
+
+        .auth-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+
+        .auth-error {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.2);
             color: #ff4444;
+            padding: 10px 15px;
+            border-radius: 8px;
             font-size: 0.85rem;
-            margin-top: 12px;
+            margin-bottom: 15px;
             display: none;
         }
 
-        .post-form { display: none; }
+        .auth-success {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            color: var(--accent3);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            display: none;
+        }
 
+        .pending-banner {
+            background: rgba(255, 165, 0, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pending-banner .pending-icon { font-size: 1.5rem; }
+        .pending-banner .pending-text h4 { color: #ffa500; font-size: 0.9rem; margin-bottom: 2px; }
+        .pending-banner .pending-text p { color: rgba(255, 255, 255, 0.4); font-size: 0.8rem; }
+
+        /* ========== ADMIN PANEL ========== */
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .admin-stat {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .admin-stat .stat-num {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: var(--gradient1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .admin-stat .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 4px;
+        }
+
+        .user-list { display: flex; flex-direction: column; gap: 10px; }
+
+        .user-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .user-row:hover { border-color: var(--accent); }
+
+        .user-row-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-row-avatar {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--gradient1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .user-row-details h4 {
+            font-size: 0.9rem;
+            color: var(--text-bright);
+            margin-bottom: 2px;
+        }
+
+        .user-row-details p {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .user-row-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .user-row-actions button {
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-approve {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: var(--accent3);
+        }
+
+        .btn-approve:hover { background: rgba(0, 255, 136, 0.2); }
+
+        .btn-revoke {
+            background: rgba(255, 165, 0, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            color: #ffa500;
+        }
+
+        .btn-revoke:hover { background: rgba(255, 165, 0, 0.2); }
+
+        .btn-make-admin {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: var(--accent2);
+        }
+
+        .btn-make-admin:hover { background: rgba(124, 58, 237, 0.2); }
+
+        .btn-del-user {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+        }
+
+        .btn-del-user:hover { background: rgba(255, 68, 68, 0.2); }
+
+        /* ========== POST FORM ========== */
         .fg { margin-bottom: 18px; }
         .fg label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
 
@@ -767,15 +1151,8 @@
 
         .tzofar-dot.active { background: #00ff88; }
 
-        .tzofar-status p {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .tzofar-status p span {
-            color: var(--text-bright);
-            font-weight: 600;
-        }
+        .tzofar-status p { font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); }
+        .tzofar-status p span { color: var(--text-bright); font-weight: 600; }
 
         .btn-pub {
             width: 100%;
@@ -836,6 +1213,10 @@
             .alert-inner { flex-direction: column; gap: 10px; padding: 15px; }
             .alert-icon-big { font-size: 2rem; }
             .alert-text h3 { font-size: 1.1rem; }
+            .admin-stats { grid-template-columns: 1fr; }
+            .user-row { flex-direction: column; gap: 10px; text-align: center; }
+            .user-row-actions { flex-wrap: wrap; justify-content: center; }
+            .user-badge { display: none; }
         }
     </style>
 </head>
@@ -879,10 +1260,36 @@
                 <div class="live-dot"></div>
                 <span>LIVE</span>
             </div>
-            <button class="btn btn-primary" onclick="openModal()">✏️ פוסט חדש</button>
+
+            <!-- Guest Actions -->
+            <div class="guest-actions" id="guestActions">
+                <button class="btn btn-ghost" onclick="openAuthModal('login')">🔑 התחבר</button>
+                <button class="btn btn-primary" onclick="openAuthModal('register')">📝 הרשם</button>
+            </div>
+
+            <!-- User Actions (hidden by default) -->
+            <div class="user-actions-header" id="userActionsHeader" style="display:none">
+                <div class="user-badge" id="headerUserBadge">
+                    <div class="user-avatar-header" id="headerAvatar">?</div>
+                    <span class="user-name-header" id="headerName">משתמש</span>
+                    <span class="role-tag" id="headerRole">משתמש</span>
+                </div>
+                <button class="btn btn-primary" id="btnNewPost" onclick="openPostModal()" style="display:none">✏️ פוסט חדש</button>
+                <button class="btn btn-admin" id="btnAdminPanel" onclick="openAdminPanel()" style="display:none">⚙️ ניהול</button>
+                <button class="btn btn-ghost" onclick="logout()">🚪</button>
+            </div>
         </div>
     </div>
 </header>
+
+<!-- Pending Approval Banner -->
+<div class="pending-banner" id="pendingBanner" style="display:none; max-width:1400px; margin:15px auto 0; padding:15px 40px;">
+    <span class="pending-icon">⏳</span>
+    <div class="pending-text">
+        <h4>החשבון שלך ממתין לאישור</h4>
+        <p>מנהל המערכת צריך לאשר את חשבונך לפני שתוכל להגיב</p>
+    </div>
+</div>
 
 <div class="ticker-bar" id="tickerBar">
     <div class="ticker-content" id="tickerContent">
@@ -903,73 +1310,132 @@
 </main>
 
 <footer>
-    <p>© 2025 <span class="brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
+    <p>© 2026 <span class="brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
 </footer>
 
-<!-- Modal -->
-<div class="modal-overlay" id="modal">
+<!-- ========== AUTH MODAL ========== -->
+<div class="modal-overlay" id="authModal">
     <div class="modal">
         <div class="modal-header">
-            <h2>📝 פרסום כתבה</h2>
-            <button class="modal-close" onclick="closeModal()">✕</button>
+            <h2 id="authModalTitle">🔑 התחברות</h2>
+            <button class="modal-close" onclick="closeAuthModal()">✕</button>
         </div>
         <div class="modal-body">
-            <div class="pass-screen" id="passScreen">
-                <div class="lock">🔐</div>
-                <p>הזן סיסמה לפרסום</p>
-                <div class="pass-group">
-                    <input type="password" id="passIn" placeholder="••••••" onkeydown="if(event.key==='Enter')checkPass()">
-                    <button onclick="checkPass()">כניסה</button>
-                </div>
-                <p class="pass-error" id="passErr">❌ סיסמה שגויה</p>
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">🔑 התחברות</div>
+                <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">📝 הרשמה</div>
             </div>
-            <div class="post-form" id="postForm">
-                <div class="tzofar-status" id="tzofarStatus">
-                    <div class="tzofar-dot" id="tzofarDot"></div>
-                    <p id="tzofarStatusText">🔄 בודק סטטוס צופר...</p>
+
+            <!-- Login Form -->
+            <div class="auth-form active" id="loginForm">
+                <div class="auth-error" id="loginError"></div>
+                <div class="fg">
+                    <label>שם משתמש</label>
+                    <input type="text" id="loginUsername" placeholder="הזן שם משתמש..." onkeydown="if(event.key==='Enter')doLogin()">
                 </div>
                 <div class="fg">
-                    <label>כותרת</label>
-                    <input type="text" id="inTitle" placeholder="כותרת הכתבה...">
+                    <label>סיסמה</label>
+                    <input type="password" id="loginPassword" placeholder="הזן סיסמה..." onkeydown="if(event.key==='Enter')doLogin()">
+                </div>
+                <button class="btn-pub" onclick="doLogin()">🔑 התחבר</button>
+            </div>
+
+            <!-- Register Form -->
+            <div class="auth-form" id="registerForm">
+                <div class="auth-error" id="registerError"></div>
+                <div class="auth-success" id="registerSuccess"></div>
+                <div class="fg">
+                    <label>שם משתמש</label>
+                    <input type="text" id="regUsername" placeholder="בחר שם משתמש...">
                 </div>
                 <div class="fg">
-                    <label>תוכן</label>
-                    <textarea id="inContent" placeholder="תוכן הכתבה..."></textarea>
+                    <label>שם תצוגה</label>
+                    <input type="text" id="regDisplayName" placeholder="השם שיוצג באתר...">
                 </div>
-                <div class="form-row">
-                    <div class="fg">
-                        <label>קטגוריה</label>
-                        <select id="inCat">
-                            <option value="general">📰 כללי</option>
-                            <option value="urgent">🔴 דחוף</option>
-                            <option value="sports">⚽ ספורט</option>
-                            <option value="tech">💻 טכנולוגיה</option>
-                            <option value="entertainment">🎬 בידור</option>
-                            <option value="tzofar">🚨 צופר - אזעקה</option>
-                        </select>
-                    </div>
-                    <div class="fg">
-                        <label>שם הכותב</label>
-                        <input type="text" id="inAuthor" placeholder="השם שלך...">
-                    </div>
+                <div class="fg">
+                    <label>סיסמה</label>
+                    <input type="password" id="regPassword" placeholder="בחר סיסמה (לפחות 4 תווים)...">
                 </div>
-                <div class="alert-section">
-                    <div class="alert-toggle" onclick="toggleAlert()">
-                        <div class="alert-toggle-info">
-                            <span>🔔</span>
-                            <div class="alert-toggle-text">
-                                <h4>שלח התראה לכולם</h4>
-                                <p>כל מי שהאתר פתוח אצלו יקבל התראה</p>
-                            </div>
+                <div class="fg">
+                    <label>אימות סיסמה</label>
+                    <input type="password" id="regPassword2" placeholder="הזן שוב את הסיסמה..." onkeydown="if(event.key==='Enter')doRegister()">
+                </div>
+                <button class="btn-pub" onclick="doRegister()">📝 הרשם</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== POST MODAL ========== -->
+<div class="modal-overlay" id="postModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="postModalTitle">📝 פרסום כתבה</h2>
+            <button class="modal-close" onclick="closePostModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="tzofar-status" id="tzofarStatus">
+                <div class="tzofar-dot" id="tzofarDot"></div>
+                <p id="tzofarStatusText">🔄 בודק סטטוס צופר...</p>
+            </div>
+            <div class="fg">
+                <label>כותרת</label>
+                <input type="text" id="inTitle" placeholder="כותרת הכתבה...">
+            </div>
+            <div class="fg">
+                <label>תוכן</label>
+                <textarea id="inContent" placeholder="תוכן הכתבה..."></textarea>
+            </div>
+            <div class="form-row">
+                <div class="fg">
+                    <label>קטגוריה</label>
+                    <select id="inCat">
+                        <option value="general">📰 כללי</option>
+                        <option value="urgent">🔴 דחוף</option>
+                        <option value="sports">⚽ ספורט</option>
+                        <option value="tech">💻 טכנולוגיה</option>
+                        <option value="entertainment">🎬 בידור</option>
+                        <option value="tzofar">🚨 צופר - אזעקה</option>
+                    </select>
+                </div>
+                <div class="fg">
+                    <label>שם הכותב</label>
+                    <input type="text" id="inAuthor" placeholder="השם שלך...">
+                </div>
+            </div>
+            <div class="alert-section">
+                <div class="alert-toggle" onclick="toggleAlert()">
+                    <div class="alert-toggle-info">
+                        <span>🔔</span>
+                        <div class="alert-toggle-text">
+                            <h4>שלח התראה לכולם</h4>
+                            <p>כל מי שהאתר פתוח אצלו יקבל התראה</p>
                         </div>
-                        <div class="toggle-switch" id="alertSwitch"></div>
                     </div>
-                    <div class="alert-msg-input" id="alertMsgBox">
-                        <label>🔔 טקסט ההתראה</label>
-                        <input type="text" id="inAlertMsg" placeholder="מה לכתוב בהתראה...">
-                    </div>
+                    <div class="toggle-switch" id="alertSwitch"></div>
                 </div>
-                <button class="btn-pub" id="btnPub" onclick="publish()">🚀 פרסם</button>
+                <div class="alert-msg-input" id="alertMsgBox">
+                    <label>🔔 טקסט ההתראה</label>
+                    <input type="text" id="inAlertMsg" placeholder="מה לכתוב בהתראה...">
+                </div>
+            </div>
+            <button class="btn-pub" id="btnPub" onclick="publish()">🚀 פרסם</button>
+        </div>
+    </div>
+</div>
+
+<!-- ========== ADMIN PANEL MODAL ========== -->
+<div class="modal-overlay" id="adminModal">
+    <div class="modal wide">
+        <div class="modal-header">
+            <h2>⚙️ ניהול משתמשים</h2>
+            <button class="modal-close" onclick="closeAdminPanel()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="admin-stats" id="adminStats"></div>
+            <h3 style="color:var(--text-bright); margin-bottom:15px; font-size:1rem;">👥 רשימת משתמשים</h3>
+            <div class="user-list" id="userList">
+                <p style="color:rgba(255,255,255,0.4); text-align:center;">טוען משתמשים...</p>
             </div>
         </div>
     </div>
@@ -982,19 +1448,28 @@
 
 <script>
 // ========================================
+// 🔧 CONFIGURATION
+// ========================================
 const BIN_ID = '69cece9436566621a873a3a2';
+const USERS_BIN_ID = '69cf100036566621a8747eb9';  // ⚠️ צור bin חדש ב-jsonbin.io עם [] והחלף כאן
 const API_KEY = '$2a$10$vb0rw5j/7dIM.sZrbGmjbuS8kVJsAqUtiFlHZL07M2qzvyLzzCETO';
 const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1489379629457346840/Fi5Jgu2r_5ll0nSCYXxMVo5JcIqWRa6__TslDN0e8XSbJuNuWeXubMjhTYlKPNkbSIQ9';
+const MASTER_PASSWORD = '123456'; // סיסמת גיבוי למנהל ראשי
 // ========================================
 
 const API = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const USERS_API = `https://api.jsonbin.io/v3/b/${USERS_BIN_ID}`;
 const CACHE_KEY = 't4_news_cache';
+const USERS_CACHE_KEY = 't4_users_cache';
+const SESSION_KEY = 't4_session';
 const SEEN_ALERTS_KEY = 't4_seen_alerts';
 const TZOFAR_API = 'https://www.oref.org.il/WarningMessages/alert/alerts.json';
 
 let posts = [];
-let isAuth = false;
+let users = [];
+let currentUser = null;
 let sendAlert = false;
+let editingPostId = null;
 let lastTzofarAlerts = [];
 
 const catLabels = {
@@ -1005,6 +1480,578 @@ const catLabels = {
     entertainment: '🎬 בידור',
     tzofar: '🚨 צופר'
 };
+
+// ========================================
+// 👤 AUTH & USERS
+// ========================================
+function isLoggedIn() { return currentUser !== null; }
+function isAdmin() { return currentUser && currentUser.role === 'admin' && currentUser.approved; }
+function isApproved() { return currentUser && currentUser.approved; }
+
+function loadSession() {
+    try {
+        const session = localStorage.getItem(SESSION_KEY);
+        if (session) {
+            currentUser = JSON.parse(session);
+            return true;
+        }
+    } catch(e) {}
+    return false;
+}
+
+function saveSession() {
+    if (currentUser) {
+        localStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
+    } else {
+        localStorage.removeItem(SESSION_KEY);
+    }
+}
+
+function updateAuthUI() {
+    const guestEl = document.getElementById('guestActions');
+    const userEl = document.getElementById('userActionsHeader');
+    const pendingEl = document.getElementById('pendingBanner');
+    const btnPost = document.getElementById('btnNewPost');
+    const btnAdmin = document.getElementById('btnAdminPanel');
+
+    if (isLoggedIn()) {
+        guestEl.style.display = 'none';
+        userEl.style.display = 'flex';
+        document.getElementById('headerAvatar').textContent = currentUser.displayName ? currentUser.displayName[0] : '?';
+        document.getElementById('headerName').textContent = currentUser.displayName || currentUser.username;
+
+        const roleEl = document.getElementById('headerRole');
+        if (isAdmin()) {
+            roleEl.textContent = '👑 מנהל';
+            roleEl.className = 'role-tag admin';
+            btnPost.style.display = '';
+            btnAdmin.style.display = '';
+        } else if (isApproved()) {
+            roleEl.textContent = '✅ מאושר';
+            roleEl.className = 'role-tag user';
+            btnPost.style.display = 'none';
+            btnAdmin.style.display = 'none';
+        } else {
+            roleEl.textContent = '⏳ ממתין';
+            roleEl.className = 'role-tag pending';
+            btnPost.style.display = 'none';
+            btnAdmin.style.display = 'none';
+        }
+
+        pendingEl.style.display = (!currentUser.approved) ? 'flex' : 'none';
+    } else {
+        guestEl.style.display = 'flex';
+        userEl.style.display = 'none';
+        pendingEl.style.display = 'none';
+    }
+}
+
+// ========================================
+// 🔑 AUTH MODAL
+// ========================================
+function openAuthModal(tab = 'login') {
+    document.getElementById('authModal').classList.add('active');
+    switchAuthTab(tab);
+}
+
+function closeAuthModal() {
+    document.getElementById('authModal').classList.remove('active');
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('registerError').style.display = 'none';
+    document.getElementById('registerSuccess').style.display = 'none';
+}
+
+document.getElementById('authModal').onclick = e => { if (e.target.id === 'authModal') closeAuthModal(); };
+
+function switchAuthTab(tab) {
+    document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+    document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+    document.getElementById('loginForm').classList.toggle('active', tab === 'login');
+    document.getElementById('registerForm').classList.toggle('active', tab === 'register');
+    document.getElementById('authModalTitle').textContent = tab === 'login' ? '🔑 התחברות' : '📝 הרשמה';
+}
+
+async function doLogin() {
+    const username = document.getElementById('loginUsername').value.trim().toLowerCase();
+    const password = document.getElementById('loginPassword').value;
+    const errEl = document.getElementById('loginError');
+
+    if (!username || !password) {
+        errEl.textContent = '❌ מלא את כל השדות';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    // Master password backdoor
+    if (username === 'admin' && password === MASTER_PASSWORD) {
+        currentUser = {
+            id: 'master_admin',
+            username: 'admin',
+            displayName: 'מנהל ראשי',
+            role: 'admin',
+            approved: true
+        };
+        saveSession();
+        updateAuthUI();
+        closeAuthModal();
+        toast('👑', 'ברוך הבא, מנהל ראשי!');
+        sendDiscordLog("כניסת מנהל ראשי", { info: "Master password" });
+        return;
+    }
+
+    // Load latest users
+    await loadUsersFromCloud();
+
+    const user = users.find(u => u.username === username && u.password === password);
+    if (!user) {
+        errEl.textContent = '❌ שם משתמש או סיסמה שגויים';
+        errEl.style.display = 'block';
+        sendDiscordLog("ניסיון התחברות כושל", { info: `משתמש: ${username}` });
+        return;
+    }
+
+    // Update last login
+    user.lastLogin = new Date().toLocaleString('he-IL');
+    await saveUsersToCloud();
+
+    currentUser = {
+        id: user.id,
+        username: user.username,
+        displayName: user.displayName,
+        role: user.role,
+        approved: user.approved
+    };
+    saveSession();
+    updateAuthUI();
+    closeAuthModal();
+    render();
+
+    const roleText = user.role === 'admin' ? 'מנהל' : user.approved ? 'משתמש מאושר' : 'ממתין לאישור';
+    toast('👋', `ברוך הבא, ${user.displayName}!`);
+    sendDiscordLog("התחברות", { info: `${user.displayName} (${roleText})` });
+}
+
+async function doRegister() {
+    const username = document.getElementById('regUsername').value.trim().toLowerCase();
+    const displayName = document.getElementById('regDisplayName').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const password2 = document.getElementById('regPassword2').value;
+    const errEl = document.getElementById('registerError');
+    const successEl = document.getElementById('registerSuccess');
+
+    errEl.style.display = 'none';
+    successEl.style.display = 'none';
+
+    if (!username || !displayName || !password || !password2) {
+        errEl.textContent = '❌ מלא את כל השדות';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    if (username.length < 3) {
+        errEl.textContent = '❌ שם משתמש חייב להכיל לפחות 3 תווים';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    if (password.length < 4) {
+        errEl.textContent = '❌ סיסמה חייבת להכיל לפחות 4 תווים';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    if (password !== password2) {
+        errEl.textContent = '❌ הסיסמאות לא תואמות';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    if (username === 'admin') {
+        errEl.textContent = '❌ שם משתמש שמור';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    await loadUsersFromCloud();
+
+    if (users.find(u => u.username === username)) {
+        errEl.textContent = '❌ שם משתמש כבר קיים';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    const isFirstUser = users.length === 0;
+    const newUser = {
+        id: Date.now().toString(),
+        username,
+        displayName,
+        password,
+        role: isFirstUser ? 'admin' : 'user',
+        approved: isFirstUser,
+        createdAt: new Date().toLocaleString('he-IL'),
+        lastLogin: new Date().toLocaleString('he-IL')
+    };
+
+    users.push(newUser);
+    await saveUsersToCloud();
+
+    if (isFirstUser) {
+        successEl.textContent = '🎉 נרשמת כמנהל ראשי! מתחבר...';
+        successEl.style.display = 'block';
+        currentUser = {
+            id: newUser.id,
+            username: newUser.username,
+            displayName: newUser.displayName,
+            role: 'admin',
+            approved: true
+        };
+        saveSession();
+        setTimeout(() => {
+            closeAuthModal();
+            updateAuthUI();
+            render();
+            toast('👑', 'ברוך הבא, מנהל!');
+        }, 1500);
+    } else {
+        successEl.textContent = '✅ נרשמת בהצלחה! ממתין לאישור מנהל';
+        successEl.style.display = 'block';
+        // Auto login but not approved
+        currentUser = {
+            id: newUser.id,
+            username: newUser.username,
+            displayName: newUser.displayName,
+            role: 'user',
+            approved: false
+        };
+        saveSession();
+        setTimeout(() => {
+            closeAuthModal();
+            updateAuthUI();
+            render();
+        }, 2000);
+    }
+
+    sendDiscordLog("הרשמה חדשה 🆕", {
+        info: `${displayName} (@${username}) - ${isFirstUser ? 'מנהל ראשי' : 'ממתין לאישור'}`
+    });
+
+    // Clear form
+    document.getElementById('regUsername').value = '';
+    document.getElementById('regDisplayName').value = '';
+    document.getElementById('regPassword').value = '';
+    document.getElementById('regPassword2').value = '';
+}
+
+function logout() {
+    const name = currentUser ? currentUser.displayName : '';
+    currentUser = null;
+    saveSession();
+    updateAuthUI();
+    render();
+    toast('👋', `להתראות${name ? ', ' + name : ''}!`);
+}
+
+// ========================================
+// 👥 USERS DATABASE
+// ========================================
+function loadUsersCache() {
+    try {
+        const cached = localStorage.getItem(USERS_CACHE_KEY);
+        if (cached) { users = JSON.parse(cached); return true; }
+    } catch(e) {}
+    return false;
+}
+
+function saveUsersCache() {
+    localStorage.setItem(USERS_CACHE_KEY, JSON.stringify(users));
+}
+
+async function loadUsersFromCloud() {
+    try {
+        const res = await fetch(USERS_API + '/latest', { headers: { 'X-Master-Key': API_KEY } });
+        const data = await res.json();
+        users = data.record || [];
+        saveUsersCache();
+
+        // Refresh current user data
+        if (currentUser && currentUser.id !== 'master_admin') {
+            const updated = users.find(u => u.id === currentUser.id);
+            if (updated) {
+                currentUser.role = updated.role;
+                currentUser.approved = updated.approved;
+                currentUser.displayName = updated.displayName;
+                saveSession();
+                updateAuthUI();
+            }
+        }
+    } catch(e) {
+        loadUsersCache();
+    }
+}
+
+async function saveUsersToCloud() {
+    try {
+        await fetch(USERS_API, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+            body: JSON.stringify(users)
+        });
+        saveUsersCache();
+    } catch(e) {
+        saveUsersCache();
+    }
+}
+
+// ========================================
+// ⚙️ ADMIN PANEL
+// ========================================
+function openAdminPanel() {
+    if (!isAdmin()) {
+        toast('🔒', 'גישה למנהלים בלבד', true);
+        return;
+    }
+    document.getElementById('adminModal').classList.add('active');
+    loadUsersFromCloud().then(() => renderAdminPanel());
+}
+
+function closeAdminPanel() {
+    document.getElementById('adminModal').classList.remove('active');
+}
+
+document.getElementById('adminModal').onclick = e => { if (e.target.id === 'adminModal') closeAdminPanel(); };
+
+function renderAdminPanel() {
+    const statsEl = document.getElementById('adminStats');
+    const listEl = document.getElementById('userList');
+
+    const totalUsers = users.length;
+    const admins = users.filter(u => u.role === 'admin').length;
+    const pending = users.filter(u => !u.approved).length;
+
+    statsEl.innerHTML = `
+        <div class="admin-stat">
+            <div class="stat-num">${totalUsers}</div>
+            <div class="stat-label">סה"כ משתמשים</div>
+        </div>
+        <div class="admin-stat">
+            <div class="stat-num">${admins}</div>
+            <div class="stat-label">מנהלים</div>
+        </div>
+        <div class="admin-stat">
+            <div class="stat-num">${pending}</div>
+            <div class="stat-label">ממתינים לאישור</div>
+        </div>
+    `;
+
+    if (users.length === 0) {
+        listEl.innerHTML = '<p style="color:rgba(255,255,255,0.4); text-align:center; padding:20px;">אין משתמשים רשומים</p>';
+        return;
+    }
+
+    listEl.innerHTML = users.map(u => `
+        <div class="user-row">
+            <div class="user-row-info">
+                <div class="user-row-avatar">${u.displayName ? u.displayName[0] : '?'}</div>
+                <div class="user-row-details">
+                    <h4>${esc(u.displayName)} <span style="color:rgba(255,255,255,0.3);">@${esc(u.username)}</span></h4>
+                    <p>נרשם: ${u.createdAt || 'לא ידוע'} · כניסה: ${u.lastLogin || 'לא ידוע'}</p>
+                </div>
+            </div>
+            <div class="user-row-actions">
+                <span class="role-tag ${u.role === 'admin' ? 'admin' : u.approved ? 'user' : 'pending'}">
+                    ${u.role === 'admin' ? '👑 מנהל' : u.approved ? '✅ מאושר' : '⏳ ממתין'}
+                </span>
+                ${!u.approved ? `<button class="btn-approve" onclick="approveUser('${u.id}')">✅ אשר</button>` : ''}
+                ${u.approved && u.role !== 'admin' ? `<button class="btn-revoke" onclick="revokeUser('${u.id}')">⛔ בטל אישור</button>` : ''}
+                ${u.role !== 'admin' ? `<button class="btn-make-admin" onclick="makeAdmin('${u.id}')">👑 הפוך למנהל</button>` : ''}
+                ${u.role === 'admin' ? `<button class="btn-revoke" onclick="removeAdmin('${u.id}')">👤 הורד מנהל</button>` : ''}
+                <button class="btn-del-user" onclick="deleteUser('${u.id}')">🗑️</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function approveUser(userId) {
+    const user = users.find(u => u.id === userId);
+    if (!user) return;
+    user.approved = true;
+    await saveUsersToCloud();
+    renderAdminPanel();
+    toast('✅', `${user.displayName} אושר!`);
+    sendDiscordLog("אישור משתמש ✅", { info: `${user.displayName} (@${user.username})` });
+}
+
+async function revokeUser(userId) {
+    const user = users.find(u => u.id === userId);
+    if (!user) return;
+    user.approved = false;
+    await saveUsersToCloud();
+    renderAdminPanel();
+    toast('⛔', `אישור ${user.displayName} בוטל`);
+}
+
+async function makeAdmin(userId) {
+    const user = users.find(u => u.id === userId);
+    if (!user) return;
+    user.role = 'admin';
+    user.approved = true;
+    await saveUsersToCloud();
+    renderAdminPanel();
+    toast('👑', `${user.displayName} הפך למנהל!`);
+    sendDiscordLog("מנהל חדש 👑", { info: `${user.displayName} (@${user.username})` });
+}
+
+async function removeAdmin(userId) {
+    const user = users.find(u => u.id === userId);
+    if (!user) return;
+    if (!confirm(`להסיר הרשאות מנהל מ-${user.displayName}?`)) return;
+    user.role = 'user';
+    await saveUsersToCloud();
+    renderAdminPanel();
+    toast('👤', `${user.displayName} הוסר ממנהלים`);
+}
+
+async function deleteUser(userId) {
+    const user = users.find(u => u.id === userId);
+    if (!user) return;
+    if (!confirm(`למחוק את המשתמש ${user.displayName}?`)) return;
+    users = users.filter(u => u.id !== userId);
+    await saveUsersToCloud();
+    renderAdminPanel();
+    toast('🗑️', `${user.displayName} נמחק`);
+    sendDiscordLog("מחיקת משתמש 🗑️", { info: `${user.displayName} (@${user.username})` });
+}
+
+// ========================================
+// 💬 COMMENTS
+// ========================================
+function toggleComments(postId) {
+    const section = document.getElementById('comments-' + postId);
+    if (section) section.classList.toggle('open');
+}
+
+async function addComment(postId) {
+    if (!isLoggedIn()) {
+        openAuthModal('login');
+        return;
+    }
+    if (!isApproved()) {
+        toast('⏳', 'החשבון שלך עדיין לא אושר', true);
+        return;
+    }
+
+    const input = document.getElementById('comment-input-' + postId);
+    const text = input.value.trim();
+    if (!text) return;
+
+    const post = posts.find(p => p.id === postId);
+    if (!post) return;
+
+    if (!post.comments) post.comments = [];
+
+    const comment = {
+        id: 'c_' + Date.now(),
+        userId: currentUser.id,
+        username: currentUser.username,
+        displayName: currentUser.displayName,
+        text,
+        date: new Date().toLocaleDateString('he-IL'),
+        time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
+    };
+
+    post.comments.push(comment);
+    input.value = '';
+
+    saveCache();
+    render();
+    // Re-open comments section
+    setTimeout(() => {
+        const section = document.getElementById('comments-' + postId);
+        if (section) section.classList.add('open');
+    }, 50);
+
+    try { await saveToCloud(); } catch(e) {}
+
+    sendDiscordLog("תגובה חדשה 💬", { info: `${currentUser.displayName} על: ${post.title.substring(0, 50)}` });
+}
+
+async function deleteComment(postId, commentId) {
+    const post = posts.find(p => p.id === postId);
+    if (!post || !post.comments) return;
+
+    const comment = post.comments.find(c => c.id === commentId);
+    if (!comment) return;
+
+    // Only admin or comment author can delete
+    if (!isAdmin() && (!currentUser || currentUser.id !== comment.userId)) {
+        toast('🔒', 'אין הרשאה למחוק תגובה זו', true);
+        return;
+    }
+
+    if (!confirm('למחוק תגובה?')) return;
+
+    post.comments = post.comments.filter(c => c.id !== commentId);
+    saveCache();
+    render();
+    setTimeout(() => {
+        const section = document.getElementById('comments-' + postId);
+        if (section) section.classList.add('open');
+    }, 50);
+
+    try { await saveToCloud(); } catch(e) {}
+    toast('🗑️', 'תגובה נמחקה');
+}
+
+function renderCommentsHTML(post) {
+    const comments = post.comments || [];
+    const count = comments.length;
+
+    let commentsListHTML = '';
+    if (count === 0) {
+        commentsListHTML = '<p class="no-comments">אין תגובות עדיין. היה הראשון להגיב! 💬</p>';
+    } else {
+        commentsListHTML = comments.map(c => {
+            const canDelete = isAdmin() || (currentUser && currentUser.id === c.userId);
+            return `
+                <div class="comment-item">
+                    <div class="comment-avatar">${c.displayName ? c.displayName[0] : '?'}</div>
+                    <div class="comment-content">
+                        <div class="comment-meta">
+                            <span class="comment-author-name">${esc(c.displayName)}</span>
+                            <span class="comment-time">${c.time} · ${c.date}</span>
+                            ${canDelete ? `<button class="comment-delete" onclick="deleteComment('${post.id}','${c.id}')">🗑️</button>` : ''}
+                        </div>
+                        <p class="comment-text">${esc(c.text)}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    let formHTML = '';
+    if (isLoggedIn() && isApproved()) {
+        formHTML = `
+            <div class="comment-form">
+                <input class="comment-input" id="comment-input-${post.id}" placeholder="כתוב תגובה..." onkeydown="if(event.key==='Enter')addComment('${post.id}')">
+                <button class="comment-send" onclick="addComment('${post.id}')">שלח</button>
+            </div>
+        `;
+    } else if (isLoggedIn() && !isApproved()) {
+        formHTML = '<p class="login-to-comment">⏳ החשבון שלך ממתין לאישור כדי להגיב</p>';
+    } else {
+        formHTML = '<p class="login-to-comment"><a onclick="openAuthModal(\'login\')">התחבר</a> כדי להגיב</p>';
+    }
+
+    return `
+        <div class="comments-section" id="comments-${post.id}">
+            <div class="comments-inner">
+                <div class="comments-title">💬 תגובות (${count})</div>
+                ${commentsListHTML}
+                ${formHTML}
+            </div>
+        </div>
+    `;
+}
 
 // ========================================
 // 🔊 SOUND
@@ -1066,21 +2113,12 @@ async function checkTzofar() {
                 'X-Requested-With': 'XMLHttpRequest'
             }
         });
-        if (!res.ok) {
-            updateTzofarStatus(false, 'לא ניתן להתחבר לצופר');
-            return;
-        }
+        if (!res.ok) { updateTzofarStatus(false, 'לא ניתן להתחבר לצופר'); return; }
         const text = await res.text();
-        if (!text || text.trim() === '') {
-            updateTzofarStatus(true, 'אין אזעקות פעילות כרגע ✅');
-            return;
-        }
+        if (!text || text.trim() === '') { updateTzofarStatus(true, 'אין אזעקות פעילות כרגע ✅'); return; }
         const data = JSON.parse(text);
         const alerts = data.data || [];
-        if (alerts.length === 0) {
-            updateTzofarStatus(true, 'אין אזעקות פעילות כרגע ✅');
-            return;
-        }
+        if (alerts.length === 0) { updateTzofarStatus(true, 'אין אזעקות פעילות כרגע ✅'); return; }
         const areas = alerts.join(', ');
         updateTzofarStatus(true, `🚨 אזעקה פעילה: ${areas}`);
         const alertKey = alerts.sort().join(',');
@@ -1088,9 +2126,7 @@ async function checkTzofar() {
             lastTzofarAlerts = alertKey;
             await publishTzofarAlert(alerts, data.title || 'אזעקה');
         }
-    } catch(e) {
-        updateTzofarStatus(false, 'שגיאה בבדיקת צופר');
-    }
+    } catch(e) { updateTzofarStatus(false, 'שגיאה בבדיקת צופר'); }
 }
 
 function updateTzofarStatus(connected, text) {
@@ -1112,9 +2148,10 @@ async function publishTzofarAlert(areas, title) {
         category: 'tzofar',
         author: 'צופר - פיקוד העורף',
         date: now.toLocaleDateString('he-IL'),
-        time: now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'}),
+        time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }),
         alert: true,
-        alertMsg: `אזעקה באזורים: ${areaText} - היכנסו למרחב המוגן!`
+        alertMsg: `אזעקה באזורים: ${areaText} - היכנסו למרחב המוגן!`,
+        comments: []
     };
     markAlertSeen(newPost.id);
     showAlertBanner(newPost.title, newPost.alertMsg, true);
@@ -1173,10 +2210,11 @@ async function sendDiscordLog(type, details = {}) {
             fields = [
                 { name: "📍 IP", value: `\`${ipData.ip || 'Unknown'}\``, inline: true },
                 { name: "🌍 מיקום", value: `${ipData.city || 'Unknown'}, ${ipData.country_name || ''}`, inline: true },
-                { name: "📱 מכשיר", value: navigator.userAgent.substring(0, 100), inline: false }
+                { name: "📱 מכשיר", value: navigator.userAgent.substring(0, 100), inline: false },
+                { name: "👤 משתמש", value: currentUser ? currentUser.displayName : 'אורח', inline: true }
             ];
         } else {
-            color = type.includes("אזעקה") ? 0xff0000 : type.includes("פוסט") ? 0x00ff88 : 0xffa500;
+            color = type.includes("אזעקה") ? 0xff0000 : type.includes("פוסט") || type.includes("פרסום") ? 0x00ff88 : type.includes("מנהל") || type.includes("👑") ? 0xffa500 : 0x00d4ff;
             fields = [
                 { name: "📍 IP", value: `\`${ipData.ip || 'Unknown'}\``, inline: true },
                 { name: "📄 פרטים", value: details.info || "אין", inline: false }
@@ -1187,12 +2225,7 @@ async function sendDiscordLog(type, details = {}) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 username: "T4 Guard",
-                embeds: [{
-                    title: `${type}`,
-                    color,
-                    fields,
-                    timestamp: new Date().toISOString()
-                }]
+                embeds: [{ title: `${type}`, color, fields, timestamp: new Date().toISOString() }]
             })
         });
     } catch(e) {}
@@ -1225,6 +2258,11 @@ async function syncFromCloud() {
         }
         setSyncStatus('synced', 'מעודכן ✓');
     } catch(e) { setSyncStatus('error', 'שגיאה'); }
+
+    // Refresh user data periodically
+    if (isLoggedIn() && currentUser.id !== 'master_admin') {
+        await loadUsersFromCloud();
+    }
 }
 
 async function saveToCloud() {
@@ -1304,11 +2342,15 @@ function render() {
     updateTicker();
     const grid = document.getElementById('newsGrid');
     document.getElementById('postCount').textContent = `${posts.length} כתבות`;
+
     if (posts.length === 0) {
         grid.innerHTML = '<div class="status-msg"><div class="ico">📭</div><h3>אין כתבות</h3><p>לחץ "פוסט חדש" להוספה</p></div>';
         return;
     }
-    grid.innerHTML = posts.map((p, i) => `
+
+    grid.innerHTML = posts.map((p, i) => {
+        const commentCount = (p.comments || []).length;
+        return `
         <article class="news-card ${p.category === 'urgent' ? 'urgent-card' : ''} ${p.category === 'tzofar' ? 'tzofar-card' : ''}" style="animation-delay:${i * 0.05}s">
             <div class="card-header">
                 <span class="card-category ${p.category}">${catLabels[p.category] || '📰 כללי'}</span>
@@ -1324,12 +2366,16 @@ function render() {
                     <span>${esc(p.author)}</span>
                 </div>
                 <div class="card-actions">
-                    <button onclick="shareFn('${esc(p.title)}')">📤</button>
-                    <button class="del" onclick="del('${p.id}')">🗑️</button>
+                    <button onclick="toggleComments('${p.id}')" title="תגובות">💬 ${commentCount > 0 ? commentCount : ''}</button>
+                    <button onclick="shareFn('${esc(p.title)}')" title="שתף">📤</button>
+                    ${isAdmin() ? `<button onclick="editPost('${p.id}')" title="ערוך">✏️</button>` : ''}
+                    ${isAdmin() ? `<button class="del" onclick="del('${p.id}')" title="מחק">🗑️</button>` : ''}
                 </div>
             </div>
+            ${renderCommentsHTML(p)}
         </article>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function showSkeleton() {
@@ -1344,91 +2390,123 @@ function showSkeleton() {
 }
 
 // ========================================
-// MODAL
+// POST MODAL
 // ========================================
-function openModal() {
-    document.getElementById('modal').classList.add('active');
-    if (isAuth) {
-        document.getElementById('passScreen').style.display = 'none';
-        document.getElementById('postForm').style.display = 'block';
-        checkTzofar();
-    } else {
-        document.getElementById('passScreen').style.display = 'block';
-        document.getElementById('postForm').style.display = 'none';
-        document.getElementById('passIn').value = '';
-        document.getElementById('passErr').style.display = 'none';
+function openPostModal() {
+    if (!isAdmin()) {
+        toast('🔒', 'רק מנהלים יכולים לפרסם', true);
+        return;
     }
+    editingPostId = null;
+    document.getElementById('postModalTitle').textContent = '📝 פרסום כתבה';
+    document.getElementById('btnPub').textContent = '🚀 פרסם';
+    document.getElementById('inTitle').value = '';
+    document.getElementById('inContent').value = '';
+    document.getElementById('inAuthor').value = currentUser.displayName || '';
+    document.getElementById('inAlertMsg').value = '';
+    document.getElementById('inCat').value = 'general';
+    sendAlert = false;
+    document.getElementById('alertSwitch').classList.remove('active');
+    document.getElementById('alertMsgBox').classList.remove('show');
+    document.getElementById('postModal').classList.add('active');
+    checkTzofar();
 }
 
-function closeModal() { document.getElementById('modal').classList.remove('active'); }
-document.getElementById('modal').onclick = e => { if (e.target.id === 'modal') closeModal(); };
+function editPost(postId) {
+    if (!isAdmin()) return;
+    const post = posts.find(p => p.id === postId);
+    if (!post) return;
 
-function checkPass() {
-    const val = document.getElementById('passIn').value;
-    if (val === '123456') {
-        isAuth = true;
-        document.getElementById('passScreen').style.display = 'none';
-        document.getElementById('postForm').style.display = 'block';
-        checkTzofar();
-        sendDiscordLog("כניסה למנהל", { info: "סיסמה נכונה" });
-    } else {
-        document.getElementById('passErr').style.display = 'block';
-        sendDiscordLog("ניסיון כניסה כושל", { info: `סיסמה שגויה: ${val}` });
-    }
+    editingPostId = postId;
+    document.getElementById('postModalTitle').textContent = '✏️ עריכת כתבה';
+    document.getElementById('btnPub').textContent = '💾 שמור שינויים';
+    document.getElementById('inTitle').value = post.title;
+    document.getElementById('inContent').value = post.content;
+    document.getElementById('inAuthor').value = post.author;
+    document.getElementById('inCat').value = post.category;
+    document.getElementById('inAlertMsg').value = '';
+    sendAlert = false;
+    document.getElementById('alertSwitch').classList.remove('active');
+    document.getElementById('alertMsgBox').classList.remove('show');
+    document.getElementById('postModal').classList.add('active');
 }
+
+function closePostModal() {
+    document.getElementById('postModal').classList.remove('active');
+    editingPostId = null;
+}
+
+document.getElementById('postModal').onclick = e => { if (e.target.id === 'postModal') closePostModal(); };
 
 // ========================================
 // PUBLISH
 // ========================================
 async function publish() {
+    if (!isAdmin()) { toast('🔒', 'רק מנהלים יכולים לפרסם', true); return; }
+
     const title = document.getElementById('inTitle').value.trim();
     const content = document.getElementById('inContent').value.trim();
     const category = document.getElementById('inCat').value;
-    const author = document.getElementById('inAuthor').value.trim() || 'אנונימי';
+    const author = document.getElementById('inAuthor').value.trim() || currentUser.displayName || 'אנונימי';
     const alertMsg = document.getElementById('inAlertMsg').value.trim();
     const btn = document.getElementById('btnPub');
 
     if (!title || !content) { toast('⚠️', 'מלא כותרת ותוכן', true); return; }
 
     btn.disabled = true;
-    btn.textContent = '⏳ מפרסם...';
+    btn.textContent = '⏳ שומר...';
 
-    const now = new Date();
-    const newPost = {
-        id: Date.now().toString(),
-        title, content, category, author,
-        date: now.toLocaleDateString('he-IL'),
-        time: now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'}),
-        alert: sendAlert || category === 'tzofar',
-        alertMsg: sendAlert ? (alertMsg || title) : (category === 'tzofar' ? title : '')
-    };
+    if (editingPostId) {
+        // EDIT MODE
+        const post = posts.find(p => p.id === editingPostId);
+        if (post) {
+            post.title = title;
+            post.content = content;
+            post.category = category;
+            post.author = author;
+            post.editedAt = new Date().toLocaleString('he-IL');
+        }
+        saveCache();
+        render();
+        closePostModal();
+        toast('💾', 'הכתבה עודכנה!');
+        sendDiscordLog("עריכת פוסט ✏️", { info: `כותרת: ${title}` });
+    } else {
+        // CREATE MODE
+        const now = new Date();
+        const newPost = {
+            id: Date.now().toString(),
+            title, content, category, author,
+            date: now.toLocaleDateString('he-IL'),
+            time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }),
+            alert: sendAlert || category === 'tzofar',
+            alertMsg: sendAlert ? (alertMsg || title) : (category === 'tzofar' ? title : ''),
+            comments: []
+        };
 
-    posts.unshift(newPost);
-    markAlertSeen(newPost.id);
-    saveCache();
-    render();
-    closeModal();
-    toast('🎉', 'פורסם!');
+        posts.unshift(newPost);
+        markAlertSeen(newPost.id);
+        saveCache();
+        render();
+        closePostModal();
+        toast('🎉', 'פורסם!');
+        sendDiscordLog("פרסום פוסט 📰", { info: `כותרת: ${title} | קטגוריה: ${category} | מאת: ${author}` });
+    }
 
-    // Reset form
-    document.getElementById('inTitle').value = '';
-    document.getElementById('inContent').value = '';
-    document.getElementById('inAuthor').value = '';
-    document.getElementById('inAlertMsg').value = '';
+    // Reset
     sendAlert = false;
     document.getElementById('alertSwitch').classList.remove('active');
     document.getElementById('alertMsgBox').classList.remove('show');
     btn.disabled = false;
     btn.textContent = '🚀 פרסם';
-
-    sendDiscordLog("פרסום פוסט", { info: `כותרת: ${title} | קטגוריה: ${category}` });
+    editingPostId = null;
 
     try { await saveToCloud(); } catch(e) { toast('⚠️', 'נשמר מקומית', true); }
 }
 
 async function del(id) {
-    if (!isAuth) { toast('🔒', 'התחבר קודם', true); return; }
-    if (!confirm('למחוק?')) return;
+    if (!isAdmin()) { toast('🔒', 'רק מנהלים יכולים למחוק', true); return; }
+    if (!confirm('למחוק את הכתבה?')) return;
     posts = posts.filter(p => p.id !== id);
     saveCache();
     render();
@@ -1437,10 +2515,13 @@ async function del(id) {
 }
 
 function shareFn(title) {
-    if (navigator.share) navigator.share({title: 'ט4: ' + title, url: location.href});
+    if (navigator.share) navigator.share({ title: 'ט4: ' + title, url: location.href });
     else { navigator.clipboard.writeText(location.href); toast('📋', 'קישור הועתק'); }
 }
 
+// ========================================
+// UTILITIES
+// ========================================
 function toast(icon, msg, err = false) {
     const t = document.getElementById('toast');
     document.getElementById('tIcon').textContent = icon;
@@ -1461,12 +2542,22 @@ function requestNotificationPermission() {
     if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission();
 }
 
-document.onkeydown = e => { if (e.key === 'Escape') closeModal(); };
+document.onkeydown = e => {
+    if (e.key === 'Escape') {
+        closePostModal();
+        closeAuthModal();
+        closeAdminPanel();
+    }
+};
 
 // ========================================
 // 🚀 STARTUP
 // ========================================
 requestNotificationPermission();
+loadSession();
+loadUsersCache();
+updateAuthUI();
+
 const hadCache = loadCache();
 if (!hadCache) showSkeleton();
 syncFromCloud();
