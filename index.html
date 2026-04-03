@@ -31,14 +31,18 @@
         }
 
         .bg-animation {
-            position: fixed; top: 0; left: 0;
+            position: fixed;
+            top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 0; pointer-events: none;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .circle {
-            position: absolute; border-radius: 50%;
-            opacity: 0.05; animation: float 20s infinite ease-in-out;
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            animation: float 20s infinite ease-in-out;
         }
 
         .circle:nth-child(1) { width: 600px; height: 600px; background: var(--accent); top: -200px; right: -100px; }
@@ -50,8 +54,11 @@
             50% { transform: translate(30px, -30px) scale(1.05); }
         }
 
+        /* ========== HEADER ========== */
         header {
-            position: sticky; top: 0; z-index: 100;
+            position: sticky;
+            top: 0;
+            z-index: 100;
             background: rgba(15, 15, 26, 0.9);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
@@ -59,287 +66,850 @@
         }
 
         .header-content {
-            max-width: 1400px; margin: 0 auto;
-            display: flex; align-items: center;
-            justify-content: space-between; height: 70px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
         }
 
-        .logo-section { display: flex; align-items: center; gap: 15px; }
-        .logo-section img { width: 45px; height: 45px; border-radius: 12px; border: 2px solid var(--accent); }
-        .logo-text h1 { font-size: 1.3rem; background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .logo-text span { font-size: 0.7rem; color: var(--accent); letter-spacing: 3px; }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-        .header-actions { display: flex; align-items: center; gap: 12px; }
+        .logo-section img {
+            width: 45px; height: 45px;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+        }
 
-        .sync-badge { display: flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; transition: all 0.3s; }
-        .sync-badge.syncing { background: rgba(255, 165, 0, 0.15); border: 1px solid rgba(255, 165, 0, 0.3); color: #ffa500; }
-        .sync-badge.synced { background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); color: var(--accent3); }
-        .sync-badge.error { background: rgba(255, 68, 68, 0.1); border: 1px solid rgba(255, 68, 68, 0.3); color: #ff4444; }
-        .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-        .sync-badge.syncing .sync-dot { animation: pulse 1s infinite; }
+        .logo-text h1 {
+            font-size: 1.3rem;
+            background: var(--gradient1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .logo-text span {
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+        }
 
-        .live-badge { display: flex; align-items: center; gap: 8px; background: rgba(255, 0, 0, 0.15); border: 1px solid rgba(255, 0, 0, 0.3); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; color: #ff4444; }
-        .live-dot { width: 8px; height: 8px; background: #ff4444; border-radius: 50%; animation: pulse 1.5s infinite; }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-        .btn { border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-family: 'Heebo', sans-serif; font-size: 0.85rem; font-weight: 500; transition: all 0.3s; }
-        .btn-primary { background: var(--gradient1); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3); }
-        .btn-ghost { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); color: var(--text); }
-        .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); color: var(--accent); }
-        .btn-admin { background: linear-gradient(135deg, #ffa500, #ff6600); color: white; }
-        .btn-admin:hover { box-shadow: 0 5px 20px rgba(255, 165, 0, 0.3); }
+        .sync-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            transition: all 0.3s;
+        }
 
-        .btn-refresh { background: rgba(0, 212, 255, 0.05); border: 1px solid var(--border); color: var(--accent); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.3s; }
-        .btn-refresh:hover { background: rgba(0, 212, 255, 0.15); border-color: var(--accent); }
-        .btn-refresh.spinning .refresh-icon { animation: spin 0.8s linear; }
-        .btn-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
-        .refresh-icon { display: inline-block; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .sync-badge.syncing {
+            background: rgba(255, 165, 0, 0.15);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            color: #ffa500;
+        }
 
-        .user-badge { display: flex; align-items: center; gap: 10px; padding: 6px 14px; border-radius: 20px; background: rgba(0, 212, 255, 0.05); border: 1px solid var(--border); }
-        .user-avatar-header { width: 30px; height: 30px; border-radius: 50%; background: var(--gradient1); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: white; font-weight: 700; }
-        .user-name-header { font-size: 0.85rem; color: var(--text-bright); font-weight: 500; }
-        .role-tag { font-size: 0.6rem; padding: 2px 8px; border-radius: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .role-tag.admin { background: rgba(255, 165, 0, 0.15); color: #ffa500; border: 1px solid rgba(255, 165, 0, 0.3); }
-        .role-tag.user { background: rgba(0, 212, 255, 0.1); color: var(--accent); border: 1px solid rgba(0, 212, 255, 0.2); }
-        .role-tag.pending { background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .guest-actions, .user-actions-header { display: flex; align-items: center; gap: 10px; }
+        .sync-badge.synced {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: var(--accent3);
+        }
 
-        .ticker-bar { background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2)); padding: 8px 0; overflow: hidden; position: relative; z-index: 1; }
-        .ticker-content { display: flex; animation: ticker 25s linear infinite; white-space: nowrap; }
-        .ticker-content span { color: var(--primary); font-weight: 700; font-size: 0.85rem; padding: 0 50px; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .sync-badge.error {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+        }
 
-        main { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 30px 40px; }
-        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
-        .section-title { display: flex; align-items: center; gap: 12px; }
-        .section-title .icon { width: 35px; height: 35px; background: var(--gradient1); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-        .section-title h2 { font-size: 1.5rem; color: var(--text-bright); }
-        .section-right { display: flex; align-items: center; gap: 12px; }
-        .post-count { background: var(--card-bg); border: 1px solid var(--border); padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; color: var(--accent); }
-        .last-sync { font-size: 0.7rem; color: rgba(255, 255, 255, 0.3); }
+        .sync-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+        }
 
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; }
-        .news-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: all 0.3s; animation: cardIn 0.4s ease; }
-        @keyframes cardIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .news-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 15px 40px rgba(0, 212, 255, 0.15); }
-        .news-card.urgent-card { border-color: rgba(255, 68, 68, 0.3); box-shadow: 0 0 20px rgba(255, 0, 0, 0.1); }
-        .news-card.urgent-card:hover { border-color: #ff4444; box-shadow: 0 15px 40px rgba(255, 0, 0, 0.2); }
+        .sync-badge.syncing .sync-dot {
+            animation: pulse 1s infinite;
+        }
 
-        .card-header { padding: 20px 22px 12px; display: flex; justify-content: space-between; align-items: center; }
-        .card-category { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 12px; border-radius: 6px; background: rgba(0, 212, 255, 0.1); color: var(--accent); }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #ff4444;
+        }
+
+        .live-dot {
+            width: 8px; height: 8px;
+            background: #ff4444;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        .btn-refresh {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-refresh:hover {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: var(--accent);
+        }
+
+        .btn-refresh.spinning .refresh-icon {
+            animation: spin 0.8s linear;
+        }
+
+        .btn-refresh:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .refresh-icon {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .btn {
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--gradient1);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        /* ========== TICKER ========== */
+        .ticker-bar {
+            background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2));
+            padding: 8px 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ticker-content {
+            display: flex;
+            animation: ticker 25s linear infinite;
+            white-space: nowrap;
+        }
+
+        .ticker-content span {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0 50px;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* ========== MAIN ========== */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title .icon {
+            width: 35px; height: 35px;
+            background: var(--gradient1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-title h2 {
+            font-size: 1.5rem;
+            color: var(--text-bright);
+        }
+
+        .section-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .post-count {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        .last-sync {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* ========== NEWS CARDS ========== */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .news-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+            animation: cardIn 0.4s ease;
+        }
+
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.15);
+        }
+
+        .news-card.urgent-card {
+            border-color: rgba(255, 68, 68, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+        }
+
+        .news-card.urgent-card:hover {
+            border-color: #ff4444;
+            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.2);
+        }
+
+        .card-header {
+            padding: 20px 22px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-category {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+        }
+
         .card-category.urgent { background: rgba(255, 68, 68, 0.1); color: #ff4444; }
         .card-category.sports { background: rgba(0, 255, 136, 0.1); color: var(--accent3); }
         .card-category.tech { background: rgba(124, 58, 237, 0.1); color: var(--accent2); }
         .card-category.entertainment { background: rgba(255, 165, 0, 0.1); color: #ffa500; }
-        .card-date { font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
-        .card-body { padding: 5px 22px 22px; }
-        .card-body h3 { font-size: 1.1rem; color: var(--text-bright); margin-bottom: 10px; line-height: 1.5; }
-        .card-body p { font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); line-height: 1.7; }
-        .card-footer { padding: 12px 22px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .card-author { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); }
-        .author-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--gradient1); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: white; font-weight: 700; }
-        .card-actions { display: flex; gap: 4px; }
-        .card-actions button { background: none; border: none; color: rgba(255, 255, 255, 0.4); cursor: pointer; font-size: 1rem; padding: 4px 8px; transition: color 0.3s; border-radius: 6px; }
-        .card-actions button:hover { color: var(--accent); background: rgba(0, 212, 255, 0.05); }
-        .card-actions .del:hover { color: #ff4444; background: rgba(255, 68, 68, 0.05); }
 
-        .comments-section { border-top: 1px solid var(--border); background: rgba(0, 0, 0, 0.15); max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-        .comments-section.open { max-height: 600px; overflow-y: auto; }
-        .comments-inner { padding: 15px 22px; }
-        .comments-title { font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); margin-bottom: 12px; }
-        .comment-item { display: flex; gap: 10px; margin-bottom: 12px; padding: 10px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05); }
-        .comment-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent2); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: white; font-weight: 700; flex-shrink: 0; }
-        .comment-content { flex: 1; }
-        .comment-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
-        .comment-author-name { font-size: 0.8rem; color: var(--accent); font-weight: 600; }
-        .comment-time { font-size: 0.7rem; color: rgba(255, 255, 255, 0.3); }
-        .comment-text { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.5; }
-        .comment-delete { background: none; border: none; color: rgba(255, 255, 255, 0.2); cursor: pointer; font-size: 0.8rem; padding: 2px 6px; border-radius: 4px; transition: all 0.3s; }
-        .comment-delete:hover { color: #ff4444; background: rgba(255, 68, 68, 0.1); }
-        .comment-form { display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.05); }
-        .comment-input { flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--primary); color: var(--text-bright); font-family: 'Heebo', sans-serif; font-size: 0.85rem; outline: none; }
-        .comment-input:focus { border-color: var(--accent); }
-        .comment-send { padding: 10px 18px; border-radius: 10px; border: none; background: var(--gradient1); color: white; font-family: 'Heebo', sans-serif; font-weight: 600; cursor: pointer; font-size: 0.85rem; transition: all 0.3s; }
-        .comment-send:hover { box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3); }
-        .no-comments { text-align: center; padding: 15px; color: rgba(255, 255, 255, 0.3); font-size: 0.85rem; }
-        .login-to-comment { text-align: center; padding: 12px; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; }
-        .login-to-comment a { color: var(--accent); cursor: pointer; text-decoration: underline; }
+        .card-date {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
 
-        .status-msg { text-align: center; padding: 80px 20px; grid-column: 1 / -1; }
+        .card-body {
+            padding: 5px 22px 22px;
+        }
+
+        .card-body h3 {
+            font-size: 1.1rem;
+            color: var(--text-bright);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .card-body p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+        }
+
+        .card-footer {
+            padding: 12px 22px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .author-avatar {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: var(--gradient1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .card-actions button {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px 8px;
+            transition: color 0.3s;
+        }
+
+        .card-actions button:hover { color: var(--accent); }
+        .card-actions .del:hover { color: #ff4444; }
+
+        /* ========== STATUS ========== */
+        .status-msg {
+            text-align: center;
+            padding: 80px 20px;
+            grid-column: 1 / -1;
+        }
+
         .status-msg .ico { font-size: 4rem; margin-bottom: 20px; opacity: 0.3; }
         .status-msg h3 { color: rgba(255, 255, 255, 0.4); margin-bottom: 10px; }
         .status-msg p { color: rgba(255, 255, 255, 0.25); }
-        .skeleton-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 22px; animation: shimmer 1.5s infinite; }
-        .skeleton-line { background: rgba(255, 255, 255, 0.05); border-radius: 6px; margin-bottom: 12px; }
+
+        .skeleton-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .skeleton-line {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
         .skeleton-line.short { width: 40%; height: 14px; }
         .skeleton-line.title { width: 80%; height: 20px; }
         .skeleton-line.text { width: 100%; height: 14px; }
         .skeleton-line.text2 { width: 70%; height: 14px; }
-        @keyframes shimmer { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        .alert-banner { display: none; position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; animation: alertSlideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ========== ALERT BANNER ========== */
+        .alert-banner {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 9999;
+            animation: alertSlideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
         .alert-banner.show { display: block; }
-        @keyframes alertSlideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-        .alert-inner { background: linear-gradient(135deg, #1a1a2e, #16213e); border-bottom: 2px solid var(--accent); padding: 20px 30px; display: flex; align-items: center; justify-content: center; gap: 20px; position: relative; }
-        .alert-icon-big { font-size: 2.5rem; animation: alertBounce 1s infinite; }
-        @keyframes alertBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-        .alert-text { text-align: center; }
-        .alert-text .alert-label { font-size: 0.7rem; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px; }
-        .alert-text h3 { font-size: 1.3rem; color: var(--text-bright); font-weight: 900; }
-        .alert-text p { font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); margin-top: 4px; }
-        .alert-close { position: absolute; top: 10px; left: 15px; background: none; border: 1px solid var(--border); color: var(--text); width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-        .alert-close:hover { background: rgba(255, 68, 68, 0.1); border-color: #ff4444; color: #ff4444; }
-        .alert-time { position: absolute; bottom: 0; left: 0; height: 3px; background: var(--gradient1); animation: alertTimer 10s linear forwards; }
-        @keyframes alertTimer { from { width: 100%; } to { width: 0%; } }
 
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        @keyframes alertSlideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .alert-inner {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-bottom: 2px solid var(--accent);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .alert-icon-big {
+            font-size: 2.5rem;
+            animation: alertBounce 1s infinite;
+        }
+
+        @keyframes alertBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .alert-text { text-align: center; }
+
+        .alert-text .alert-label {
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .alert-text h3 {
+            font-size: 1.3rem;
+            color: var(--text-bright);
+            font-weight: 900;
+        }
+
+        .alert-text p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
+        }
+
+        .alert-close {
+            position: absolute;
+            top: 10px; left: 15px;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 30px; height: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .alert-close:hover {
+            background: rgba(255, 68, 68, 0.1);
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
+        .alert-time {
+            position: absolute;
+            bottom: 0; left: 0;
+            height: 3px;
+            background: var(--gradient1);
+            animation: alertTimer 10s linear forwards;
+        }
+
+        @keyframes alertTimer {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        /* ========== MODAL ========== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
         .modal-overlay.active { display: flex; }
-        .modal { background: var(--secondary); border: 1px solid var(--border); border-radius: 20px; width: 100%; max-width: 500px; animation: slideUp 0.3s ease; max-height: 90vh; overflow-y: auto; }
-        .modal.wide { max-width: 700px; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .modal-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+
+        .modal {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            animation: slideUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .modal-header h2 { color: var(--text-bright); }
-        .modal-close { width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--border); background: none; color: var(--text); cursor: pointer; font-size: 1.1rem; transition: all 0.3s; }
-        .modal-close:hover { background: rgba(255, 68, 68, 0.1); border-color: #ff4444; color: #ff4444; }
+
+        .modal-close {
+            width: 35px; height: 35px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: none;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 68, 68, 0.1);
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
         .modal-body { padding: 25px; }
 
-        .auth-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
-        .auth-tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-size: 0.9rem; font-weight: 600; color: rgba(255, 255, 255, 0.4); border-bottom: 2px solid transparent; transition: all 0.3s; }
-        .auth-tab:hover { color: rgba(255, 255, 255, 0.7); }
-        .auth-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-        .auth-form { display: none; }
-        .auth-form.active { display: block; }
-        .auth-error { background: rgba(255, 68, 68, 0.1); border: 1px solid rgba(255, 68, 68, 0.2); color: #ff4444; padding: 10px 15px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 15px; display: none; }
-        .auth-success { background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.2); color: var(--accent3); padding: 10px 15px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 15px; display: none; }
+        /* ========== PASSWORD SCREEN ========== */
+        .pass-screen {
+            text-align: center;
+            padding: 20px 0;
+        }
 
-        .pending-banner { background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.2); border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; gap: 12px; }
-        .pending-banner .pending-icon { font-size: 1.5rem; }
-        .pending-banner .pending-text h4 { color: #ffa500; font-size: 0.9rem; margin-bottom: 2px; }
-        .pending-banner .pending-text p { color: rgba(255, 255, 255, 0.4); font-size: 0.8rem; }
+        .pass-screen .lock { font-size: 3rem; margin-bottom: 15px; }
+        .pass-screen p { color: rgba(255, 255, 255, 0.5); margin-bottom: 25px; }
 
-        .admin-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
-        .admin-stat { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 12px; padding: 15px; text-align: center; }
-        .admin-stat .stat-num { font-size: 1.8rem; font-weight: 900; background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .admin-stat .stat-label { font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); margin-top: 4px; }
-        .admin-error { background: rgba(255, 68, 68, 0.1); border: 1px solid rgba(255, 68, 68, 0.2); color: #ff4444; padding: 12px 15px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 15px; text-align: center; }
-        .admin-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .admin-toolbar h3 { color: var(--text-bright); font-size: 1rem; }
-        .admin-toolbar button { padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border); background: rgba(0, 212, 255, 0.05); color: var(--accent); font-family: 'Heebo', sans-serif; font-size: 0.8rem; cursor: pointer; transition: all 0.3s; }
-        .admin-toolbar button:hover { background: rgba(0, 212, 255, 0.15); border-color: var(--accent); }
+        .pass-group {
+            display: flex;
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
 
-        .user-list { display: flex; flex-direction: column; gap: 10px; }
-        .user-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 12px; transition: all 0.3s; }
-        .user-row:hover { border-color: var(--accent); }
-        .user-row-info { display: flex; align-items: center; gap: 12px; }
-        .user-row-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--gradient1); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem; }
-        .user-row-details h4 { font-size: 0.9rem; color: var(--text-bright); margin-bottom: 2px; }
-        .user-row-details p { font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
-        .user-row-actions { display: flex; gap: 8px; align-items: center; }
-        .user-row-actions button { padding: 6px 14px; border-radius: 8px; border: none; font-family: 'Heebo', sans-serif; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .btn-approve { background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); color: var(--accent3); }
-        .btn-approve:hover { background: rgba(0, 255, 136, 0.2); }
-        .btn-revoke { background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.3); color: #ffa500; }
-        .btn-revoke:hover { background: rgba(255, 165, 0, 0.2); }
-        .btn-make-admin { background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.3); color: var(--accent2); }
-        .btn-make-admin:hover { background: rgba(124, 58, 237, 0.2); }
-        .btn-del-user { background: rgba(255, 68, 68, 0.1); border: 1px solid rgba(255, 68, 68, 0.3); color: #ff4444; }
-        .btn-del-user:hover { background: rgba(255, 68, 68, 0.2); }
+        .pass-group input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--primary);
+            color: var(--text-bright);
+            font-family: 'Heebo', sans-serif;
+            text-align: center;
+            letter-spacing: 5px;
+            outline: none;
+        }
+
+        .pass-group input:focus { border-color: var(--accent); }
+
+        .pass-group button {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            background: var(--gradient1);
+            color: white;
+            font-family: 'Heebo', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .pass-error {
+            color: #ff4444;
+            font-size: 0.85rem;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* ========== POST FORM ========== */
+        .post-form { display: none; }
 
         .fg { margin-bottom: 18px; }
-        .fg label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
-        .fg input, .fg textarea, .fg select { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--primary); color: var(--text-bright); font-family: 'Heebo', sans-serif; outline: none; }
-        .fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--accent); }
-        .fg textarea { min-height: 100px; resize: vertical; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .fg label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
 
-        .alert-section { background: rgba(255, 165, 0, 0.05); border: 1px solid rgba(255, 165, 0, 0.2); border-radius: 12px; padding: 15px; margin-bottom: 18px; }
-        .alert-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-        .alert-toggle-info { display: flex; align-items: center; gap: 10px; }
+        .fg input, .fg textarea, .fg select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--primary);
+            color: var(--text-bright);
+            font-family: 'Heebo', sans-serif;
+            outline: none;
+        }
+
+        .fg input:focus, .fg textarea:focus, .fg select:focus {
+            border-color: var(--accent);
+        }
+
+        .fg textarea { min-height: 100px; resize: vertical; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* ========== ALERT TOGGLE ========== */
+        .alert-section {
+            background: rgba(255, 165, 0, 0.05);
+            border: 1px solid rgba(255, 165, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 18px;
+        }
+
+        .alert-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .alert-toggle-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .alert-toggle-info span:first-child { font-size: 1.3rem; }
-        .alert-toggle-text h4 { font-size: 0.9rem; color: var(--text-bright); margin-bottom: 2px; }
-        .alert-toggle-text p { font-size: 0.7rem; color: rgba(255, 255, 255, 0.4); }
-        .toggle-switch { width: 46px; height: 26px; background: rgba(255, 255, 255, 0.1); border-radius: 13px; position: relative; transition: background 0.3s; cursor: pointer; }
+
+        .alert-toggle-text h4 {
+            font-size: 0.9rem;
+            color: var(--text-bright);
+            margin-bottom: 2px;
+        }
+
+        .alert-toggle-text p {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .toggle-switch {
+            width: 46px; height: 26px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 13px;
+            position: relative;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
         .toggle-switch.active { background: var(--accent); }
-        .toggle-switch::after { content: ''; position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.3s; }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px; right: 3px;
+            width: 20px; height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
         .toggle-switch.active::after { transform: translateX(-20px); }
+
         .alert-msg-input { display: none; margin-top: 12px; }
         .alert-msg-input.show { display: block; }
-        .alert-msg-input input { width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255, 165, 0, 0.3); background: var(--primary); color: var(--text-bright); font-family: 'Heebo', sans-serif; outline: none; }
-        .alert-msg-input input:focus { border-color: #ffa500; }
-        .alert-msg-input label { display: block; font-size: 0.8rem; color: #ffa500; margin-bottom: 6px; }
 
-        .btn-pub { width: 100%; padding: 14px; border-radius: 12px; border: none; background: var(--gradient1); color: white; font-family: 'Heebo', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+        .alert-msg-input input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            background: var(--primary);
+            color: var(--text-bright);
+            font-family: 'Heebo', sans-serif;
+            outline: none;
+        }
+
+        .alert-msg-input input:focus { border-color: #ffa500; }
+
+        .alert-msg-input label {
+            display: block;
+            font-size: 0.8rem;
+            color: #ffa500;
+            margin-bottom: 6px;
+        }
+
+        .btn-pub {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: var(--gradient1);
+            color: white;
+            font-family: 'Heebo', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
         .btn-pub:hover { box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3); }
         .btn-pub:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--card-bg); border: 1px solid var(--accent); padding: 14px 28px; border-radius: 12px; color: var(--text-bright); z-index: 2000; display: flex; align-items: center; gap: 10px; transition: transform 0.4s; }
+        /* ========== TOAST ========== */
+        .toast {
+            position: fixed;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--card-bg);
+            border: 1px solid var(--accent);
+            padding: 14px 28px;
+            border-radius: 12px;
+            color: var(--text-bright);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.4s;
+        }
+
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.error { border-color: #ff4444; }
 
-        footer { position: relative; z-index: 1; text-align: center; padding: 30px; border-top: 1px solid var(--border); margin-top: 60px; }
-        footer p { color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; }
-        footer .brand { background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+        /* ========== FOOTER ========== */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+        }
 
+        footer p { color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; }
+
+        footer .brand {
+            background: var(--gradient1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
-            header { padding: 0 15px; } main { padding: 20px 15px; }
-            .news-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; }
-            .header-content { height: 60px; } .sync-badge span:last-child { display: none; }
-            .live-badge { display: none; } .alert-inner { flex-direction: column; gap: 10px; padding: 15px; }
-            .admin-stats { grid-template-columns: 1fr; }
-            .user-row { flex-direction: column; gap: 10px; text-align: center; }
-            .user-row-actions { flex-wrap: wrap; justify-content: center; }
-            .user-badge { display: none; } .last-sync { display: none; }
+            header { padding: 0 15px; }
+            main { padding: 20px 15px; }
+            .news-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .header-content { height: 60px; }
+            .sync-badge span:last-child { display: none; }
+            .live-badge { display: none; }
+            .alert-inner { flex-direction: column; gap: 10px; padding: 15px; }
+            .alert-icon-big { font-size: 2rem; }
+            .alert-text h3 { font-size: 1.1rem; }
+            .last-sync { display: none; }
         }
     </style>
 </head>
 <body>
 
-<div class="bg-animation"><div class="circle"></div><div class="circle"></div><div class="circle"></div></div>
+<div class="bg-animation">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+</div>
 
+<!-- Alert Banner -->
 <div class="alert-banner" id="alertBanner">
     <div class="alert-inner">
-        <span class="alert-icon-big" id="alertIcon">🔔</span>
+        <span class="alert-icon-big">🔔</span>
         <div class="alert-text">
-            <div class="alert-label" id="alertLabel">⚡ התראה ממערך החדשות</div>
-            <h3 id="alertTitle"></h3><p id="alertBody"></p>
+            <div class="alert-label">⚡ התראה ממערך החדשות</div>
+            <h3 id="alertTitle"></h3>
+            <p id="alertBody"></p>
         </div>
         <button class="alert-close" onclick="closeAlert()">✕</button>
         <div class="alert-time"></div>
     </div>
 </div>
 
+<!-- Header -->
 <header>
     <div class="header-content">
         <div class="logo-section">
             <img src="logo.png" alt="ט4" onerror="this.style.display='none'">
-            <div class="logo-text"><h1>מערך החדשות</h1><span>ט4 ניוז</span></div>
+            <div class="logo-text">
+                <h1>מערך החדשות</h1>
+                <span>ט4 ניוז</span>
+            </div>
         </div>
         <div class="header-actions">
-            <div class="sync-badge synced" id="syncBadge"><div class="sync-dot"></div><span id="syncText">מחובר</span></div>
-            <button class="btn-refresh" id="btnRefresh" onclick="manualRefresh()" title="רענן"><span class="refresh-icon">🔄</span></button>
-            <div class="live-badge"><div class="live-dot"></div><span>LIVE</span></div>
-            <div class="guest-actions" id="guestActions">
-                <button class="btn btn-ghost" onclick="openAuthModal('login')">🔑 התחבר</button>
-                <button class="btn btn-primary" onclick="openAuthModal('register')">📝 הרשם</button>
+            <div class="sync-badge synced" id="syncBadge">
+                <div class="sync-dot"></div>
+                <span id="syncText">מחובר</span>
             </div>
-            <div class="user-actions-header" id="userActionsHeader" style="display:none">
-                <div class="user-badge"><div class="user-avatar-header" id="headerAvatar">?</div><span class="user-name-header" id="headerName">משתמש</span><span class="role-tag" id="headerRole">משתמש</span></div>
-                <button class="btn btn-primary" id="btnNewPost" onclick="openPostModal()" style="display:none">✏️ פוסט חדש</button>
-                <button class="btn btn-admin" id="btnAdminPanel" onclick="openAdminPanel()" style="display:none">⚙️ ניהול</button>
-                <button class="btn btn-ghost" onclick="logout()">🚪</button>
+            <button class="btn-refresh" id="btnRefresh" onclick="manualRefresh()" title="רענן עכשיו">
+                <span class="refresh-icon">🔄</span>
+            </button>
+            <div class="live-badge">
+                <div class="live-dot"></div>
+                <span>LIVE</span>
             </div>
+            <button class="btn btn-primary" onclick="openModal()">✏️ פוסט חדש</button>
         </div>
     </div>
 </header>
 
-<div class="pending-banner" id="pendingBanner" style="display:none; max-width:1400px; margin:15px auto 0; padding:15px 40px;">
-    <span class="pending-icon">⏳</span>
-    <div class="pending-text"><h4>החשבון שלך ממתין לאישור</h4><p>מנהל המערכת צריך לאשר את חשבונך</p></div>
-</div>
-
+<!-- Ticker -->
 <div class="ticker-bar">
     <div class="ticker-content" id="tickerContent">
         <span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>
@@ -347,639 +917,600 @@
     </div>
 </div>
 
+<!-- Main Content -->
 <main>
     <div class="section-header">
-        <div class="section-title"><div class="icon">📰</div><h2>חדשות אחרונות</h2></div>
-        <div class="section-right"><span class="last-sync" id="lastSync"></span><div class="post-count" id="postCount">טוען...</div></div>
+        <div class="section-title">
+            <div class="icon">📰</div>
+            <h2>חדשות אחרונות</h2>
+        </div>
+        <div class="section-right">
+            <span class="last-sync" id="lastSync"></span>
+            <div class="post-count" id="postCount">טוען...</div>
+        </div>
     </div>
     <div class="news-grid" id="newsGrid"></div>
 </main>
 
-<footer><p>© 2025 <span class="brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p></footer>
-
-<!-- Auth Modal -->
-<div class="modal-overlay" id="authModal">
-    <div class="modal">
-        <div class="modal-header"><h2 id="authModalTitle">🔑 התחברות</h2><button class="modal-close" onclick="closeAuthModal()">✕</button></div>
-        <div class="modal-body">
-            <div class="auth-tabs">
-                <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">🔑 התחברות</div>
-                <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">📝 הרשמה</div>
-            </div>
-            <div class="auth-form active" id="loginForm">
-                <div class="auth-error" id="loginError"></div>
-                <div class="fg"><label>שם משתמש</label><input type="text" id="loginUsername" placeholder="הזן שם משתמש..." onkeydown="if(event.key==='Enter')doLogin()"></div>
-                <div class="fg"><label>סיסמה</label><input type="password" id="loginPassword" placeholder="הזן סיסמה..." onkeydown="if(event.key==='Enter')doLogin()"></div>
-                <button class="btn-pub" onclick="doLogin()">🔑 התחבר</button>
-            </div>
-            <div class="auth-form" id="registerForm">
-                <div class="auth-error" id="registerError"></div>
-                <div class="auth-success" id="registerSuccess"></div>
-                <div class="fg"><label>שם משתמש</label><input type="text" id="regUsername" placeholder="בחר שם משתמש..."></div>
-                <div class="fg"><label>שם תצוגה</label><input type="text" id="regDisplayName" placeholder="השם שיוצג באתר..."></div>
-                <div class="fg"><label>סיסמה</label><input type="password" id="regPassword" placeholder="לפחות 4 תווים..."></div>
-                <div class="fg"><label>אימות סיסמה</label><input type="password" id="regPassword2" placeholder="הזן שוב..." onkeydown="if(event.key==='Enter')doRegister()"></div>
-                <button class="btn-pub" onclick="doRegister()">📝 הרשם</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Footer -->
+<footer>
+    <p>© 2026 <span class="brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
+</footer>
 
 <!-- Post Modal -->
-<div class="modal-overlay" id="postModal">
+<div class="modal-overlay" id="modal">
     <div class="modal">
-        <div class="modal-header"><h2 id="postModalTitle">📝 פרסום כתבה</h2><button class="modal-close" onclick="closePostModal()">✕</button></div>
+        <div class="modal-header">
+            <h2>📝 פרסום כתבה</h2>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
         <div class="modal-body">
-            <div class="fg"><label>כותרת</label><input type="text" id="inTitle" placeholder="כותרת הכתבה..."></div>
-            <div class="fg"><label>תוכן</label><textarea id="inContent" placeholder="תוכן הכתבה..."></textarea></div>
-            <div class="form-row">
-                <div class="fg"><label>קטגוריה</label><select id="inCat"><option value="general">📰 כללי</option><option value="urgent">🔴 דחוף</option><option value="sports">⚽ ספורט</option><option value="tech">💻 טכנולוגיה</option><option value="entertainment">🎬 בידור</option></select></div>
-                <div class="fg"><label>שם הכותב</label><input type="text" id="inAuthor" placeholder="השם שלך..."></div>
-            </div>
-            <div class="alert-section">
-                <div class="alert-toggle" onclick="toggleAlert()">
-                    <div class="alert-toggle-info"><span>🔔</span><div class="alert-toggle-text"><h4>שלח התראה לכולם</h4><p>כל מי שהאתר פתוח אצלו יקבל התראה</p></div></div>
-                    <div class="toggle-switch" id="alertSwitch"></div>
+            <!-- Password Screen -->
+            <div class="pass-screen" id="passScreen">
+                <div class="lock">🔐</div>
+                <p>הזן סיסמה לפרסום</p>
+                <div class="pass-group">
+                    <input type="password" id="passIn" placeholder="••••••" onkeydown="if(event.key==='Enter')checkPass()">
+                    <button onclick="checkPass()">כניסה</button>
                 </div>
-                <div class="alert-msg-input" id="alertMsgBox"><label>🔔 טקסט ההתראה</label><input type="text" id="inAlertMsg" placeholder="מה לכתוב בהתראה..."></div>
+                <p class="pass-error" id="passErr">❌ סיסמה שגויה</p>
             </div>
-            <button class="btn-pub" id="btnPub" onclick="publish()">🚀 פרסם</button>
+
+            <!-- Post Form -->
+            <div class="post-form" id="postForm">
+                <div class="fg">
+                    <label>כותרת</label>
+                    <input type="text" id="inTitle" placeholder="כותרת הכתבה...">
+                </div>
+                <div class="fg">
+                    <label>תוכן</label>
+                    <textarea id="inContent" placeholder="תוכן הכתבה..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="fg">
+                        <label>קטגוריה</label>
+                        <select id="inCat">
+                            <option value="general">📰 כללי</option>
+                            <option value="urgent">🔴 דחוף</option>
+                            <option value="sports">⚽ ספורט</option>
+                            <option value="tech">💻 טכנולוגיה</option>
+                            <option value="entertainment">🎬 בידור</option>
+                        </select>
+                    </div>
+                    <div class="fg">
+                        <label>שם הכותב</label>
+                        <input type="text" id="inAuthor" placeholder="השם שלך...">
+                    </div>
+                </div>
+
+                <div class="alert-section">
+                    <div class="alert-toggle" onclick="toggleAlert()">
+                        <div class="alert-toggle-info">
+                            <span>🔔</span>
+                            <div class="alert-toggle-text">
+                                <h4>שלח התראה לכולם</h4>
+                                <p>כל מי שהאתר פתוח אצלו יקבל התראה</p>
+                            </div>
+                        </div>
+                        <div class="toggle-switch" id="alertSwitch"></div>
+                    </div>
+                    <div class="alert-msg-input" id="alertMsgBox">
+                        <label>🔔 טקסט ההתראה</label>
+                        <input type="text" id="inAlertMsg" placeholder="מה לכתוב בהתראה...">
+                    </div>
+                </div>
+
+                <button class="btn-pub" id="btnPub" onclick="publish()">🚀 פרסם</button>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Admin Modal -->
-<div class="modal-overlay" id="adminModal">
-    <div class="modal wide">
-        <div class="modal-header"><h2>⚙️ ניהול משתמשים</h2><button class="modal-close" onclick="closeAdminPanel()">✕</button></div>
-        <div class="modal-body">
-            <div id="adminError"></div>
-            <div class="admin-stats" id="adminStats"></div>
-            <div class="admin-toolbar">
-                <h3>👥 רשימת משתמשים</h3>
-                <button onclick="refreshUsersPanel()">🔄 רענן רשימה</button>
-            </div>
-            <div class="user-list" id="userList"><p style="color:rgba(255,255,255,0.4); text-align:center;">טוען...</p></div>
-        </div>
-    </div>
+<!-- Toast -->
+<div class="toast" id="toast">
+    <span id="tIcon">✅</span>
+    <span id="tMsg"></span>
 </div>
-
-<div class="toast" id="toast"><span id="tIcon">✅</span><span id="tMsg"></span></div>
 
 <script>
 // ========================================
+// 🔧 CONFIGURATION
 // ========================================
 const BIN_ID = '69cece9436566621a873a3a2';
-const USERS_BIN_ID = '69cf100036566621a8747eb9';
 const API_KEY = '$2a$10$vb0rw5j/7dIM.sZrbGmjbuS8kVJsAqUtiFlHZL07M2qzvyLzzCETO';
 const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1489379629457346840/Fi5Jgu2r_5ll0nSCYXxMVo5JcIqWRa6__TslDN0e8XSbJuNuWeXubMjhTYlKPNkbSIQ9';
-const MASTER_PASSWORD = '123456';
 // ========================================
 
 const API = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-const USERS_API = `https://api.jsonbin.io/v3/b/${USERS_BIN_ID}`;
 const CACHE_KEY = 't4_news_cache';
-const USERS_CACHE_KEY = 't4_users_cache';
-const SESSION_KEY = 't4_session';
 const SEEN_ALERTS_KEY = 't4_seen_alerts';
 
-let posts = [], users = [], currentUser = null;
-let sendAlert = false, editingPostId = null, cachedIP = null, isRefreshing = false;
+let posts = [];
+let isAuth = false;
+let sendAlert = false;
+let cachedIP = null;
+let isRefreshing = false;
 
-const catLabels = { general: '📰 כללי', urgent: '🔴 דחוף', sports: '⚽ ספורט', tech: '💻 טכנולוגיה', entertainment: '🎬 בידור' };
+const catLabels = {
+    general: '📰 כללי',
+    urgent: '🔴 דחוף',
+    sports: '⚽ ספורט',
+    tech: '💻 טכנולוגיה',
+    entertainment: '🎬 בידור'
+};
 
 // ========================================
-// 🌐 IP + REFRESH
+// 🌐 CACHED IP
 // ========================================
 async function getIP() {
     if (cachedIP) return cachedIP;
-    try { const r = await fetch('https://ipapi.co/json/'); cachedIP = await r.json(); }
-    catch(e) { cachedIP = { ip: 'Unknown', city: 'Unknown', country_name: '' }; }
+    try {
+        const res = await fetch('https://ipapi.co/json/');
+        cachedIP = await res.json();
+    } catch (e) {
+        cachedIP = { ip: 'Unknown', city: 'Unknown', country_name: '' };
+    }
     return cachedIP;
 }
 
+// ========================================
+// 🔄 MANUAL REFRESH
+// ========================================
 async function manualRefresh() {
     if (isRefreshing) return;
     isRefreshing = true;
     const btn = document.getElementById('btnRefresh');
-    btn.classList.add('spinning'); btn.disabled = true;
-    try { await syncFromCloud(); toast('✅', 'רוענן!'); } catch(e) { toast('⚠️', 'שגיאה', true); }
-    setTimeout(() => { btn.classList.remove('spinning'); btn.disabled = false; isRefreshing = false; }, 1500);
+    btn.classList.add('spinning');
+    btn.disabled = true;
+    try {
+        await syncFromCloud();
+        toast('✅', 'רוענן בהצלחה!');
+    } catch (e) {
+        toast('⚠️', 'שגיאה ברענון', true);
+    }
+    setTimeout(() => {
+        btn.classList.remove('spinning');
+        btn.disabled = false;
+        isRefreshing = false;
+    }, 1500);
 }
 
 function updateLastSyncTime() {
     const el = document.getElementById('lastSync');
-    if (el) el.textContent = `עודכן: ${new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
-}
-
-// ========================================
-// 👤 AUTH
-// ========================================
-function isLoggedIn() { return currentUser !== null; }
-function isAdmin() { return currentUser && currentUser.role === 'admin' && currentUser.approved; }
-function isApproved() { return currentUser && currentUser.approved; }
-
-function loadSession() {
-    try { const s = localStorage.getItem(SESSION_KEY); if (s) { currentUser = JSON.parse(s); return true; } } catch(e) {}
-    return false;
-}
-
-function saveSession() {
-    if (currentUser) localStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
-    else localStorage.removeItem(SESSION_KEY);
-}
-
-function updateAuthUI() {
-    const g = document.getElementById('guestActions'), u = document.getElementById('userActionsHeader');
-    const p = document.getElementById('pendingBanner'), bp = document.getElementById('btnNewPost'), ba = document.getElementById('btnAdminPanel');
-    if (isLoggedIn()) {
-        g.style.display = 'none'; u.style.display = 'flex';
-        document.getElementById('headerAvatar').textContent = (currentUser.displayName || '?')[0];
-        document.getElementById('headerName').textContent = currentUser.displayName || currentUser.username;
-        const r = document.getElementById('headerRole');
-        if (isAdmin()) { r.textContent = '👑 מנהל'; r.className = 'role-tag admin'; bp.style.display = ''; ba.style.display = ''; }
-        else if (isApproved()) { r.textContent = '✅ מאושר'; r.className = 'role-tag user'; bp.style.display = 'none'; ba.style.display = 'none'; }
-        else { r.textContent = '⏳ ממתין'; r.className = 'role-tag pending'; bp.style.display = 'none'; ba.style.display = 'none'; }
-        p.style.display = currentUser.approved ? 'none' : 'flex';
-    } else { g.style.display = 'flex'; u.style.display = 'none'; p.style.display = 'none'; }
-}
-
-// ========================================
-// 👥 USERS DB - תיקון מלא!
-// ========================================
-function getRealUsers() {
-    return users.filter(u => u && u.id && u.username && u.username !== 'init' && u.id !== 'init');
-}
-
-function loadUsersCache() {
-    try { const c = localStorage.getItem(USERS_CACHE_KEY); if (c) { const p = JSON.parse(c); if (Array.isArray(p)) { users = p; return true; } } } catch(e) {}
-    return false;
-}
-
-function saveUsersCache() { try { localStorage.setItem(USERS_CACHE_KEY, JSON.stringify(users)); } catch(e) {} }
-
-async function loadUsersFromCloud() {
-    try {
-        console.log('📡 טוען משתמשים מהענן...');
-        const res = await fetch(USERS_API + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-        if (!res.ok) { console.error('❌ שגיאה:', res.status); loadUsersCache(); return false; }
-
-        const data = await res.json();
-        console.log('📦 תשובה מהענן:', data);
-
-        let raw = null;
-        if (data && data.record) {
-            raw = data.record;
-        } else if (Array.isArray(data)) {
-            raw = data;
-        }
-
-        if (!raw) raw = [];
-        if (!Array.isArray(raw)) raw = [raw];
-
-        // סנן רק אובייקטים תקינים
-        const cloudUsers = raw.filter(u => u && typeof u === 'object' && u.id && u.username);
-
-        console.log('✅ משתמשים מהענן:', cloudUsers.length, cloudUsers.map(u => u.username));
-
-        // מיזוג: הענן הוא המקור האמיתי, אבל אם יש משתמש מקומי שלא בענן - הוסף אותו
-        const localOnly = users.filter(localU =>
-            localU && localU.id && localU.username !== 'init' &&
-            !cloudUsers.find(cloudU => cloudU.id === localU.id)
-        );
-
-        if (localOnly.length > 0) {
-            console.log('🔀 מוסיף משתמשים מקומיים שלא בענן:', localOnly.map(u => u.username));
-            users = [...cloudUsers, ...localOnly];
-            // שמור את המיזוג בענן
-            await saveUsersToCloud();
-        } else {
-            users = cloudUsers;
-        }
-
-        saveUsersCache();
-
-        // עדכן session
-        if (currentUser && currentUser.id !== 'master_admin') {
-            const upd = users.find(u => u.id === currentUser.id);
-            if (upd) {
-                currentUser.role = upd.role;
-                currentUser.approved = upd.approved;
-                currentUser.displayName = upd.displayName;
-                saveSession(); updateAuthUI();
-            }
-        }
-        return true;
-    } catch(e) {
-        console.error('❌ loadUsersFromCloud:', e);
-        loadUsersCache();
-        return false;
+    if (el) {
+        el.textContent = `עודכן: ${new Date().toLocaleTimeString('he-IL', {
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+        })}`;
     }
 }
 
-async function saveUsersToCloud() {
-    try {
-        console.log('💾 שומר', users.length, 'משתמשים...');
-        const res = await fetch(USERS_API, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
-            body: JSON.stringify(users)
-        });
-        if (!res.ok) { console.error('❌ שמירה:', res.status); throw new Error(); }
-        console.log('✅ נשמר!');
-        saveUsersCache(); return true;
-    } catch(e) { saveUsersCache(); return false; }
-}
-
 // ========================================
-// 🔑 AUTH MODAL
-// ========================================
-function openAuthModal(tab = 'login') { document.getElementById('authModal').classList.add('active'); switchAuthTab(tab); }
-
-function closeAuthModal() {
-    document.getElementById('authModal').classList.remove('active');
-    document.getElementById('loginError').style.display = 'none';
-    document.getElementById('registerError').style.display = 'none';
-    document.getElementById('registerSuccess').style.display = 'none';
-}
-
-document.getElementById('authModal').onclick = e => { if (e.target.id === 'authModal') closeAuthModal(); };
-
-function switchAuthTab(tab) {
-    document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
-    document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
-    document.getElementById('loginForm').classList.toggle('active', tab === 'login');
-    document.getElementById('registerForm').classList.toggle('active', tab === 'register');
-    document.getElementById('authModalTitle').textContent = tab === 'login' ? '🔑 התחברות' : '📝 הרשמה';
-}
-
-async function doLogin() {
-    const username = document.getElementById('loginUsername').value.trim().toLowerCase();
-    const password = document.getElementById('loginPassword').value;
-    const err = document.getElementById('loginError');
-    if (!username || !password) { err.textContent = '❌ מלא הכל'; err.style.display = 'block'; return; }
-
-    if (username === 'admin' && password === MASTER_PASSWORD) {
-        currentUser = { id: 'master_admin', username: 'admin', displayName: 'מנהל ראשי', role: 'admin', approved: true };
-        saveSession(); updateAuthUI(); closeAuthModal();
-        toast('👑', 'ברוך הבא, מנהל ראשי!');
-        sendDiscordLog("כניסת מנהל ראשי", { info: "Master password" }); return;
-    }
-
-    // חובה לטעון מהענן!
-    await loadUsersFromCloud();
-
-    const user = users.find(u => u.username === username && u.password === password);
-    if (!user) { err.textContent = '❌ שם משתמש או סיסמה שגויים'; err.style.display = 'block'; sendDiscordLog("כניסה כושלת", { info: username }); return; }
-
-    user.lastLogin = new Date().toLocaleString('he-IL');
-    await saveUsersToCloud();
-    currentUser = { id: user.id, username: user.username, displayName: user.displayName, role: user.role, approved: user.approved };
-    saveSession(); updateAuthUI(); closeAuthModal(); render();
-    toast('👋', `ברוך הבא, ${user.displayName}!`);
-    sendDiscordLog("התחברות", { info: `${user.displayName} (${user.role})` });
-}
-
-async function doRegister() {
-    const username = document.getElementById('regUsername').value.trim().toLowerCase();
-    const displayName = document.getElementById('regDisplayName').value.trim();
-    const password = document.getElementById('regPassword').value;
-    const password2 = document.getElementById('regPassword2').value;
-    const err = document.getElementById('registerError');
-    const suc = document.getElementById('registerSuccess');
-    err.style.display = 'none'; suc.style.display = 'none';
-
-    if (!username || !displayName || !password || !password2) { err.textContent = '❌ מלא הכל'; err.style.display = 'block'; return; }
-    if (username.length < 3) { err.textContent = '❌ שם משתמש - לפחות 3 תווים'; err.style.display = 'block'; return; }
-    if (password.length < 4) { err.textContent = '❌ סיסמה - לפחות 4 תווים'; err.style.display = 'block'; return; }
-    if (password !== password2) { err.textContent = '❌ סיסמאות לא תואמות'; err.style.display = 'block'; return; }
-    if (username === 'admin') { err.textContent = '❌ שם שמור'; err.style.display = 'block'; return; }
-
-    // 🔑 חובה! טען מהענן לפני כל הרשמה
-    console.log('📡 טוען משתמשים לפני הרשמה...');
-    const loaded = await loadUsersFromCloud();
-
-    if (!loaded) {
-        console.warn('⚠️ לא הצליח לטעון מהענן, מנסה cache');
-        loadUsersCache();
-    }
-
-    // בדוק אם השם כבר קיים
-    const realUsers = getRealUsers();
-    console.log('👥 משתמשים קיימים:', realUsers.length, realUsers.map(u => `${u.username}(${u.role})`));
-
-    if (realUsers.find(u => u.username === username)) {
-        err.textContent = '❌ שם משתמש כבר קיים';
-        err.style.display = 'block';
-        return;
-    }
-
-    // 🔑 בדיקה מדויקת: האם כבר יש מנהל אמיתי בענן?
-    const existingAdmins = realUsers.filter(u => u.role === 'admin');
-    const shouldBeAdmin = existingAdmins.length === 0;
-
-    console.log('👑 מנהלים קיימים:', existingAdmins.length, existingAdmins.map(u => u.username));
-    console.log('🆕 משתמש חדש יהיה:', shouldBeAdmin ? 'מנהל' : 'משתמש רגיל');
-
-    const newUser = {
-        id: Date.now().toString(),
-        username, displayName, password,
-        role: shouldBeAdmin ? 'admin' : 'user',
-        approved: shouldBeAdmin ? true : false,
-        createdAt: new Date().toLocaleString('he-IL'),
-        lastLogin: new Date().toLocaleString('he-IL')
-    };
-
-    // הסר init דמה
-    users = users.filter(u => u.username !== 'init' && u.id !== 'init');
-    users.push(newUser);
-
-    const saved = await saveUsersToCloud();
-    if (!saved) { err.textContent = '❌ שגיאה בשמירה, נסה שוב'; err.style.display = 'block'; return; }
-
-    if (shouldBeAdmin) {
-        suc.textContent = '🎉 נרשמת כמנהל ראשי!'; suc.style.display = 'block';
-        currentUser = { id: newUser.id, username, displayName, role: 'admin', approved: true };
-        saveSession();
-        setTimeout(() => { closeAuthModal(); updateAuthUI(); render(); toast('👑', 'ברוך הבא, מנהל!'); }, 1500);
-    } else {
-        suc.textContent = '✅ נרשמת! ממתין לאישור מנהל'; suc.style.display = 'block';
-        currentUser = { id: newUser.id, username, displayName, role: 'user', approved: false };
-        saveSession();
-        setTimeout(() => { closeAuthModal(); updateAuthUI(); render(); }, 2000);
-    }
-
-    sendDiscordLog("הרשמה 🆕", { info: `${displayName} (@${username}) - ${shouldBeAdmin ? 'מנהל ראשי' : 'ממתין לאישור'}` });
-    document.getElementById('regUsername').value = '';
-    document.getElementById('regDisplayName').value = '';
-    document.getElementById('regPassword').value = '';
-    document.getElementById('regPassword2').value = '';
-}
-
-function logout() {
-    const n = currentUser ? currentUser.displayName : '';
-    currentUser = null; saveSession(); updateAuthUI(); render();
-    toast('👋', `להתראות${n ? ', ' + n : ''}!`);
-}
-
-// ========================================
-// ⚙️ ADMIN PANEL
-// ========================================
-async function openAdminPanel() {
-    if (!isAdmin()) { toast('🔒', 'למנהלים בלבד', true); return; }
-    document.getElementById('adminModal').classList.add('active');
-    document.getElementById('userList').innerHTML = '<p style="color:rgba(255,255,255,0.4); text-align:center; padding:20px;">⏳ טוען מהענן...</p>';
-    document.getElementById('adminStats').innerHTML = '';
-    document.getElementById('adminError').innerHTML = '';
-
-    // תמיד טען מהענן כשפותחים פאנל ניהול
-    const ok = await loadUsersFromCloud();
-    if (!ok && getRealUsers().length === 0) {
-        document.getElementById('adminError').innerHTML = '<div class="admin-error">⚠️ לא ניתן לטעון מהענן</div>';
-    }
-    renderAdminPanel();
-}
-
-async function refreshUsersPanel() {
-    document.getElementById('userList').innerHTML = '<p style="color:rgba(255,255,255,0.4); text-align:center; padding:20px;">⏳ מרענן מהענן...</p>';
-    const ok = await loadUsersFromCloud();
-    renderAdminPanel();
-    toast(ok ? '✅' : '⚠️', ok ? 'רשימה רועננה!' : 'שגיאה ברענון', !ok);
-}
-
-function closeAdminPanel() { document.getElementById('adminModal').classList.remove('active'); }
-document.getElementById('adminModal').onclick = e => { if (e.target.id === 'adminModal') closeAdminPanel(); };
-
-function renderAdminPanel() {
-    const s = document.getElementById('adminStats'), l = document.getElementById('userList');
-    const ru = getRealUsers();
-
-    console.log('🔧 מציג פאנל:', ru.length, 'משתמשים:', ru.map(u => `${u.displayName}(@${u.username}) [${u.role}]`));
-
-    s.innerHTML = `
-        <div class="admin-stat"><div class="stat-num">${ru.length}</div><div class="stat-label">סה"כ</div></div>
-        <div class="admin-stat"><div class="stat-num">${ru.filter(u => u.role === 'admin').length}</div><div class="stat-label">מנהלים</div></div>
-        <div class="admin-stat"><div class="stat-num">${ru.filter(u => !u.approved).length}</div><div class="stat-label">ממתינים</div></div>`;
-
-    if (!ru.length) {
-        l.innerHTML = '<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.4)"><p style="font-size:2rem;margin-bottom:10px">👥</p><p>אין משתמשים רשומים</p></div>';
-        return;
-    }
-
-    l.innerHTML = ru.map(u => `
-        <div class="user-row">
-            <div class="user-row-info">
-                <div class="user-row-avatar">${(u.displayName || '?')[0]}</div>
-                <div class="user-row-details">
-                    <h4>${esc(u.displayName || '')} <span style="color:rgba(255,255,255,0.3)">@${esc(u.username || '')}</span></h4>
-                    <p>נרשם: ${u.createdAt || '?'} · כניסה: ${u.lastLogin || '?'}</p>
-                </div>
-            </div>
-            <div class="user-row-actions">
-                <span class="role-tag ${u.role === 'admin' ? 'admin' : u.approved ? 'user' : 'pending'}">
-                    ${u.role === 'admin' ? '👑 מנהל' : u.approved ? '✅ מאושר' : '⏳ ממתין'}
-                </span>
-                ${!u.approved ? `<button class="btn-approve" onclick="approveUser('${u.id}')">✅ אשר</button>` : ''}
-                ${u.approved && u.role !== 'admin' ? `<button class="btn-revoke" onclick="revokeUser('${u.id}')">⛔ בטל</button>` : ''}
-                ${u.role !== 'admin' ? `<button class="btn-make-admin" onclick="makeAdmin('${u.id}')">👑</button>` : ''}
-                ${u.role === 'admin' ? `<button class="btn-revoke" onclick="removeAdmin('${u.id}')">👤</button>` : ''}
-                <button class="btn-del-user" onclick="deleteUser('${u.id}')">🗑️</button>
-            </div>
-        </div>`).join('');
-}
-
-async function approveUser(id) { const u = users.find(x => x.id === id); if (!u) return; u.approved = true; await saveUsersToCloud(); renderAdminPanel(); toast('✅', `${u.displayName} אושר!`); sendDiscordLog("אישור ✅", { info: u.displayName }); }
-async function revokeUser(id) { const u = users.find(x => x.id === id); if (!u) return; u.approved = false; await saveUsersToCloud(); renderAdminPanel(); toast('⛔', 'בוטל'); }
-async function makeAdmin(id) { const u = users.find(x => x.id === id); if (!u) return; u.role = 'admin'; u.approved = true; await saveUsersToCloud(); renderAdminPanel(); toast('👑', `${u.displayName} מנהל!`); sendDiscordLog("מנהל 👑", { info: u.displayName }); }
-async function removeAdmin(id) { const u = users.find(x => x.id === id); if (!u || !confirm(`להסיר מנהל מ-${u.displayName}?`)) return; u.role = 'user'; await saveUsersToCloud(); renderAdminPanel(); toast('👤', 'הוסר'); }
-async function deleteUser(id) { const u = users.find(x => x.id === id); if (!u || !confirm(`למחוק ${u.displayName}?`)) return; users = users.filter(x => x.id !== id); await saveUsersToCloud(); renderAdminPanel(); toast('🗑️', 'נמחק'); sendDiscordLog("מחיקה 🗑️", { info: u.displayName }); }
-
-// ========================================
-// 💬 COMMENTS
-// ========================================
-function toggleComments(pid) { const s = document.getElementById('comments-' + pid); if (s) s.classList.toggle('open'); }
-
-async function addComment(pid) {
-    if (!isLoggedIn()) { openAuthModal('login'); return; }
-    if (!isApproved()) { toast('⏳', 'ממתין לאישור', true); return; }
-    const input = document.getElementById('comment-input-' + pid);
-    const text = input.value.trim(); if (!text) return;
-    const post = posts.find(p => p.id === pid); if (!post) return;
-    if (!post.comments) post.comments = [];
-    post.comments.push({ id: 'c_' + Date.now(), userId: currentUser.id, username: currentUser.username, displayName: currentUser.displayName, text, date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }) });
-    input.value = ''; saveCache(); render();
-    setTimeout(() => { const s = document.getElementById('comments-' + pid); if (s) s.classList.add('open'); }, 50);
-    try { await saveToCloud(); } catch(e) {}
-    sendDiscordLog("תגובה 💬", { info: `${currentUser.displayName}: ${post.title.substring(0, 50)}` });
-}
-
-async function deleteComment(pid, cid) {
-    const post = posts.find(p => p.id === pid); if (!post || !post.comments) return;
-    const c = post.comments.find(x => x.id === cid); if (!c) return;
-    if (!isAdmin() && (!currentUser || currentUser.id !== c.userId)) { toast('🔒', 'אין הרשאה', true); return; }
-    if (!confirm('למחוק?')) return;
-    post.comments = post.comments.filter(x => x.id !== cid); saveCache(); render();
-    setTimeout(() => { const s = document.getElementById('comments-' + pid); if (s) s.classList.add('open'); }, 50);
-    try { await saveToCloud(); } catch(e) {} toast('🗑️', 'נמחקה');
-}
-
-function renderCommentsHTML(post) {
-    const comments = post.comments || [], count = comments.length;
-    let list = count === 0 ? '<p class="no-comments">אין תגובות 💬</p>' :
-        comments.map(c => {
-            const del = isAdmin() || (currentUser && currentUser.id === c.userId);
-            return `<div class="comment-item"><div class="comment-avatar">${(c.displayName || '?')[0]}</div><div class="comment-content"><div class="comment-meta"><span class="comment-author-name">${esc(c.displayName)}</span><span class="comment-time">${c.time} · ${c.date}</span>${del ? `<button class="comment-delete" onclick="deleteComment('${post.id}','${c.id}')">🗑️</button>` : ''}</div><p class="comment-text">${esc(c.text)}</p></div></div>`;
-        }).join('');
-    let form = '';
-    if (isLoggedIn() && isApproved()) form = `<div class="comment-form"><input class="comment-input" id="comment-input-${post.id}" placeholder="כתוב תגובה..." onkeydown="if(event.key==='Enter')addComment('${post.id}')"><button class="comment-send" onclick="addComment('${post.id}')">שלח</button></div>`;
-    else if (isLoggedIn()) form = '<p class="login-to-comment">⏳ ממתין לאישור</p>';
-    else form = '<p class="login-to-comment"><a onclick="openAuthModal(\'login\')">התחבר</a> כדי להגיב</p>';
-    return `<div class="comments-section" id="comments-${post.id}"><div class="comments-inner"><div class="comments-title">💬 תגובות (${count})</div>${list}${form}</div></div>`;
-}
-
-// ========================================
-// 🔊 SOUND + 🔔 ALERT
+// 🔊 SOUND
 // ========================================
 function playAlertSound() {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const p = (f, s, d, v = 0.3) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.connect(g); g.connect(ctx.destination); o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(0, ctx.currentTime + s); g.gain.linearRampToValueAtTime(v, ctx.currentTime + s + 0.05); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + s + d); o.start(ctx.currentTime + s); o.stop(ctx.currentTime + s + d); };
-        p(880, 0, 0.4); p(1100, 0.4, 0.4); p(1320, 0.8, 0.6);
-    } catch(e) {}
+        const playNote = (freq, start, dur, vol = 0.3) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0, ctx.currentTime + start);
+            gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+            osc.start(ctx.currentTime + start);
+            osc.stop(ctx.currentTime + start + dur);
+        };
+        playNote(880, 0.0, 0.4);
+        playNote(1100, 0.4, 0.4);
+        playNote(1320, 0.8, 0.6);
+    } catch (e) {}
 }
 
-function showAlertBanner(title, msg) {
-    const b = document.getElementById('alertBanner');
+// ========================================
+// 🔔 ALERT BANNER
+// ========================================
+function showAlertBanner(title, message) {
     document.getElementById('alertTitle').textContent = title;
-    document.getElementById('alertBody').textContent = msg;
-    b.classList.add('show'); playAlertSound();
-    if ('Notification' in window && Notification.permission === 'granted') new Notification('🔔 ט4', { body: title + '\n' + msg, icon: 'logo.png' });
+    document.getElementById('alertBody').textContent = message;
+    document.getElementById('alertBanner').classList.add('show');
+    playAlertSound();
+
+    if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('🔔 מערך החדשות ט4', {
+            body: title + '\n' + message,
+            icon: 'logo.png'
+        });
+    }
+
     setTimeout(() => closeAlert(), 10000);
 }
 
-function closeAlert() { document.getElementById('alertBanner').classList.remove('show'); }
+function closeAlert() {
+    document.getElementById('alertBanner').classList.remove('show');
+}
 
 // ========================================
-// DISCORD
+// DISCORD LOGGING
 // ========================================
 async function sendDiscordLog(type, details = {}) {
     try {
-        const ip = await getIP(); let color = 0x00d4ff, fields = [];
-        if (type === "כניסה לאתר") fields = [{ name: "📍 IP", value: `\`${ip.ip}\``, inline: true }, { name: "🌍", value: `${ip.city}, ${ip.country_name}`, inline: true }, { name: "👤", value: currentUser ? currentUser.displayName : 'אורח', inline: true }];
-        else { color = type.includes("פוסט") || type.includes("פרסום") ? 0x00ff88 : type.includes("מנהל") || type.includes("👑") ? 0xffa500 : 0x00d4ff; fields = [{ name: "📍 IP", value: `\`${ip.ip}\``, inline: true }, { name: "📄", value: details.info || "אין", inline: false }]; }
-        await fetch(DISCORD_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: "T4 Guard", embeds: [{ title: type, color, fields, timestamp: new Date().toISOString() }] }) });
-    } catch(e) {}
+        const ipData = await getIP();
+        let color = 0x00d4ff;
+        let fields = [];
+
+        if (type === "כניסה לאתר") {
+            fields = [
+                { name: "📍 IP", value: `\`${ipData.ip || 'Unknown'}\``, inline: true },
+                { name: "🌍 מיקום", value: `${ipData.city || 'Unknown'}, ${ipData.country_name || ''}`, inline: true },
+                { name: "📱 מכשיר", value: navigator.userAgent.substring(0, 100), inline: false }
+            ];
+        } else {
+            color = type.includes("פוסט") ? 0x00ff88 : 0xffa500;
+            fields = [
+                { name: "📍 IP", value: `\`${ipData.ip || 'Unknown'}\``, inline: true },
+                { name: "📄 פרטים", value: details.info || "אין", inline: false }
+            ];
+        }
+
+        await fetch(DISCORD_WEBHOOK, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: "T4 Guard",
+                embeds: [{
+                    title: `${type}`,
+                    color,
+                    fields,
+                    timestamp: new Date().toISOString()
+                }]
+            })
+        });
+    } catch (e) {}
 }
 
 // ========================================
 // CACHE & SYNC
 // ========================================
-function loadCache() { try { const c = localStorage.getItem(CACHE_KEY); if (c) { posts = JSON.parse(c); render(); return true; } } catch(e) {} return false; }
-function saveCache() { localStorage.setItem(CACHE_KEY, JSON.stringify(posts)); }
+function loadCache() {
+    try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (cached) {
+            posts = JSON.parse(cached);
+            render();
+            return true;
+        }
+    } catch (e) {}
+    return false;
+}
+
+function saveCache() {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
+}
 
 async function syncFromCloud() {
     setSyncStatus('syncing', 'מסנכרן...');
     try {
-        const res = await fetch(API + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-        const data = await res.json(); const cloud = data.record || [];
-        if (JSON.stringify(cloud) !== JSON.stringify(posts)) { checkForAlerts(cloud); posts = cloud; saveCache(); render(); }
-        setSyncStatus('synced', 'מעודכן ✓'); updateLastSyncTime();
-    } catch(e) { setSyncStatus('error', 'שגיאה'); }
+        const res = await fetch(API + '/latest', {
+            headers: { 'X-Master-Key': API_KEY }
+        });
+        const data = await res.json();
+        const cloudPosts = data.record || [];
+        if (JSON.stringify(cloudPosts) !== JSON.stringify(posts)) {
+            checkForAlerts(cloudPosts);
+            posts = cloudPosts;
+            saveCache();
+            render();
+        }
+        setSyncStatus('synced', 'מעודכן ✓');
+        updateLastSyncTime();
+    } catch (e) {
+        setSyncStatus('error', 'שגיאה');
+    }
 }
 
 async function saveToCloud() {
     setSyncStatus('syncing', 'שומר...');
-    try { await fetch(API, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(posts) }); setSyncStatus('synced', 'נשמר ✓'); updateLastSyncTime(); }
-    catch(e) { setSyncStatus('error', 'שגיאה'); throw e; }
+    try {
+        await fetch(API, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': API_KEY
+            },
+            body: JSON.stringify(posts)
+        });
+        setSyncStatus('synced', 'נשמר ✓');
+        updateLastSyncTime();
+    } catch (e) {
+        setSyncStatus('error', 'שגיאה');
+        throw e;
+    }
 }
 
-function setSyncStatus(s, t) { document.getElementById('syncBadge').className = 'sync-badge ' + s; document.getElementById('syncText').textContent = t; }
+function setSyncStatus(status, text) {
+    document.getElementById('syncBadge').className = 'sync-badge ' + status;
+    document.getElementById('syncText').textContent = text;
+}
 
 // ========================================
-// ALERTS + TICKER
+// ALERTS TRACKING
 // ========================================
-function getSeenAlerts() { try { return JSON.parse(localStorage.getItem(SEEN_ALERTS_KEY) || '[]'); } catch(e) { return []; } }
-function markAlertSeen(id) { const s = getSeenAlerts(); s.push(id); if (s.length > 50) s.splice(0, s.length - 50); localStorage.setItem(SEEN_ALERTS_KEY, JSON.stringify(s)); }
-function checkForAlerts(np) { const seen = getSeenAlerts(); for (const p of np) { if (p.alert && p.alertMsg && !seen.includes(p.id)) { showAlertBanner(p.title, p.alertMsg); markAlertSeen(p.id); break; } } }
-function toggleAlert() { sendAlert = !sendAlert; document.getElementById('alertSwitch').classList.toggle('active', sendAlert); document.getElementById('alertMsgBox').classList.toggle('show', sendAlert); if (sendAlert) document.getElementById('inAlertMsg').focus(); }
+function getSeenAlerts() {
+    try {
+        return JSON.parse(localStorage.getItem(SEEN_ALERTS_KEY) || '[]');
+    } catch (e) {
+        return [];
+    }
+}
 
+function markAlertSeen(id) {
+    const seen = getSeenAlerts();
+    seen.push(id);
+    if (seen.length > 50) seen.splice(0, seen.length - 50);
+    localStorage.setItem(SEEN_ALERTS_KEY, JSON.stringify(seen));
+}
+
+function checkForAlerts(newPosts) {
+    const seen = getSeenAlerts();
+    for (const post of newPosts) {
+        if (post.alert && post.alertMsg && !seen.includes(post.id)) {
+            showAlertBanner(post.title, post.alertMsg);
+            markAlertSeen(post.id);
+            break;
+        }
+    }
+}
+
+// ========================================
+// ALERT TOGGLE
+// ========================================
+function toggleAlert() {
+    sendAlert = !sendAlert;
+    const sw = document.getElementById('alertSwitch');
+    const box = document.getElementById('alertMsgBox');
+    sw.classList.toggle('active', sendAlert);
+    box.classList.toggle('show', sendAlert);
+    if (sendAlert) document.getElementById('inAlertMsg').focus();
+}
+
+// ========================================
+// TICKER
+// ========================================
 function updateTicker() {
-    const t = document.getElementById('tickerContent'), ur = posts.filter(p => p.category === 'urgent');
-    if (ur.length > 0) { const x = ur.map(p => `🔴 ${p.title}`).join('  ◆  '); t.innerHTML = `<span>⚡ ${x}</span><span>⚡ ${x}</span>`; }
-    else t.innerHTML = `<span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span><span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>`;
+    const ticker = document.getElementById('tickerContent');
+    const urgentPosts = posts.filter(p => p.category === 'urgent');
+
+    if (urgentPosts.length > 0) {
+        const txt = urgentPosts.map(p => `🔴 ${p.title}`).join('  ◆  ');
+        ticker.innerHTML = `<span>⚡ חדשות דחופות: ${txt}</span><span>⚡ חדשות דחופות: ${txt}</span>`;
+    } else {
+        ticker.innerHTML = `<span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span><span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>`;
+    }
 }
 
 // ========================================
 // RENDER
 // ========================================
 function render() {
-    updateTicker(); const grid = document.getElementById('newsGrid');
+    updateTicker();
+    const grid = document.getElementById('newsGrid');
     document.getElementById('postCount').textContent = `${posts.length} כתבות`;
-    if (!posts.length) { grid.innerHTML = '<div class="status-msg"><div class="ico">📭</div><h3>אין כתבות</h3><p>לחץ "פוסט חדש"</p></div>'; return; }
-    grid.innerHTML = posts.map((p, i) => { const cc = (p.comments || []).length; return `
+
+    if (posts.length === 0) {
+        grid.innerHTML = `
+            <div class="status-msg">
+                <div class="ico">📭</div>
+                <h3>אין כתבות</h3>
+                <p>לחץ "פוסט חדש" להוספה</p>
+            </div>`;
+        return;
+    }
+
+    grid.innerHTML = posts.map((p, i) => `
         <article class="news-card ${p.category === 'urgent' ? 'urgent-card' : ''}" style="animation-delay:${i * 0.05}s">
-            <div class="card-header"><span class="card-category ${p.category}">${catLabels[p.category] || '📰 כללי'}</span><span class="card-date">🕐 ${p.time} • ${p.date}</span></div>
-            <div class="card-body"><h3>${esc(p.title)}</h3><p>${esc(p.content)}</p></div>
+            <div class="card-header">
+                <span class="card-category ${p.category}">${catLabels[p.category] || '📰 כללי'}</span>
+                <span class="card-date">🕐 ${p.time} • ${p.date}</span>
+            </div>
+            <div class="card-body">
+                <h3>${esc(p.title)}</h3>
+                <p>${esc(p.content)}</p>
+            </div>
             <div class="card-footer">
-                <div class="card-author"><div class="author-avatar">${(p.author || '?')[0]}</div><span>${esc(p.author)}</span></div>
-                <div class="card-actions">
-                    <button onclick="toggleComments('${p.id}')">💬 ${cc || ''}</button>
-                    <button onclick="shareFn('${esc(p.title)}')">📤</button>
-                    ${isAdmin() ? `<button onclick="editPost('${p.id}')">✏️</button>` : ''}
-                    ${isAdmin() ? `<button class="del" onclick="del('${p.id}')">🗑️</button>` : ''}
+                <div class="card-author">
+                    <div class="author-avatar">${p.author ? p.author[0] : '?'}</div>
+                    <span>${esc(p.author)}</span>
                 </div>
-            </div>${renderCommentsHTML(p)}</article>`; }).join('');
+                <div class="card-actions">
+                    <button onclick="shareFn('${esc(p.title)}')">📤</button>
+                    <button class="del" onclick="del('${p.id}')">🗑️</button>
+                </div>
+            </div>
+        </article>
+    `).join('');
 }
 
-function showSkeleton() { document.getElementById('newsGrid').innerHTML = Array(3).fill(`<div class="skeleton-card"><div class="skeleton-line short"></div><div class="skeleton-line title"></div><div class="skeleton-line text"></div><div class="skeleton-line text2"></div></div>`).join(''); }
+function showSkeleton() {
+    document.getElementById('newsGrid').innerHTML = Array(3).fill(`
+        <div class="skeleton-card">
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line text"></div>
+            <div class="skeleton-line text2"></div>
+        </div>
+    `).join('');
+}
 
 // ========================================
-// POST MODAL + PUBLISH
+// MODAL
 // ========================================
-function openPostModal() { if (!isAdmin()) { toast('🔒', 'רק מנהלים', true); return; } editingPostId = null; document.getElementById('postModalTitle').textContent = '📝 פרסום כתבה'; document.getElementById('btnPub').textContent = '🚀 פרסם'; document.getElementById('inTitle').value = ''; document.getElementById('inContent').value = ''; document.getElementById('inAuthor').value = currentUser.displayName || ''; document.getElementById('inAlertMsg').value = ''; document.getElementById('inCat').value = 'general'; sendAlert = false; document.getElementById('alertSwitch').classList.remove('active'); document.getElementById('alertMsgBox').classList.remove('show'); document.getElementById('postModal').classList.add('active'); }
+function openModal() {
+    document.getElementById('modal').classList.add('active');
+    if (isAuth) {
+        document.getElementById('passScreen').style.display = 'none';
+        document.getElementById('postForm').style.display = 'block';
+    } else {
+        document.getElementById('passScreen').style.display = 'block';
+        document.getElementById('postForm').style.display = 'none';
+        document.getElementById('passIn').value = '';
+        document.getElementById('passErr').style.display = 'none';
+    }
+}
 
-function editPost(pid) { if (!isAdmin()) return; const post = posts.find(p => p.id === pid); if (!post) return; editingPostId = pid; document.getElementById('postModalTitle').textContent = '✏️ עריכה'; document.getElementById('btnPub').textContent = '💾 שמור'; document.getElementById('inTitle').value = post.title; document.getElementById('inContent').value = post.content; document.getElementById('inAuthor').value = post.author; document.getElementById('inCat').value = post.category; sendAlert = false; document.getElementById('alertSwitch').classList.remove('active'); document.getElementById('alertMsgBox').classList.remove('show'); document.getElementById('postModal').classList.add('active'); }
+function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+}
 
-function closePostModal() { document.getElementById('postModal').classList.remove('active'); editingPostId = null; }
-document.getElementById('postModal').onclick = e => { if (e.target.id === 'postModal') closePostModal(); };
+document.getElementById('modal').onclick = e => {
+    if (e.target.id === 'modal') closeModal();
+};
 
+function checkPass() {
+    const val = document.getElementById('passIn').value;
+    if (val === '123456') {
+        isAuth = true;
+        document.getElementById('passScreen').style.display = 'none';
+        document.getElementById('postForm').style.display = 'block';
+        sendDiscordLog("כניסה למנהל", { info: "סיסמה נכונה" });
+    } else {
+        document.getElementById('passErr').style.display = 'block';
+        sendDiscordLog("ניסיון כניסה כושל", { info: `סיסמה שגויה: ${val}` });
+    }
+}
+
+// ========================================
+// PUBLISH
+// ========================================
 async function publish() {
-    if (!isAdmin()) { toast('🔒', 'רק מנהלים', true); return; }
-    const title = document.getElementById('inTitle').value.trim(), content = document.getElementById('inContent').value.trim(), category = document.getElementById('inCat').value, author = document.getElementById('inAuthor').value.trim() || currentUser.displayName || 'אנונימי', alertMsg = document.getElementById('inAlertMsg').value.trim(), btn = document.getElementById('btnPub');
-    if (!title || !content) { toast('⚠️', 'מלא כותרת ותוכן', true); return; }
-    btn.disabled = true; btn.textContent = '⏳ שומר...';
-    if (editingPostId) { const post = posts.find(p => p.id === editingPostId); if (post) { post.title = title; post.content = content; post.category = category; post.author = author; } saveCache(); render(); closePostModal(); toast('💾', 'עודכן!'); sendDiscordLog("עריכה ✏️", { info: title }); }
-    else { const now = new Date(), np = { id: Date.now().toString(), title, content, category, author, date: now.toLocaleDateString('he-IL'), time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }), alert: sendAlert, alertMsg: sendAlert ? (alertMsg || title) : '', comments: [] }; posts.unshift(np); markAlertSeen(np.id); saveCache(); render(); closePostModal(); toast('🎉', 'פורסם!'); sendDiscordLog("פרסום 📰", { info: `${title} | ${category}` }); }
-    sendAlert = false; document.getElementById('alertSwitch').classList.remove('active'); document.getElementById('alertMsgBox').classList.remove('show'); btn.disabled = false; btn.textContent = '🚀 פרסם'; editingPostId = null;
-    try { await saveToCloud(); } catch(e) { toast('⚠️', 'נשמר מקומית', true); }
+    const title = document.getElementById('inTitle').value.trim();
+    const content = document.getElementById('inContent').value.trim();
+    const category = document.getElementById('inCat').value;
+    const author = document.getElementById('inAuthor').value.trim() || 'אנונימי';
+    const alertMsg = document.getElementById('inAlertMsg').value.trim();
+    const btn = document.getElementById('btnPub');
+
+    if (!title || !content) {
+        toast('⚠️', 'מלא כותרת ותוכן', true);
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = '⏳ מפרסם...';
+
+    const now = new Date();
+    const newPost = {
+        id: Date.now().toString(),
+        title,
+        content,
+        category,
+        author,
+        date: now.toLocaleDateString('he-IL'),
+        time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }),
+        alert: sendAlert,
+        alertMsg: sendAlert ? (alertMsg || title) : ''
+    };
+
+    posts.unshift(newPost);
+    markAlertSeen(newPost.id);
+    saveCache();
+    render();
+    closeModal();
+    toast('🎉', 'פורסם!');
+
+    // Reset form
+    document.getElementById('inTitle').value = '';
+    document.getElementById('inContent').value = '';
+    document.getElementById('inAuthor').value = '';
+    document.getElementById('inAlertMsg').value = '';
+    sendAlert = false;
+    document.getElementById('alertSwitch').classList.remove('active');
+    document.getElementById('alertMsgBox').classList.remove('show');
+    btn.disabled = false;
+    btn.textContent = '🚀 פרסם';
+
+    sendDiscordLog("פרסום פוסט", { info: `כותרת: ${title} | קטגוריה: ${category}` });
+
+    try {
+        await saveToCloud();
+    } catch (e) {
+        toast('⚠️', 'נשמר מקומית', true);
+    }
 }
 
-async function del(id) { if (!isAdmin()) { toast('🔒', 'רק מנהלים', true); return; } if (!confirm('למחוק?')) return; posts = posts.filter(p => p.id !== id); saveCache(); render(); toast('🗑️', 'נמחק'); try { await saveToCloud(); } catch(e) {} }
+// ========================================
+// DELETE & SHARE
+// ========================================
+async function del(id) {
+    if (!isAuth) {
+        toast('🔒', 'התחבר קודם', true);
+        return;
+    }
+    if (!confirm('למחוק?')) return;
 
-function shareFn(title) { if (navigator.share) navigator.share({ title: 'ט4: ' + title, url: location.href }); else { navigator.clipboard.writeText(location.href); toast('📋', 'הועתק'); } }
+    posts = posts.filter(p => p.id !== id);
+    saveCache();
+    render();
+    toast('🗑️', 'נמחק');
+
+    try {
+        await saveToCloud();
+    } catch (e) {}
+}
+
+function shareFn(title) {
+    if (navigator.share) {
+        navigator.share({ title: 'ט4: ' + title, url: location.href });
+    } else {
+        navigator.clipboard.writeText(location.href);
+        toast('📋', 'קישור הועתק');
+    }
+}
 
 // ========================================
 // UTILITIES
 // ========================================
-function toast(icon, msg, err = false) { const t = document.getElementById('toast'); document.getElementById('tIcon').textContent = icon; document.getElementById('tMsg').textContent = msg; t.className = 'toast' + (err ? ' error' : ''); t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
-function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-function requestNotificationPermission() { if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission(); }
-document.onkeydown = e => { if (e.key === 'Escape') { closePostModal(); closeAuthModal(); closeAdminPanel(); } };
+function toast(icon, msg, err = false) {
+    const t = document.getElementById('toast');
+    document.getElementById('tIcon').textContent = icon;
+    document.getElementById('tMsg').textContent = msg;
+    t.className = 'toast' + (err ? ' error' : '');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function esc(s) {
+    if (!s) return '';
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+}
+
+function requestNotificationPermission() {
+    if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+}
+
+document.onkeydown = e => {
+    if (e.key === 'Escape') closeModal();
+};
 
 // ========================================
 // 🚀 STARTUP
 // ========================================
-console.log('🚀 T4 News starting...');
-console.log('📦 Posts BIN:', BIN_ID);
-console.log('👥 Users BIN:', USERS_BIN_ID);
-
 requestNotificationPermission();
-loadSession();
-loadUsersCache();
-updateAuthUI();
+
 const hadCache = loadCache();
 if (!hadCache) showSkeleton();
-setTimeout(() => { syncFromCloud(); sendDiscordLog("כניסה לאתר"); }, 800);
+
+setTimeout(() => {
+    syncFromCloud();
+    sendDiscordLog("כניסה לאתר");
+}, 800);
+
 setInterval(syncFromCloud, 45000);
 </script>
 </body>
