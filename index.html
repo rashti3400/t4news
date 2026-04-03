@@ -293,7 +293,6 @@
             box-shadow: 0 15px 40px rgba(255, 0, 0, 0.2);
         }
 
-        /* כרטיס צופר */
         .news-card.tzofar-card {
             border-color: rgba(255, 0, 0, 0.5);
             box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
@@ -430,7 +429,6 @@
             50% { opacity: 0.5; }
         }
 
-        /* Alert Banner */
         .alert-banner {
             display: none;
             position: fixed;
@@ -525,7 +523,6 @@
             to { width: 0%; }
         }
 
-        /* צופר באנר מיוחד */
         .alert-banner.tzofar-alert .alert-inner {
             background: linear-gradient(135deg, #1a0000, #2a0000);
             border-bottom: 2px solid #ff0000;
@@ -540,7 +537,6 @@
         .alert-banner.tzofar-alert .alert-label { color: #ff4444; }
         .alert-banner.tzofar-alert .alert-time { background: linear-gradient(90deg, #ff0000, #ff4444); }
 
-        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -750,7 +746,6 @@
             margin-bottom: 6px;
         }
 
-        /* צופר סקשן */
         .tzofar-status {
             background: rgba(255, 0, 0, 0.05);
             border: 1px solid rgba(255, 0, 0, 0.2);
@@ -929,13 +924,10 @@
                 <p class="pass-error" id="passErr">❌ סיסמה שגויה</p>
             </div>
             <div class="post-form" id="postForm">
-
-                <!-- סטטוס צופר -->
                 <div class="tzofar-status" id="tzofarStatus">
                     <div class="tzofar-dot" id="tzofarDot"></div>
                     <p id="tzofarStatusText">🔄 בודק סטטוס צופר...</p>
                 </div>
-
                 <div class="fg">
                     <label>כותרת</label>
                     <input type="text" id="inTitle" placeholder="כותרת הכתבה...">
@@ -961,7 +953,6 @@
                         <input type="text" id="inAuthor" placeholder="השם שלך...">
                     </div>
                 </div>
-
                 <div class="alert-section">
                     <div class="alert-toggle" onclick="toggleAlert()">
                         <div class="alert-toggle-info">
@@ -978,7 +969,6 @@
                         <input type="text" id="inAlertMsg" placeholder="מה לכתוב בהתראה...">
                     </div>
                 </div>
-
                 <button class="btn-pub" id="btnPub" onclick="publish()">🚀 פרסם</button>
             </div>
         </div>
@@ -1017,12 +1007,11 @@ const catLabels = {
 };
 
 // ========================================
-// 🔊 SOUND - מרגיע, כמו פינג התראה
+// 🔊 SOUND
 // ========================================
 function playAlertSound() {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
-
         const playNote = (freq, start, dur, vol = 0.3) => {
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
@@ -1036,20 +1025,15 @@ function playAlertSound() {
             osc.start(ctx.currentTime + start);
             osc.stop(ctx.currentTime + start + dur);
         };
-
-        // פינג מרגיע - 3 תווים
         playNote(880, 0.0, 0.4);
         playNote(1100, 0.4, 0.4);
         playNote(1320, 0.8, 0.6);
-
     } catch(e) {}
 }
 
-// צליל אזעקה לצופר - חזק יותר
 function playTzofarSound() {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
-
         const playNote = (freq, start, dur, vol = 0.5) => {
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
@@ -1065,16 +1049,14 @@ function playTzofarSound() {
             osc.start(ctx.currentTime + start);
             osc.stop(ctx.currentTime + start + dur);
         };
-
         playNote(440, 0.0, 1.5);
         playNote(440, 1.7, 1.5);
         playNote(440, 3.4, 1.5);
-
     } catch(e) {}
 }
 
 // ========================================
-// 🚨 TZOFAR - בדיקת אזעקות
+// 🚨 TZOFAR
 // ========================================
 async function checkTzofar() {
     try {
@@ -1084,38 +1066,28 @@ async function checkTzofar() {
                 'X-Requested-With': 'XMLHttpRequest'
             }
         });
-
         if (!res.ok) {
             updateTzofarStatus(false, 'לא ניתן להתחבר לצופר');
             return;
         }
-
         const text = await res.text();
-
         if (!text || text.trim() === '') {
             updateTzofarStatus(true, 'אין אזעקות פעילות כרגע ✅');
             return;
         }
-
         const data = JSON.parse(text);
         const alerts = data.data || [];
-
         if (alerts.length === 0) {
             updateTzofarStatus(true, 'אין אזעקות פעילות כרגע ✅');
             return;
         }
-
-        // יש אזעקות!
         const areas = alerts.join(', ');
         updateTzofarStatus(true, `🚨 אזעקה פעילה: ${areas}`);
-
-        // בדוק אם זו אזעקה חדשה
         const alertKey = alerts.sort().join(',');
         if (alertKey !== lastTzofarAlerts) {
             lastTzofarAlerts = alertKey;
             await publishTzofarAlert(alerts, data.title || 'אזעקה');
         }
-
     } catch(e) {
         updateTzofarStatus(false, 'שגיאה בבדיקת צופר');
     }
@@ -1133,7 +1105,6 @@ function updateTzofarStatus(connected, text) {
 async function publishTzofarAlert(areas, title) {
     const now = new Date();
     const areaText = areas.join(', ');
-
     const newPost = {
         id: 'tzofar_' + Date.now().toString(),
         title: `🚨 ${title} - ${areaText}`,
@@ -1145,21 +1116,12 @@ async function publishTzofarAlert(areas, title) {
         alert: true,
         alertMsg: `אזעקה באזורים: ${areaText} - היכנסו למרחב המוגן!`
     };
-
-    // שמור ב-seen כדי שלא יציג שוב
     markAlertSeen(newPost.id);
-
-    // הצג התראה מיידית
     showAlertBanner(newPost.title, newPost.alertMsg, true);
-
-    // הוסף לפוסטים
     posts.unshift(newPost);
     saveCache();
     render();
-
     try { await saveToCloud(); } catch(e) {}
-
-    // שלח לדיסקורד
     sendDiscordLog("🚨 אזעקת צופר", { info: `אזורים: ${areaText}` });
 }
 
@@ -1170,10 +1132,8 @@ function showAlertBanner(title, message, isTzofar = false) {
     const banner = document.getElementById('alertBanner');
     const icon = document.getElementById('alertIcon');
     const label = document.getElementById('alertLabel');
-
     document.getElementById('alertTitle').textContent = title;
     document.getElementById('alertBody').textContent = message;
-
     if (isTzofar) {
         icon.textContent = '🚨';
         label.textContent = '⚠️ אזעקת פיקוד העורף';
@@ -1185,16 +1145,13 @@ function showAlertBanner(title, message, isTzofar = false) {
         banner.classList.remove('tzofar-alert');
         playAlertSound();
     }
-
     banner.classList.add('show');
-
     if ('Notification' in window && Notification.permission === 'granted') {
         new Notification(isTzofar ? '🚨 אזעקה!' : '🔔 מערך החדשות ט4', {
             body: title + '\n' + message,
             icon: 'logo.png'
         });
     }
-
     setTimeout(() => closeAlert(), isTzofar ? 30000 : 10000);
 }
 
@@ -1212,7 +1169,6 @@ async function sendDiscordLog(type, details = {}) {
         const ipData = await ipRes.json();
         let color = 0x00d4ff;
         let fields = [];
-
         if (type === "כניסה לאתר") {
             fields = [
                 { name: "📍 IP", value: `\`${ipData.ip || 'Unknown'}\``, inline: true },
@@ -1226,7 +1182,6 @@ async function sendDiscordLog(type, details = {}) {
                 { name: "📄 פרטים", value: details.info || "אין", inline: false }
             ];
         }
-
         await fetch(DISCORD_WEBHOOK, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1331,7 +1286,6 @@ function updateTicker() {
     const ticker = document.getElementById('tickerContent');
     const tzofarPosts = posts.filter(p => p.category === 'tzofar');
     const urgentPosts = posts.filter(p => p.category === 'urgent');
-
     if (tzofarPosts.length > 0) {
         const txt = tzofarPosts.map(p => `🚨 ${p.title}`).join('  ◆  ');
         ticker.innerHTML = `<span>${txt}  ◆  </span><span>${txt}  ◆  </span>`;
@@ -1350,12 +1304,10 @@ function render() {
     updateTicker();
     const grid = document.getElementById('newsGrid');
     document.getElementById('postCount').textContent = `${posts.length} כתבות`;
-
     if (posts.length === 0) {
         grid.innerHTML = '<div class="status-msg"><div class="ico">📭</div><h3>אין כתבות</h3><p>לחץ "פוסט חדש" להוספה</p></div>';
         return;
     }
-
     grid.innerHTML = posts.map((p, i) => `
         <article class="news-card ${p.category === 'urgent' ? 'urgent-card' : ''} ${p.category === 'tzofar' ? 'tzofar-card' : ''}" style="animation-delay:${i * 0.05}s">
             <div class="card-header">
@@ -1525,6 +1477,5 @@ setInterval(checkTzofar, 10000);
 
 sendDiscordLog("כניסה לאתר");
 </script>
-
 </body>
 </html>
