@@ -216,7 +216,50 @@
             background: rgba(255, 68, 68, 0.2);
         }
 
-        /* ========== USER BADGE ========== */
+        /* Refresh Button */
+        .btn-refresh {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .btn-refresh:hover {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .btn-refresh.spinning .refresh-icon {
+            animation: spin 0.8s linear;
+        }
+
+        .btn-refresh:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .refresh-icon {
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* User Badge */
         .user-badge {
             display: flex;
             align-items: center;
@@ -337,6 +380,12 @@
             color: var(--text-bright);
         }
 
+        .section-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .post-count {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -344,6 +393,11 @@
             border-radius: 20px;
             font-size: 0.8rem;
             color: var(--accent);
+        }
+
+        .last-sync {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
         }
 
         .news-grid {
@@ -487,7 +541,7 @@
         .card-actions button:hover { color: var(--accent); background: rgba(0, 212, 255, 0.05); }
         .card-actions .del:hover { color: #ff4444; background: rgba(255, 68, 68, 0.05); }
 
-        /* ========== COMMENTS ========== */
+        /* Comments */
         .comments-section {
             border-top: 1px solid var(--border);
             background: rgba(0, 0, 0, 0.15);
@@ -665,7 +719,7 @@
             50% { opacity: 0.5; }
         }
 
-        /* ========== ALERT BANNER ========== */
+        /* Alert Banner */
         .alert-banner {
             display: none;
             position: fixed;
@@ -774,7 +828,7 @@
         .alert-banner.tzofar-alert .alert-label { color: #ff4444; }
         .alert-banner.tzofar-alert .alert-time { background: linear-gradient(90deg, #ff0000, #ff4444); }
 
-        /* ========== MODALS ========== */
+        /* Modals */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -837,7 +891,7 @@
 
         .modal-body { padding: 25px; }
 
-        /* ========== AUTH MODAL ========== */
+        /* Auth Modal */
         .auth-tabs {
             display: flex;
             border-bottom: 1px solid var(--border);
@@ -903,7 +957,7 @@
         .pending-banner .pending-text h4 { color: #ffa500; font-size: 0.9rem; margin-bottom: 2px; }
         .pending-banner .pending-text p { color: rgba(255, 255, 255, 0.4); font-size: 0.8rem; }
 
-        /* ========== ADMIN PANEL ========== */
+        /* Admin Panel */
         .admin-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1026,7 +1080,7 @@
 
         .btn-del-user:hover { background: rgba(255, 68, 68, 0.2); }
 
-        /* ========== POST FORM ========== */
+        /* Post Form */
         .fg { margin-bottom: 18px; }
         .fg label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
 
@@ -1217,6 +1271,7 @@
             .user-row { flex-direction: column; gap: 10px; text-align: center; }
             .user-row-actions { flex-wrap: wrap; justify-content: center; }
             .user-badge { display: none; }
+            .last-sync { display: none; }
         }
     </style>
 </head>
@@ -1256,6 +1311,12 @@
                 <div class="sync-dot"></div>
                 <span id="syncText">מחובר</span>
             </div>
+
+            <!-- Refresh Button -->
+            <button class="btn-refresh" id="btnRefresh" onclick="manualRefresh()" title="רענן עכשיו">
+                <span class="refresh-icon">🔄</span>
+            </button>
+
             <div class="live-badge">
                 <div class="live-dot"></div>
                 <span>LIVE</span>
@@ -1267,7 +1328,7 @@
                 <button class="btn btn-primary" onclick="openAuthModal('register')">📝 הרשם</button>
             </div>
 
-            <!-- User Actions (hidden by default) -->
+            <!-- User Actions -->
             <div class="user-actions-header" id="userActionsHeader" style="display:none">
                 <div class="user-badge" id="headerUserBadge">
                     <div class="user-avatar-header" id="headerAvatar">?</div>
@@ -1282,7 +1343,7 @@
     </div>
 </header>
 
-<!-- Pending Approval Banner -->
+<!-- Pending Banner -->
 <div class="pending-banner" id="pendingBanner" style="display:none; max-width:1400px; margin:15px auto 0; padding:15px 40px;">
     <span class="pending-icon">⏳</span>
     <div class="pending-text">
@@ -1304,16 +1365,19 @@
             <div class="icon">📰</div>
             <h2>חדשות אחרונות</h2>
         </div>
-        <div class="post-count" id="postCount">טוען...</div>
+        <div class="section-right">
+            <span class="last-sync" id="lastSync"></span>
+            <div class="post-count" id="postCount">טוען...</div>
+        </div>
     </div>
     <div class="news-grid" id="newsGrid"></div>
 </main>
 
 <footer>
-    <p>© 2025 <span class="brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
+    <p>© 2026 <span class="brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
 </footer>
 
-<!-- ========== AUTH MODAL ========== -->
+<!-- Auth Modal -->
 <div class="modal-overlay" id="authModal">
     <div class="modal">
         <div class="modal-header">
@@ -1325,8 +1389,6 @@
                 <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">🔑 התחברות</div>
                 <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">📝 הרשמה</div>
             </div>
-
-            <!-- Login Form -->
             <div class="auth-form active" id="loginForm">
                 <div class="auth-error" id="loginError"></div>
                 <div class="fg">
@@ -1339,8 +1401,6 @@
                 </div>
                 <button class="btn-pub" onclick="doLogin()">🔑 התחבר</button>
             </div>
-
-            <!-- Register Form -->
             <div class="auth-form" id="registerForm">
                 <div class="auth-error" id="registerError"></div>
                 <div class="auth-success" id="registerSuccess"></div>
@@ -1366,7 +1426,7 @@
     </div>
 </div>
 
-<!-- ========== POST MODAL ========== -->
+<!-- Post Modal -->
 <div class="modal-overlay" id="postModal">
     <div class="modal">
         <div class="modal-header">
@@ -1424,7 +1484,7 @@
     </div>
 </div>
 
-<!-- ========== ADMIN PANEL MODAL ========== -->
+<!-- Admin Modal -->
 <div class="modal-overlay" id="adminModal">
     <div class="modal wide">
         <div class="modal-header">
@@ -1451,10 +1511,10 @@
 // 🔧 CONFIGURATION
 // ========================================
 const BIN_ID = '69cece9436566621a873a3a2';
-const USERS_BIN_ID = '69cf100036566621a8747eb9';  // ⚠️ צור bin חדש ב-jsonbin.io עם [] והחלף כאן
+const USERS_BIN_ID = 'PUT_YOUR_USERS_BIN_ID_HERE';
 const API_KEY = '$2a$10$vb0rw5j/7dIM.sZrbGmjbuS8kVJsAqUtiFlHZL07M2qzvyLzzCETO';
 const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1489379629457346840/Fi5Jgu2r_5ll0nSCYXxMVo5JcIqWRa6__TslDN0e8XSbJuNuWeXubMjhTYlKPNkbSIQ9';
-const MASTER_PASSWORD = '123456'; // סיסמת גיבוי למנהל ראשי
+const MASTER_PASSWORD = '123456';
 // ========================================
 
 const API = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
@@ -1471,6 +1531,9 @@ let currentUser = null;
 let sendAlert = false;
 let editingPostId = null;
 let lastTzofarAlerts = [];
+let cachedIP = null;
+let isRefreshing = false;
+let lastSyncTime = null;
 
 const catLabels = {
     general: '📰 כללי',
@@ -1482,6 +1545,53 @@ const catLabels = {
 };
 
 // ========================================
+// 🌐 CACHED IP
+// ========================================
+async function getIP() {
+    if (cachedIP) return cachedIP;
+    try {
+        const res = await fetch('https://ipapi.co/json/');
+        cachedIP = await res.json();
+    } catch(e) {
+        cachedIP = { ip: 'Unknown', city: 'Unknown', country_name: '' };
+    }
+    return cachedIP;
+}
+
+// ========================================
+// 🔄 MANUAL REFRESH
+// ========================================
+async function manualRefresh() {
+    if (isRefreshing) return;
+    isRefreshing = true;
+
+    const btn = document.getElementById('btnRefresh');
+    btn.classList.add('spinning');
+    btn.disabled = true;
+
+    try {
+        await syncFromCloud();
+        toast('✅', 'רוענן בהצלחה!');
+    } catch(e) {
+        toast('⚠️', 'שגיאה ברענון', true);
+    }
+
+    setTimeout(() => {
+        btn.classList.remove('spinning');
+        btn.disabled = false;
+        isRefreshing = false;
+    }, 1500);
+}
+
+function updateLastSyncTime() {
+    lastSyncTime = new Date();
+    const el = document.getElementById('lastSync');
+    if (el) {
+        el.textContent = `עודכן: ${lastSyncTime.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
+    }
+}
+
+// ========================================
 // 👤 AUTH & USERS
 // ========================================
 function isLoggedIn() { return currentUser !== null; }
@@ -1491,20 +1601,14 @@ function isApproved() { return currentUser && currentUser.approved; }
 function loadSession() {
     try {
         const session = localStorage.getItem(SESSION_KEY);
-        if (session) {
-            currentUser = JSON.parse(session);
-            return true;
-        }
+        if (session) { currentUser = JSON.parse(session); return true; }
     } catch(e) {}
     return false;
 }
 
 function saveSession() {
-    if (currentUser) {
-        localStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
-    } else {
-        localStorage.removeItem(SESSION_KEY);
-    }
+    if (currentUser) localStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
+    else localStorage.removeItem(SESSION_KEY);
 }
 
 function updateAuthUI() {
@@ -1537,7 +1641,6 @@ function updateAuthUI() {
             btnPost.style.display = 'none';
             btnAdmin.style.display = 'none';
         }
-
         pendingEl.style.display = (!currentUser.approved) ? 'flex' : 'none';
     } else {
         guestEl.style.display = 'flex';
@@ -1582,15 +1685,8 @@ async function doLogin() {
         return;
     }
 
-    // Master password backdoor
     if (username === 'admin' && password === MASTER_PASSWORD) {
-        currentUser = {
-            id: 'master_admin',
-            username: 'admin',
-            displayName: 'מנהל ראשי',
-            role: 'admin',
-            approved: true
-        };
+        currentUser = { id: 'master_admin', username: 'admin', displayName: 'מנהל ראשי', role: 'admin', approved: true };
         saveSession();
         updateAuthUI();
         closeAuthModal();
@@ -1599,7 +1695,6 @@ async function doLogin() {
         return;
     }
 
-    // Load latest users
     await loadUsersFromCloud();
 
     const user = users.find(u => u.username === username && u.password === password);
@@ -1610,25 +1705,17 @@ async function doLogin() {
         return;
     }
 
-    // Update last login
     user.lastLogin = new Date().toLocaleString('he-IL');
     await saveUsersToCloud();
 
-    currentUser = {
-        id: user.id,
-        username: user.username,
-        displayName: user.displayName,
-        role: user.role,
-        approved: user.approved
-    };
+    currentUser = { id: user.id, username: user.username, displayName: user.displayName, role: user.role, approved: user.approved };
     saveSession();
     updateAuthUI();
     closeAuthModal();
     render();
 
-    const roleText = user.role === 'admin' ? 'מנהל' : user.approved ? 'משתמש מאושר' : 'ממתין לאישור';
     toast('👋', `ברוך הבא, ${user.displayName}!`);
-    sendDiscordLog("התחברות", { info: `${user.displayName} (${roleText})` });
+    sendDiscordLog("התחברות", { info: `${user.displayName} (${user.role === 'admin' ? 'מנהל' : user.approved ? 'מאושר' : 'ממתין'})` });
 }
 
 async function doRegister() {
@@ -1643,99 +1730,56 @@ async function doRegister() {
     successEl.style.display = 'none';
 
     if (!username || !displayName || !password || !password2) {
-        errEl.textContent = '❌ מלא את כל השדות';
-        errEl.style.display = 'block';
-        return;
+        errEl.textContent = '❌ מלא את כל השדות'; errEl.style.display = 'block'; return;
     }
-
     if (username.length < 3) {
-        errEl.textContent = '❌ שם משתמש חייב להכיל לפחות 3 תווים';
-        errEl.style.display = 'block';
-        return;
+        errEl.textContent = '❌ שם משתמש חייב להכיל לפחות 3 תווים'; errEl.style.display = 'block'; return;
     }
-
     if (password.length < 4) {
-        errEl.textContent = '❌ סיסמה חייבת להכיל לפחות 4 תווים';
-        errEl.style.display = 'block';
-        return;
+        errEl.textContent = '❌ סיסמה חייבת להכיל לפחות 4 תווים'; errEl.style.display = 'block'; return;
     }
-
     if (password !== password2) {
-        errEl.textContent = '❌ הסיסמאות לא תואמות';
-        errEl.style.display = 'block';
-        return;
+        errEl.textContent = '❌ הסיסמאות לא תואמות'; errEl.style.display = 'block'; return;
     }
-
     if (username === 'admin') {
-        errEl.textContent = '❌ שם משתמש שמור';
-        errEl.style.display = 'block';
-        return;
+        errEl.textContent = '❌ שם משתמש שמור'; errEl.style.display = 'block'; return;
     }
 
     await loadUsersFromCloud();
 
     if (users.find(u => u.username === username)) {
-        errEl.textContent = '❌ שם משתמש כבר קיים';
-        errEl.style.display = 'block';
-        return;
+        errEl.textContent = '❌ שם משתמש כבר קיים'; errEl.style.display = 'block'; return;
     }
 
-    const isFirstUser = users.length === 0;
+    const isFirstUser = users.filter(u => u.username !== 'init').length === 0;
     const newUser = {
-        id: Date.now().toString(),
-        username,
-        displayName,
-        password,
+        id: Date.now().toString(), username, displayName, password,
         role: isFirstUser ? 'admin' : 'user',
         approved: isFirstUser,
         createdAt: new Date().toLocaleString('he-IL'),
         lastLogin: new Date().toLocaleString('he-IL')
     };
 
+    users = users.filter(u => u.username !== 'init');
     users.push(newUser);
     await saveUsersToCloud();
 
     if (isFirstUser) {
         successEl.textContent = '🎉 נרשמת כמנהל ראשי! מתחבר...';
         successEl.style.display = 'block';
-        currentUser = {
-            id: newUser.id,
-            username: newUser.username,
-            displayName: newUser.displayName,
-            role: 'admin',
-            approved: true
-        };
+        currentUser = { id: newUser.id, username: newUser.username, displayName: newUser.displayName, role: 'admin', approved: true };
         saveSession();
-        setTimeout(() => {
-            closeAuthModal();
-            updateAuthUI();
-            render();
-            toast('👑', 'ברוך הבא, מנהל!');
-        }, 1500);
+        setTimeout(() => { closeAuthModal(); updateAuthUI(); render(); toast('👑', 'ברוך הבא, מנהל!'); }, 1500);
     } else {
         successEl.textContent = '✅ נרשמת בהצלחה! ממתין לאישור מנהל';
         successEl.style.display = 'block';
-        // Auto login but not approved
-        currentUser = {
-            id: newUser.id,
-            username: newUser.username,
-            displayName: newUser.displayName,
-            role: 'user',
-            approved: false
-        };
+        currentUser = { id: newUser.id, username: newUser.username, displayName: newUser.displayName, role: 'user', approved: false };
         saveSession();
-        setTimeout(() => {
-            closeAuthModal();
-            updateAuthUI();
-            render();
-        }, 2000);
+        setTimeout(() => { closeAuthModal(); updateAuthUI(); render(); }, 2000);
     }
 
-    sendDiscordLog("הרשמה חדשה 🆕", {
-        info: `${displayName} (@${username}) - ${isFirstUser ? 'מנהל ראשי' : 'ממתין לאישור'}`
-    });
+    sendDiscordLog("הרשמה חדשה 🆕", { info: `${displayName} (@${username}) - ${isFirstUser ? 'מנהל ראשי' : 'ממתין לאישור'}` });
 
-    // Clear form
     document.getElementById('regUsername').value = '';
     document.getElementById('regDisplayName').value = '';
     document.getElementById('regPassword').value = '';
@@ -1762,9 +1806,7 @@ function loadUsersCache() {
     return false;
 }
 
-function saveUsersCache() {
-    localStorage.setItem(USERS_CACHE_KEY, JSON.stringify(users));
-}
+function saveUsersCache() { localStorage.setItem(USERS_CACHE_KEY, JSON.stringify(users)); }
 
 async function loadUsersFromCloud() {
     try {
@@ -1773,7 +1815,6 @@ async function loadUsersFromCloud() {
         users = data.record || [];
         saveUsersCache();
 
-        // Refresh current user data
         if (currentUser && currentUser.id !== 'master_admin') {
             const updated = users.find(u => u.id === currentUser.id);
             if (updated) {
@@ -1784,9 +1825,7 @@ async function loadUsersFromCloud() {
                 updateAuthUI();
             }
         }
-    } catch(e) {
-        loadUsersCache();
-    }
+    } catch(e) { loadUsersCache(); }
 }
 
 async function saveUsersToCloud() {
@@ -1797,58 +1836,42 @@ async function saveUsersToCloud() {
             body: JSON.stringify(users)
         });
         saveUsersCache();
-    } catch(e) {
-        saveUsersCache();
-    }
+    } catch(e) { saveUsersCache(); }
 }
 
 // ========================================
 // ⚙️ ADMIN PANEL
 // ========================================
 function openAdminPanel() {
-    if (!isAdmin()) {
-        toast('🔒', 'גישה למנהלים בלבד', true);
-        return;
-    }
+    if (!isAdmin()) { toast('🔒', 'גישה למנהלים בלבד', true); return; }
     document.getElementById('adminModal').classList.add('active');
     loadUsersFromCloud().then(() => renderAdminPanel());
 }
 
-function closeAdminPanel() {
-    document.getElementById('adminModal').classList.remove('active');
-}
+function closeAdminPanel() { document.getElementById('adminModal').classList.remove('active'); }
 
 document.getElementById('adminModal').onclick = e => { if (e.target.id === 'adminModal') closeAdminPanel(); };
 
 function renderAdminPanel() {
     const statsEl = document.getElementById('adminStats');
     const listEl = document.getElementById('userList');
-
-    const totalUsers = users.length;
-    const admins = users.filter(u => u.role === 'admin').length;
-    const pending = users.filter(u => !u.approved).length;
+    const realUsers = users.filter(u => u.username !== 'init');
+    const totalUsers = realUsers.length;
+    const admins = realUsers.filter(u => u.role === 'admin').length;
+    const pending = realUsers.filter(u => !u.approved).length;
 
     statsEl.innerHTML = `
-        <div class="admin-stat">
-            <div class="stat-num">${totalUsers}</div>
-            <div class="stat-label">סה"כ משתמשים</div>
-        </div>
-        <div class="admin-stat">
-            <div class="stat-num">${admins}</div>
-            <div class="stat-label">מנהלים</div>
-        </div>
-        <div class="admin-stat">
-            <div class="stat-num">${pending}</div>
-            <div class="stat-label">ממתינים לאישור</div>
-        </div>
+        <div class="admin-stat"><div class="stat-num">${totalUsers}</div><div class="stat-label">סה"כ משתמשים</div></div>
+        <div class="admin-stat"><div class="stat-num">${admins}</div><div class="stat-label">מנהלים</div></div>
+        <div class="admin-stat"><div class="stat-num">${pending}</div><div class="stat-label">ממתינים לאישור</div></div>
     `;
 
-    if (users.length === 0) {
+    if (realUsers.length === 0) {
         listEl.innerHTML = '<p style="color:rgba(255,255,255,0.4); text-align:center; padding:20px;">אין משתמשים רשומים</p>';
         return;
     }
 
-    listEl.innerHTML = users.map(u => `
+    listEl.innerHTML = realUsers.map(u => `
         <div class="user-row">
             <div class="user-row-info">
                 <div class="user-row-avatar">${u.displayName ? u.displayName[0] : '?'}</div>
@@ -1862,9 +1885,9 @@ function renderAdminPanel() {
                     ${u.role === 'admin' ? '👑 מנהל' : u.approved ? '✅ מאושר' : '⏳ ממתין'}
                 </span>
                 ${!u.approved ? `<button class="btn-approve" onclick="approveUser('${u.id}')">✅ אשר</button>` : ''}
-                ${u.approved && u.role !== 'admin' ? `<button class="btn-revoke" onclick="revokeUser('${u.id}')">⛔ בטל אישור</button>` : ''}
-                ${u.role !== 'admin' ? `<button class="btn-make-admin" onclick="makeAdmin('${u.id}')">👑 הפוך למנהל</button>` : ''}
-                ${u.role === 'admin' ? `<button class="btn-revoke" onclick="removeAdmin('${u.id}')">👤 הורד מנהל</button>` : ''}
+                ${u.approved && u.role !== 'admin' ? `<button class="btn-revoke" onclick="revokeUser('${u.id}')">⛔ בטל</button>` : ''}
+                ${u.role !== 'admin' ? `<button class="btn-make-admin" onclick="makeAdmin('${u.id}')">👑 מנהל</button>` : ''}
+                ${u.role === 'admin' ? `<button class="btn-revoke" onclick="removeAdmin('${u.id}')">👤 הורד</button>` : ''}
                 <button class="btn-del-user" onclick="deleteUser('${u.id}')">🗑️</button>
             </div>
         </div>
@@ -1893,8 +1916,7 @@ async function revokeUser(userId) {
 async function makeAdmin(userId) {
     const user = users.find(u => u.id === userId);
     if (!user) return;
-    user.role = 'admin';
-    user.approved = true;
+    user.role = 'admin'; user.approved = true;
     await saveUsersToCloud();
     renderAdminPanel();
     toast('👑', `${user.displayName} הפך למנהל!`);
@@ -1931,14 +1953,8 @@ function toggleComments(postId) {
 }
 
 async function addComment(postId) {
-    if (!isLoggedIn()) {
-        openAuthModal('login');
-        return;
-    }
-    if (!isApproved()) {
-        toast('⏳', 'החשבון שלך עדיין לא אושר', true);
-        return;
-    }
+    if (!isLoggedIn()) { openAuthModal('login'); return; }
+    if (!isApproved()) { toast('⏳', 'החשבון שלך עדיין לא אושר', true); return; }
 
     const input = document.getElementById('comment-input-' + postId);
     const text = input.value.trim();
@@ -1946,58 +1962,35 @@ async function addComment(postId) {
 
     const post = posts.find(p => p.id === postId);
     if (!post) return;
-
     if (!post.comments) post.comments = [];
 
-    const comment = {
-        id: 'c_' + Date.now(),
-        userId: currentUser.id,
-        username: currentUser.username,
-        displayName: currentUser.displayName,
-        text,
+    post.comments.push({
+        id: 'c_' + Date.now(), userId: currentUser.id, username: currentUser.username,
+        displayName: currentUser.displayName, text,
         date: new Date().toLocaleDateString('he-IL'),
         time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
-    };
+    });
 
-    post.comments.push(comment);
     input.value = '';
-
     saveCache();
     render();
-    // Re-open comments section
-    setTimeout(() => {
-        const section = document.getElementById('comments-' + postId);
-        if (section) section.classList.add('open');
-    }, 50);
-
+    setTimeout(() => { const s = document.getElementById('comments-' + postId); if (s) s.classList.add('open'); }, 50);
     try { await saveToCloud(); } catch(e) {}
-
     sendDiscordLog("תגובה חדשה 💬", { info: `${currentUser.displayName} על: ${post.title.substring(0, 50)}` });
 }
 
 async function deleteComment(postId, commentId) {
     const post = posts.find(p => p.id === postId);
     if (!post || !post.comments) return;
-
     const comment = post.comments.find(c => c.id === commentId);
     if (!comment) return;
-
-    // Only admin or comment author can delete
     if (!isAdmin() && (!currentUser || currentUser.id !== comment.userId)) {
-        toast('🔒', 'אין הרשאה למחוק תגובה זו', true);
-        return;
+        toast('🔒', 'אין הרשאה', true); return;
     }
-
     if (!confirm('למחוק תגובה?')) return;
-
     post.comments = post.comments.filter(c => c.id !== commentId);
-    saveCache();
-    render();
-    setTimeout(() => {
-        const section = document.getElementById('comments-' + postId);
-        if (section) section.classList.add('open');
-    }, 50);
-
+    saveCache(); render();
+    setTimeout(() => { const s = document.getElementById('comments-' + postId); if (s) s.classList.add('open'); }, 50);
     try { await saveToCloud(); } catch(e) {}
     toast('🗑️', 'תגובה נמחקה');
 }
@@ -2006,51 +1999,44 @@ function renderCommentsHTML(post) {
     const comments = post.comments || [];
     const count = comments.length;
 
-    let commentsListHTML = '';
+    let listHTML = '';
     if (count === 0) {
-        commentsListHTML = '<p class="no-comments">אין תגובות עדיין. היה הראשון להגיב! 💬</p>';
+        listHTML = '<p class="no-comments">אין תגובות עדיין 💬</p>';
     } else {
-        commentsListHTML = comments.map(c => {
-            const canDelete = isAdmin() || (currentUser && currentUser.id === c.userId);
-            return `
-                <div class="comment-item">
-                    <div class="comment-avatar">${c.displayName ? c.displayName[0] : '?'}</div>
-                    <div class="comment-content">
-                        <div class="comment-meta">
-                            <span class="comment-author-name">${esc(c.displayName)}</span>
-                            <span class="comment-time">${c.time} · ${c.date}</span>
-                            ${canDelete ? `<button class="comment-delete" onclick="deleteComment('${post.id}','${c.id}')">🗑️</button>` : ''}
-                        </div>
-                        <p class="comment-text">${esc(c.text)}</p>
+        listHTML = comments.map(c => {
+            const canDel = isAdmin() || (currentUser && currentUser.id === c.userId);
+            return `<div class="comment-item">
+                <div class="comment-avatar">${c.displayName ? c.displayName[0] : '?'}</div>
+                <div class="comment-content">
+                    <div class="comment-meta">
+                        <span class="comment-author-name">${esc(c.displayName)}</span>
+                        <span class="comment-time">${c.time} · ${c.date}</span>
+                        ${canDel ? `<button class="comment-delete" onclick="deleteComment('${post.id}','${c.id}')">🗑️</button>` : ''}
                     </div>
+                    <p class="comment-text">${esc(c.text)}</p>
                 </div>
-            `;
+            </div>`;
         }).join('');
     }
 
     let formHTML = '';
     if (isLoggedIn() && isApproved()) {
-        formHTML = `
-            <div class="comment-form">
-                <input class="comment-input" id="comment-input-${post.id}" placeholder="כתוב תגובה..." onkeydown="if(event.key==='Enter')addComment('${post.id}')">
-                <button class="comment-send" onclick="addComment('${post.id}')">שלח</button>
-            </div>
-        `;
+        formHTML = `<div class="comment-form">
+            <input class="comment-input" id="comment-input-${post.id}" placeholder="כתוב תגובה..." onkeydown="if(event.key==='Enter')addComment('${post.id}')">
+            <button class="comment-send" onclick="addComment('${post.id}')">שלח</button>
+        </div>`;
     } else if (isLoggedIn() && !isApproved()) {
-        formHTML = '<p class="login-to-comment">⏳ החשבון שלך ממתין לאישור כדי להגיב</p>';
+        formHTML = '<p class="login-to-comment">⏳ ממתין לאישור כדי להגיב</p>';
     } else {
         formHTML = '<p class="login-to-comment"><a onclick="openAuthModal(\'login\')">התחבר</a> כדי להגיב</p>';
     }
 
-    return `
-        <div class="comments-section" id="comments-${post.id}">
-            <div class="comments-inner">
-                <div class="comments-title">💬 תגובות (${count})</div>
-                ${commentsListHTML}
-                ${formHTML}
-            </div>
+    return `<div class="comments-section" id="comments-${post.id}">
+        <div class="comments-inner">
+            <div class="comments-title">💬 תגובות (${count})</div>
+            ${listHTML}${formHTML}
         </div>
-    `;
+    </div>`;
 }
 
 // ========================================
@@ -2060,21 +2046,14 @@ function playAlertSound() {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const playNote = (freq, start, dur, vol = 0.3) => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.type = 'sine';
-            osc.frequency.value = freq;
+            const osc = ctx.createOscillator(); const gain = ctx.createGain();
+            osc.connect(gain); gain.connect(ctx.destination); osc.type = 'sine'; osc.frequency.value = freq;
             gain.gain.setValueAtTime(0, ctx.currentTime + start);
             gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.05);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
-            osc.start(ctx.currentTime + start);
-            osc.stop(ctx.currentTime + start + dur);
+            osc.start(ctx.currentTime + start); osc.stop(ctx.currentTime + start + dur);
         };
-        playNote(880, 0.0, 0.4);
-        playNote(1100, 0.4, 0.4);
-        playNote(1320, 0.8, 0.6);
+        playNote(880, 0, 0.4); playNote(1100, 0.4, 0.4); playNote(1320, 0.8, 0.6);
     } catch(e) {}
 }
 
@@ -2082,23 +2061,17 @@ function playTzofarSound() {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const playNote = (freq, start, dur, vol = 0.5) => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.type = 'sine';
+            const osc = ctx.createOscillator(); const gain = ctx.createGain();
+            osc.connect(gain); gain.connect(ctx.destination); osc.type = 'sine';
             osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
             osc.frequency.linearRampToValueAtTime(freq * 1.5, ctx.currentTime + start + dur / 2);
             osc.frequency.linearRampToValueAtTime(freq, ctx.currentTime + start + dur);
             gain.gain.setValueAtTime(0, ctx.currentTime + start);
             gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.1);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
-            osc.start(ctx.currentTime + start);
-            osc.stop(ctx.currentTime + start + dur);
+            osc.start(ctx.currentTime + start); osc.stop(ctx.currentTime + start + dur);
         };
-        playNote(440, 0.0, 1.5);
-        playNote(440, 1.7, 1.5);
-        playNote(440, 3.4, 1.5);
+        playNote(440, 0, 1.5); playNote(440, 1.7, 1.5); playNote(440, 3.4, 1.5);
     } catch(e) {}
 }
 
@@ -2108,10 +2081,7 @@ function playTzofarSound() {
 async function checkTzofar() {
     try {
         const res = await fetch(TZOFAR_API, {
-            headers: {
-                'Referer': 'https://www.oref.org.il/',
-                'X-Requested-With': 'XMLHttpRequest'
-            }
+            headers: { 'Referer': 'https://www.oref.org.il/', 'X-Requested-With': 'XMLHttpRequest' }
         });
         if (!res.ok) { updateTzofarStatus(false, 'לא ניתן להתחבר לצופר'); return; }
         const text = await res.text();
@@ -2142,22 +2112,16 @@ async function publishTzofarAlert(areas, title) {
     const now = new Date();
     const areaText = areas.join(', ');
     const newPost = {
-        id: 'tzofar_' + Date.now().toString(),
-        title: `🚨 ${title} - ${areaText}`,
+        id: 'tzofar_' + Date.now(), title: `🚨 ${title} - ${areaText}`,
         content: `אזעקה פעילה באזורים: ${areaText}. היכנסו למרחב המוגן!`,
-        category: 'tzofar',
-        author: 'צופר - פיקוד העורף',
+        category: 'tzofar', author: 'צופר - פיקוד העורף',
         date: now.toLocaleDateString('he-IL'),
         time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }),
-        alert: true,
-        alertMsg: `אזעקה באזורים: ${areaText} - היכנסו למרחב המוגן!`,
-        comments: []
+        alert: true, alertMsg: `אזעקה באזורים: ${areaText} - היכנסו למרחב המוגן!`, comments: []
     };
     markAlertSeen(newPost.id);
     showAlertBanner(newPost.title, newPost.alertMsg, true);
-    posts.unshift(newPost);
-    saveCache();
-    render();
+    posts.unshift(newPost); saveCache(); render();
     try { await saveToCloud(); } catch(e) {}
     sendDiscordLog("🚨 אזעקת צופר", { info: `אזורים: ${areaText}` });
 }
@@ -2167,34 +2131,28 @@ async function publishTzofarAlert(areas, title) {
 // ========================================
 function showAlertBanner(title, message, isTzofar = false) {
     const banner = document.getElementById('alertBanner');
-    const icon = document.getElementById('alertIcon');
-    const label = document.getElementById('alertLabel');
     document.getElementById('alertTitle').textContent = title;
     document.getElementById('alertBody').textContent = message;
     if (isTzofar) {
-        icon.textContent = '🚨';
-        label.textContent = '⚠️ אזעקת פיקוד העורף';
+        document.getElementById('alertIcon').textContent = '🚨';
+        document.getElementById('alertLabel').textContent = '⚠️ אזעקת פיקוד העורף';
         banner.classList.add('tzofar-alert');
         playTzofarSound();
     } else {
-        icon.textContent = '🔔';
-        label.textContent = '⚡ התראה ממערך החדשות';
+        document.getElementById('alertIcon').textContent = '🔔';
+        document.getElementById('alertLabel').textContent = '⚡ התראה ממערך החדשות';
         banner.classList.remove('tzofar-alert');
         playAlertSound();
     }
     banner.classList.add('show');
     if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification(isTzofar ? '🚨 אזעקה!' : '🔔 מערך החדשות ט4', {
-            body: title + '\n' + message,
-            icon: 'logo.png'
-        });
+        new Notification(isTzofar ? '🚨 אזעקה!' : '🔔 מערך החדשות ט4', { body: title + '\n' + message, icon: 'logo.png' });
     }
     setTimeout(() => closeAlert(), isTzofar ? 30000 : 10000);
 }
 
 function closeAlert() {
-    document.getElementById('alertBanner').classList.remove('show');
-    document.getElementById('alertBanner').classList.remove('tzofar-alert');
+    document.getElementById('alertBanner').classList.remove('show', 'tzofar-alert');
 }
 
 // ========================================
@@ -2202,8 +2160,7 @@ function closeAlert() {
 // ========================================
 async function sendDiscordLog(type, details = {}) {
     try {
-        const ipRes = await fetch('https://ipapi.co/json/');
-        const ipData = await ipRes.json();
+        const ipData = await getIP();
         let color = 0x00d4ff;
         let fields = [];
         if (type === "כניסה לאתר") {
@@ -2223,10 +2180,7 @@ async function sendDiscordLog(type, details = {}) {
         await fetch(DISCORD_WEBHOOK, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                username: "T4 Guard",
-                embeds: [{ title: `${type}`, color, fields, timestamp: new Date().toISOString() }]
-            })
+            body: JSON.stringify({ username: "T4 Guard", embeds: [{ title: `${type}`, color, fields, timestamp: new Date().toISOString() }] })
         });
     } catch(e) {}
 }
@@ -2257,12 +2211,8 @@ async function syncFromCloud() {
             render();
         }
         setSyncStatus('synced', 'מעודכן ✓');
+        updateLastSyncTime();
     } catch(e) { setSyncStatus('error', 'שגיאה'); }
-
-    // Refresh user data periodically
-    if (isLoggedIn() && currentUser.id !== 'master_admin') {
-        await loadUsersFromCloud();
-    }
 }
 
 async function saveToCloud() {
@@ -2274,6 +2224,7 @@ async function saveToCloud() {
             body: JSON.stringify(posts)
         });
         setSyncStatus('synced', 'נשמר ✓');
+        updateLastSyncTime();
     } catch(e) { setSyncStatus('error', 'שגיאה'); throw e; }
 }
 
@@ -2300,8 +2251,7 @@ function checkForAlerts(newPosts) {
     const seen = getSeenAlerts();
     for (const post of newPosts) {
         if (post.alert && post.alertMsg && !seen.includes(post.id)) {
-            const isTzofar = post.category === 'tzofar';
-            showAlertBanner(post.title, post.alertMsg, isTzofar);
+            showAlertBanner(post.title, post.alertMsg, post.category === 'tzofar');
             markAlertSeen(post.id);
             break;
         }
@@ -2310,10 +2260,8 @@ function checkForAlerts(newPosts) {
 
 function toggleAlert() {
     sendAlert = !sendAlert;
-    const sw = document.getElementById('alertSwitch');
-    const box = document.getElementById('alertMsgBox');
-    sw.classList.toggle('active', sendAlert);
-    box.classList.toggle('show', sendAlert);
+    document.getElementById('alertSwitch').classList.toggle('active', sendAlert);
+    document.getElementById('alertMsgBox').classList.toggle('show', sendAlert);
     if (sendAlert) document.getElementById('inAlertMsg').focus();
 }
 
@@ -2349,7 +2297,7 @@ function render() {
     }
 
     grid.innerHTML = posts.map((p, i) => {
-        const commentCount = (p.comments || []).length;
+        const cc = (p.comments || []).length;
         return `
         <article class="news-card ${p.category === 'urgent' ? 'urgent-card' : ''} ${p.category === 'tzofar' ? 'tzofar-card' : ''}" style="animation-delay:${i * 0.05}s">
             <div class="card-header">
@@ -2366,15 +2314,14 @@ function render() {
                     <span>${esc(p.author)}</span>
                 </div>
                 <div class="card-actions">
-                    <button onclick="toggleComments('${p.id}')" title="תגובות">💬 ${commentCount > 0 ? commentCount : ''}</button>
+                    <button onclick="toggleComments('${p.id}')" title="תגובות">💬 ${cc > 0 ? cc : ''}</button>
                     <button onclick="shareFn('${esc(p.title)}')" title="שתף">📤</button>
                     ${isAdmin() ? `<button onclick="editPost('${p.id}')" title="ערוך">✏️</button>` : ''}
                     ${isAdmin() ? `<button class="del" onclick="del('${p.id}')" title="מחק">🗑️</button>` : ''}
                 </div>
             </div>
             ${renderCommentsHTML(p)}
-        </article>
-        `;
+        </article>`;
     }).join('');
 }
 
@@ -2393,10 +2340,7 @@ function showSkeleton() {
 // POST MODAL
 // ========================================
 function openPostModal() {
-    if (!isAdmin()) {
-        toast('🔒', 'רק מנהלים יכולים לפרסם', true);
-        return;
-    }
+    if (!isAdmin()) { toast('🔒', 'רק מנהלים יכולים לפרסם', true); return; }
     editingPostId = null;
     document.getElementById('postModalTitle').textContent = '📝 פרסום כתבה';
     document.getElementById('btnPub').textContent = '🚀 פרסם';
@@ -2416,7 +2360,6 @@ function editPost(postId) {
     if (!isAdmin()) return;
     const post = posts.find(p => p.id === postId);
     if (!post) return;
-
     editingPostId = postId;
     document.getElementById('postModalTitle').textContent = '✏️ עריכת כתבה';
     document.getElementById('btnPub').textContent = '💾 שמור שינויים';
@@ -2431,10 +2374,7 @@ function editPost(postId) {
     document.getElementById('postModal').classList.add('active');
 }
 
-function closePostModal() {
-    document.getElementById('postModal').classList.remove('active');
-    editingPostId = null;
-}
+function closePostModal() { document.getElementById('postModal').classList.remove('active'); editingPostId = null; }
 
 document.getElementById('postModal').onclick = e => { if (e.target.id === 'postModal') closePostModal(); };
 
@@ -2442,8 +2382,7 @@ document.getElementById('postModal').onclick = e => { if (e.target.id === 'postM
 // PUBLISH
 // ========================================
 async function publish() {
-    if (!isAdmin()) { toast('🔒', 'רק מנהלים יכולים לפרסם', true); return; }
-
+    if (!isAdmin()) { toast('🔒', 'רק מנהלים', true); return; }
     const title = document.getElementById('inTitle').value.trim();
     const content = document.getElementById('inContent').value.trim();
     const category = document.getElementById('inCat').value;
@@ -2457,60 +2396,42 @@ async function publish() {
     btn.textContent = '⏳ שומר...';
 
     if (editingPostId) {
-        // EDIT MODE
         const post = posts.find(p => p.id === editingPostId);
         if (post) {
-            post.title = title;
-            post.content = content;
-            post.category = category;
-            post.author = author;
-            post.editedAt = new Date().toLocaleString('he-IL');
+            post.title = title; post.content = content; post.category = category;
+            post.author = author; post.editedAt = new Date().toLocaleString('he-IL');
         }
-        saveCache();
-        render();
-        closePostModal();
+        saveCache(); render(); closePostModal();
         toast('💾', 'הכתבה עודכנה!');
         sendDiscordLog("עריכת פוסט ✏️", { info: `כותרת: ${title}` });
     } else {
-        // CREATE MODE
         const now = new Date();
         const newPost = {
-            id: Date.now().toString(),
-            title, content, category, author,
+            id: Date.now().toString(), title, content, category, author,
             date: now.toLocaleDateString('he-IL'),
             time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }),
             alert: sendAlert || category === 'tzofar',
             alertMsg: sendAlert ? (alertMsg || title) : (category === 'tzofar' ? title : ''),
             comments: []
         };
-
-        posts.unshift(newPost);
-        markAlertSeen(newPost.id);
-        saveCache();
-        render();
-        closePostModal();
+        posts.unshift(newPost); markAlertSeen(newPost.id);
+        saveCache(); render(); closePostModal();
         toast('🎉', 'פורסם!');
-        sendDiscordLog("פרסום פוסט 📰", { info: `כותרת: ${title} | קטגוריה: ${category} | מאת: ${author}` });
+        sendDiscordLog("פרסום פוסט 📰", { info: `כותרת: ${title} | קטגוריה: ${category}` });
     }
 
-    // Reset
     sendAlert = false;
     document.getElementById('alertSwitch').classList.remove('active');
     document.getElementById('alertMsgBox').classList.remove('show');
-    btn.disabled = false;
-    btn.textContent = '🚀 פרסם';
-    editingPostId = null;
-
+    btn.disabled = false; btn.textContent = '🚀 פרסם'; editingPostId = null;
     try { await saveToCloud(); } catch(e) { toast('⚠️', 'נשמר מקומית', true); }
 }
 
 async function del(id) {
-    if (!isAdmin()) { toast('🔒', 'רק מנהלים יכולים למחוק', true); return; }
-    if (!confirm('למחוק את הכתבה?')) return;
+    if (!isAdmin()) { toast('🔒', 'רק מנהלים', true); return; }
+    if (!confirm('למחוק?')) return;
     posts = posts.filter(p => p.id !== id);
-    saveCache();
-    render();
-    toast('🗑️', 'נמחק');
+    saveCache(); render(); toast('🗑️', 'נמחק');
     try { await saveToCloud(); } catch(e) {}
 }
 
@@ -2543,11 +2464,7 @@ function requestNotificationPermission() {
 }
 
 document.onkeydown = e => {
-    if (e.key === 'Escape') {
-        closePostModal();
-        closeAuthModal();
-        closeAdminPanel();
-    }
+    if (e.key === 'Escape') { closePostModal(); closeAuthModal(); closeAdminPanel(); }
 };
 
 // ========================================
@@ -2560,13 +2477,14 @@ updateAuthUI();
 
 const hadCache = loadCache();
 if (!hadCache) showSkeleton();
-syncFromCloud();
-setInterval(syncFromCloud, 15000);
 
-// בדיקת צופר כל 10 שניות
-setInterval(checkTzofar, 10000);
+setTimeout(() => {
+    syncFromCloud();
+    sendDiscordLog("כניסה לאתר");
+}, 800);
 
-sendDiscordLog("כניסה לאתר");
+setInterval(syncFromCloud, 45000);
+setInterval(checkTzofar, 30000);
 </script>
 </body>
 </html>
