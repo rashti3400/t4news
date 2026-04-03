@@ -31,18 +31,14 @@
         }
 
         .bg-animation {
-            position: fixed;
-            top: 0; left: 0;
+            position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
+            z-index: 0; pointer-events: none;
         }
 
         .circle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.05;
-            animation: float 20s infinite ease-in-out;
+            position: absolute; border-radius: 50%;
+            opacity: 0.05; animation: float 20s infinite ease-in-out;
         }
 
         .circle:nth-child(1) { width: 600px; height: 600px; background: var(--accent); top: -200px; right: -100px; }
@@ -214,8 +210,6 @@
         .news-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 15px 40px rgba(0, 212, 255, 0.15); }
         .news-card.urgent-card { border-color: rgba(255, 68, 68, 0.3); box-shadow: 0 0 20px rgba(255, 0, 0, 0.1); }
         .news-card.urgent-card:hover { border-color: #ff4444; box-shadow: 0 15px 40px rgba(255, 0, 0, 0.2); }
-        .news-card.tzofar-card { border-color: rgba(255, 0, 0, 0.5); box-shadow: 0 0 25px rgba(255, 0, 0, 0.2); background: linear-gradient(135deg, #1a0000, #16213e); }
-        .news-card.tzofar-card:hover { border-color: #ff0000; box-shadow: 0 15px 40px rgba(255, 0, 0, 0.3); }
 
         .card-header { padding: 20px 22px 12px; display: flex; justify-content: space-between; align-items: center; }
 
@@ -229,9 +223,6 @@
         .card-category.sports { background: rgba(0, 255, 136, 0.1); color: var(--accent3); }
         .card-category.tech { background: rgba(124, 58, 237, 0.1); color: var(--accent2); }
         .card-category.entertainment { background: rgba(255, 165, 0, 0.1); color: #ffa500; }
-        .card-category.tzofar { background: rgba(255, 0, 0, 0.2); color: #ff4444; animation: tzofar-blink 1s infinite; }
-
-        @keyframes tzofar-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
         .card-date { font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
         .card-body { padding: 5px 22px 22px; }
@@ -269,7 +260,7 @@
 
         .comments-section.open { max-height: 600px; overflow-y: auto; }
         .comments-inner { padding: 15px 22px; }
-        .comments-title { font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .comments-title { font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); margin-bottom: 12px; }
 
         .comment-item {
             display: flex; gap: 10px; margin-bottom: 12px; padding: 10px;
@@ -380,19 +371,6 @@
         }
 
         @keyframes alertTimer { from { width: 100%; } to { width: 0%; } }
-
-        .alert-banner.tzofar-alert .alert-inner {
-            background: linear-gradient(135deg, #1a0000, #2a0000);
-            border-bottom: 2px solid #ff0000; animation: tzofar-flash 0.5s infinite;
-        }
-
-        @keyframes tzofar-flash {
-            0%, 100% { background: linear-gradient(135deg, #1a0000, #2a0000); }
-            50% { background: linear-gradient(135deg, #2a0000, #1a0000); }
-        }
-
-        .alert-banner.tzofar-alert .alert-label { color: #ff4444; }
-        .alert-banner.tzofar-alert .alert-time { background: linear-gradient(90deg, #ff0000, #ff4444); }
 
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0;
@@ -572,16 +550,6 @@
         .alert-msg-input input:focus { border-color: #ffa500; }
         .alert-msg-input label { display: block; font-size: 0.8rem; color: #ffa500; margin-bottom: 6px; }
 
-        .tzofar-status {
-            background: rgba(255, 0, 0, 0.05); border: 1px solid rgba(255, 0, 0, 0.2);
-            border-radius: 12px; padding: 12px 15px; margin-bottom: 18px;
-            display: flex; align-items: center; gap: 12px;
-        }
-
-        .tzofar-dot { width: 10px; height: 10px; border-radius: 50%; background: #ff4444; animation: pulse 1s infinite; flex-shrink: 0; }
-        .tzofar-dot.active { background: #00ff88; }
-        .tzofar-status p { font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); }
-
         .btn-pub {
             width: 100%; padding: 14px; border-radius: 12px; border: none;
             background: var(--gradient1); color: white; font-family: 'Heebo', sans-serif;
@@ -693,7 +661,7 @@
     </div>
 </div>
 
-<div class="ticker-bar" id="tickerBar">
+<div class="ticker-bar">
     <div class="ticker-content" id="tickerContent">
         <span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>
         <span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>
@@ -715,7 +683,7 @@
 </main>
 
 <footer>
-    <p>© 2025 <span class="brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
+    <p>© 2026 <span class="brand">מערך החדשות של ט4</span> — כל הזכויות שמורות</p>
 </footer>
 
 <!-- Auth Modal -->
@@ -775,10 +743,6 @@
             <button class="modal-close" onclick="closePostModal()">✕</button>
         </div>
         <div class="modal-body">
-            <div class="tzofar-status" id="tzofarStatus">
-                <div class="tzofar-dot" id="tzofarDot"></div>
-                <p id="tzofarStatusText">🔄 בודק סטטוס צופר...</p>
-            </div>
             <div class="fg">
                 <label>כותרת</label>
                 <input type="text" id="inTitle" placeholder="כותרת הכתבה...">
@@ -796,7 +760,6 @@
                         <option value="sports">⚽ ספורט</option>
                         <option value="tech">💻 טכנולוגיה</option>
                         <option value="entertainment">🎬 בידור</option>
-                        <option value="tzofar">🚨 צופר - אזעקה</option>
                     </select>
                 </div>
                 <div class="fg">
@@ -853,7 +816,7 @@
 // 🔧 CONFIGURATION
 // ========================================
 const BIN_ID = '69cece9436566621a873a3a2';
-const USERS_BIN_ID = '69cf100036566621a8747eb9';  // ⚠️ שים כאן את ה-BIN ID של המשתמשים
+const USERS_BIN_ID = 'PUT_YOUR_USERS_BIN_ID_HERE';
 const API_KEY = '$2a$10$vb0rw5j/7dIM.sZrbGmjbuS8kVJsAqUtiFlHZL07M2qzvyLzzCETO';
 const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1489379629457346840/Fi5Jgu2r_5ll0nSCYXxMVo5JcIqWRa6__TslDN0e8XSbJuNuWeXubMjhTYlKPNkbSIQ9';
 const MASTER_PASSWORD = '123456';
@@ -865,20 +828,18 @@ const CACHE_KEY = 't4_news_cache';
 const USERS_CACHE_KEY = 't4_users_cache';
 const SESSION_KEY = 't4_session';
 const SEEN_ALERTS_KEY = 't4_seen_alerts';
-const TZOFAR_API = 'https://www.oref.org.il/WarningMessages/alert/alerts.json';
 
 let posts = [];
 let users = [];
 let currentUser = null;
 let sendAlert = false;
 let editingPostId = null;
-let lastTzofarAlerts = [];
 let cachedIP = null;
 let isRefreshing = false;
 
 const catLabels = {
     general: '📰 כללי', urgent: '🔴 דחוף', sports: '⚽ ספורט',
-    tech: '💻 טכנולוגיה', entertainment: '🎬 בידור', tzofar: '🚨 צופר'
+    tech: '💻 טכנולוגיה', entertainment: '🎬 בידור'
 };
 
 // ========================================
@@ -975,7 +936,7 @@ function updateAuthUI() {
 }
 
 // ========================================
-// 👥 USERS DATABASE - תיקון מרכזי!
+// 👥 USERS DATABASE
 // ========================================
 function getRealUsers() {
     return users.filter(u => u && u.id && u.username && u.username !== 'init');
@@ -988,7 +949,7 @@ function loadUsersCache() {
             const parsed = JSON.parse(cached);
             if (Array.isArray(parsed)) { users = parsed; return true; }
         }
-    } catch(e) { console.error('loadUsersCache error:', e); }
+    } catch(e) {}
     return false;
 }
 
@@ -998,99 +959,49 @@ function saveUsersCache() {
 
 async function loadUsersFromCloud() {
     try {
-        console.log('📡 Loading users from cloud...');
-        const res = await fetch(USERS_API + '/latest', {
-            headers: { 'X-Master-Key': API_KEY }
-        });
-
-        if (!res.ok) {
-            console.error('❌ Users API error:', res.status, res.statusText);
-            loadUsersCache();
-            return false;
-        }
-
+        const res = await fetch(USERS_API + '/latest', { headers: { 'X-Master-Key': API_KEY } });
+        if (!res.ok) { loadUsersCache(); return false; }
         const data = await res.json();
-        console.log('📦 Users API response:', data);
 
-        // טיפול בפורמטים שונים של JSONBin
         let rawUsers = null;
-
-        if (data && data.record) {
-            rawUsers = data.record;
-        } else if (Array.isArray(data)) {
-            rawUsers = data;
-        } else if (data && typeof data === 'object') {
-            // אולי המערך עטוף באובייקט
-            const keys = Object.keys(data);
-            for (const key of keys) {
-                if (Array.isArray(data[key])) {
-                    rawUsers = data[key];
-                    break;
-                }
+        if (data && data.record) rawUsers = data.record;
+        else if (Array.isArray(data)) rawUsers = data;
+        else if (data && typeof data === 'object') {
+            for (const key of Object.keys(data)) {
+                if (Array.isArray(data[key])) { rawUsers = data[key]; break; }
             }
         }
 
-        if (!rawUsers) {
-            console.warn('⚠️ Could not parse users, raw data:', data);
-            rawUsers = [];
-        }
+        if (!rawUsers) rawUsers = [];
+        if (!Array.isArray(rawUsers)) rawUsers = [rawUsers];
 
-        if (!Array.isArray(rawUsers)) {
-            console.warn('⚠️ Users is not array, wrapping:', rawUsers);
-            rawUsers = [rawUsers];
-        }
-
-        // סנן ערכים ריקים או פגומים
         users = rawUsers.filter(u => u && typeof u === 'object' && u.id);
-
-        console.log('✅ Loaded users:', users.length, users);
         saveUsersCache();
 
-        // עדכן את המשתמש הנוכחי אם צריך
         if (currentUser && currentUser.id !== 'master_admin') {
             const updated = users.find(u => u.id === currentUser.id);
             if (updated) {
                 currentUser.role = updated.role;
                 currentUser.approved = updated.approved;
                 currentUser.displayName = updated.displayName;
-                saveSession();
-                updateAuthUI();
+                saveSession(); updateAuthUI();
             }
         }
-
         return true;
-    } catch(e) {
-        console.error('❌ loadUsersFromCloud error:', e);
-        loadUsersCache();
-        return false;
-    }
+    } catch(e) { loadUsersCache(); return false; }
 }
 
 async function saveUsersToCloud() {
     try {
-        console.log('💾 Saving users to cloud:', users.length, 'users');
         const res = await fetch(USERS_API, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Master-Key': API_KEY
-            },
+            headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
             body: JSON.stringify(users)
         });
-
-        if (!res.ok) {
-            console.error('❌ Save users error:', res.status);
-            throw new Error('Save failed');
-        }
-
-        console.log('✅ Users saved successfully');
+        if (!res.ok) throw new Error('Save failed');
         saveUsersCache();
         return true;
-    } catch(e) {
-        console.error('❌ saveUsersToCloud error:', e);
-        saveUsersCache();
-        return false;
-    }
+    } catch(e) { saveUsersCache(); return false; }
 }
 
 // ========================================
@@ -1127,7 +1038,6 @@ async function doLogin() {
         errEl.textContent = '❌ מלא את כל השדות'; errEl.style.display = 'block'; return;
     }
 
-    // Master admin
     if (username === 'admin' && password === MASTER_PASSWORD) {
         currentUser = { id: 'master_admin', username: 'admin', displayName: 'מנהל ראשי', role: 'admin', approved: true };
         saveSession(); updateAuthUI(); closeAuthModal();
@@ -1136,13 +1046,12 @@ async function doLogin() {
         return;
     }
 
-    // טען משתמשים מהענן
     await loadUsersFromCloud();
 
     const user = users.find(u => u.username === username && u.password === password);
     if (!user) {
         errEl.textContent = '❌ שם משתמש או סיסמה שגויים'; errEl.style.display = 'block';
-        sendDiscordLog("ניסיון התחברות כושל", { info: `משתמש: ${username}` });
+        sendDiscordLog("התחברות כושלת", { info: `משתמש: ${username}` });
         return;
     }
 
@@ -1163,24 +1072,15 @@ async function doRegister() {
     const errEl = document.getElementById('registerError');
     const successEl = document.getElementById('registerSuccess');
 
-    errEl.style.display = 'none';
-    successEl.style.display = 'none';
+    errEl.style.display = 'none'; successEl.style.display = 'none';
 
     if (!username || !displayName || !password || !password2) {
         errEl.textContent = '❌ מלא את כל השדות'; errEl.style.display = 'block'; return;
     }
-    if (username.length < 3) {
-        errEl.textContent = '❌ שם משתמש - לפחות 3 תווים'; errEl.style.display = 'block'; return;
-    }
-    if (password.length < 4) {
-        errEl.textContent = '❌ סיסמה - לפחות 4 תווים'; errEl.style.display = 'block'; return;
-    }
-    if (password !== password2) {
-        errEl.textContent = '❌ הסיסמאות לא תואמות'; errEl.style.display = 'block'; return;
-    }
-    if (username === 'admin') {
-        errEl.textContent = '❌ שם משתמש שמור'; errEl.style.display = 'block'; return;
-    }
+    if (username.length < 3) { errEl.textContent = '❌ שם משתמש - לפחות 3 תווים'; errEl.style.display = 'block'; return; }
+    if (password.length < 4) { errEl.textContent = '❌ סיסמה - לפחות 4 תווים'; errEl.style.display = 'block'; return; }
+    if (password !== password2) { errEl.textContent = '❌ הסיסמאות לא תואמות'; errEl.style.display = 'block'; return; }
+    if (username === 'admin') { errEl.textContent = '❌ שם משתמש שמור'; errEl.style.display = 'block'; return; }
 
     await loadUsersFromCloud();
 
@@ -1192,36 +1092,32 @@ async function doRegister() {
     const isFirstUser = realUsers.length === 0;
 
     const newUser = {
-        id: Date.now().toString(),
-        username, displayName, password,
+        id: Date.now().toString(), username, displayName, password,
         role: isFirstUser ? 'admin' : 'user',
         approved: isFirstUser,
         createdAt: new Date().toLocaleString('he-IL'),
         lastLogin: new Date().toLocaleString('he-IL')
     };
 
-    // הסר את ה-init הדמה
     users = users.filter(u => u.username !== 'init' && u.id !== 'init');
     users.push(newUser);
 
     const saved = await saveUsersToCloud();
-    if (!saved) {
-        errEl.textContent = '❌ שגיאה בשמירה, נסה שוב'; errEl.style.display = 'block'; return;
-    }
+    if (!saved) { errEl.textContent = '❌ שגיאה בשמירה, נסה שוב'; errEl.style.display = 'block'; return; }
 
     if (isFirstUser) {
-        successEl.textContent = '🎉 נרשמת כמנהל ראשי! מתחבר...'; successEl.style.display = 'block';
-        currentUser = { id: newUser.id, username: newUser.username, displayName: newUser.displayName, role: 'admin', approved: true };
+        successEl.textContent = '🎉 נרשמת כמנהל ראשי!'; successEl.style.display = 'block';
+        currentUser = { id: newUser.id, username, displayName, role: 'admin', approved: true };
         saveSession();
         setTimeout(() => { closeAuthModal(); updateAuthUI(); render(); toast('👑', 'ברוך הבא, מנהל!'); }, 1500);
     } else {
         successEl.textContent = '✅ נרשמת! ממתין לאישור מנהל'; successEl.style.display = 'block';
-        currentUser = { id: newUser.id, username: newUser.username, displayName: newUser.displayName, role: 'user', approved: false };
+        currentUser = { id: newUser.id, username, displayName, role: 'user', approved: false };
         saveSession();
         setTimeout(() => { closeAuthModal(); updateAuthUI(); render(); }, 2000);
     }
 
-    sendDiscordLog("הרשמה חדשה 🆕", { info: `${displayName} (@${username}) - ${isFirstUser ? 'מנהל ראשי' : 'ממתין'}` });
+    sendDiscordLog("הרשמה 🆕", { info: `${displayName} (@${username}) - ${isFirstUser ? 'מנהל' : 'ממתין'}` });
 
     document.getElementById('regUsername').value = '';
     document.getElementById('regDisplayName').value = '';
@@ -1236,28 +1132,23 @@ function logout() {
 }
 
 // ========================================
-// ⚙️ ADMIN PANEL - תיקון מרכזי!
+// ⚙️ ADMIN PANEL
 // ========================================
 async function openAdminPanel() {
     if (!isAdmin()) { toast('🔒', 'גישה למנהלים בלבד', true); return; }
     document.getElementById('adminModal').classList.add('active');
-
-    // הצג טעינה
-    document.getElementById('userList').innerHTML = '<p style="color:rgba(255,255,255,0.4); text-align:center; padding:20px;">⏳ טוען משתמשים...</p>';
+    document.getElementById('userList').innerHTML = '<p style="color:rgba(255,255,255,0.4); text-align:center; padding:20px;">⏳ טוען...</p>';
     document.getElementById('adminStats').innerHTML = '';
     document.getElementById('adminError').innerHTML = '';
 
     const success = await loadUsersFromCloud();
-
     if (!success && getRealUsers().length === 0) {
-        document.getElementById('adminError').innerHTML = '<div class="admin-error">⚠️ לא ניתן לטעון משתמשים מהענן. בדוק את USERS_BIN_ID בקוד.</div>';
+        document.getElementById('adminError').innerHTML = '<div class="admin-error">⚠️ לא ניתן לטעון. בדוק USERS_BIN_ID.</div>';
     }
-
     renderAdminPanel();
 }
 
 function closeAdminPanel() { document.getElementById('adminModal').classList.remove('active'); }
-
 document.getElementById('adminModal').onclick = e => { if (e.target.id === 'adminModal') closeAdminPanel(); };
 
 function renderAdminPanel() {
@@ -1265,28 +1156,17 @@ function renderAdminPanel() {
     const listEl = document.getElementById('userList');
     const realUsers = getRealUsers();
 
-    console.log('🔧 Rendering admin panel, real users:', realUsers.length, realUsers);
-
-    const totalUsers = realUsers.length;
-    const admins = realUsers.filter(u => u.role === 'admin').length;
-    const pending = realUsers.filter(u => !u.approved).length;
-
     statsEl.innerHTML = `
-        <div class="admin-stat"><div class="stat-num">${totalUsers}</div><div class="stat-label">סה"כ משתמשים</div></div>
-        <div class="admin-stat"><div class="stat-num">${admins}</div><div class="stat-label">מנהלים</div></div>
-        <div class="admin-stat"><div class="stat-num">${pending}</div><div class="stat-label">ממתינים לאישור</div></div>
+        <div class="admin-stat"><div class="stat-num">${realUsers.length}</div><div class="stat-label">סה"כ משתמשים</div></div>
+        <div class="admin-stat"><div class="stat-num">${realUsers.filter(u => u.role === 'admin').length}</div><div class="stat-label">מנהלים</div></div>
+        <div class="admin-stat"><div class="stat-num">${realUsers.filter(u => !u.approved).length}</div><div class="stat-label">ממתינים</div></div>
     `;
 
     if (realUsers.length === 0) {
-        listEl.innerHTML = `
-            <div style="text-align:center; padding:30px; color:rgba(255,255,255,0.4);">
-                <p style="font-size:2rem; margin-bottom:10px;">👥</p>
-                <p style="margin-bottom:5px;">אין משתמשים רשומים עדיין</p>
-                <p style="font-size:0.75rem; color:rgba(255,255,255,0.25);">משתמשים שנרשמים דרך האתר יופיעו כאן</p>
-                <p style="font-size:0.7rem; color:rgba(255,255,255,0.2); margin-top:10px;">
-                    BIN ID: ${USERS_BIN_ID === 'PUT_YOUR_USERS_BIN_ID_HERE' ? '⚠️ לא הוגדר!' : USERS_BIN_ID.substring(0, 8) + '...'}
-                </p>
-            </div>`;
+        listEl.innerHTML = `<div style="text-align:center; padding:30px; color:rgba(255,255,255,0.4);">
+            <p style="font-size:2rem; margin-bottom:10px;">👥</p>
+            <p>אין משתמשים רשומים עדיין</p>
+        </div>`;
         return;
     }
 
@@ -1313,47 +1193,39 @@ function renderAdminPanel() {
     `).join('');
 }
 
-async function approveUser(userId) {
-    const user = users.find(u => u.id === userId);
-    if (!user) return;
-    user.approved = true;
-    await saveUsersToCloud(); renderAdminPanel();
-    toast('✅', `${user.displayName} אושר!`);
-    sendDiscordLog("אישור משתמש ✅", { info: `${user.displayName}` });
+async function approveUser(id) {
+    const u = users.find(x => x.id === id); if (!u) return;
+    u.approved = true; await saveUsersToCloud(); renderAdminPanel();
+    toast('✅', `${u.displayName} אושר!`);
+    sendDiscordLog("אישור ✅", { info: u.displayName });
 }
 
-async function revokeUser(userId) {
-    const user = users.find(u => u.id === userId);
-    if (!user) return;
-    user.approved = false;
-    await saveUsersToCloud(); renderAdminPanel();
-    toast('⛔', `אישור ${user.displayName} בוטל`);
+async function revokeUser(id) {
+    const u = users.find(x => x.id === id); if (!u) return;
+    u.approved = false; await saveUsersToCloud(); renderAdminPanel();
+    toast('⛔', `אישור ${u.displayName} בוטל`);
 }
 
-async function makeAdmin(userId) {
-    const user = users.find(u => u.id === userId);
-    if (!user) return;
-    user.role = 'admin'; user.approved = true;
-    await saveUsersToCloud(); renderAdminPanel();
-    toast('👑', `${user.displayName} הפך למנהל!`);
-    sendDiscordLog("מנהל חדש 👑", { info: `${user.displayName}` });
+async function makeAdmin(id) {
+    const u = users.find(x => x.id === id); if (!u) return;
+    u.role = 'admin'; u.approved = true; await saveUsersToCloud(); renderAdminPanel();
+    toast('👑', `${u.displayName} הפך למנהל!`);
+    sendDiscordLog("מנהל חדש 👑", { info: u.displayName });
 }
 
-async function removeAdmin(userId) {
-    const user = users.find(u => u.id === userId);
-    if (!user || !confirm(`להסיר הרשאות מנהל מ-${user.displayName}?`)) return;
-    user.role = 'user';
-    await saveUsersToCloud(); renderAdminPanel();
-    toast('👤', `${user.displayName} הוסר ממנהלים`);
+async function removeAdmin(id) {
+    const u = users.find(x => x.id === id);
+    if (!u || !confirm(`להסיר מנהל מ-${u.displayName}?`)) return;
+    u.role = 'user'; await saveUsersToCloud(); renderAdminPanel();
+    toast('👤', `${u.displayName} הוסר ממנהלים`);
 }
 
-async function deleteUser(userId) {
-    const user = users.find(u => u.id === userId);
-    if (!user || !confirm(`למחוק את ${user.displayName}?`)) return;
-    users = users.filter(u => u.id !== userId);
-    await saveUsersToCloud(); renderAdminPanel();
-    toast('🗑️', `${user.displayName} נמחק`);
-    sendDiscordLog("מחיקת משתמש 🗑️", { info: `${user.displayName}` });
+async function deleteUser(id) {
+    const u = users.find(x => x.id === id);
+    if (!u || !confirm(`למחוק את ${u.displayName}?`)) return;
+    users = users.filter(x => x.id !== id); await saveUsersToCloud(); renderAdminPanel();
+    toast('🗑️', `${u.displayName} נמחק`);
+    sendDiscordLog("מחיקת משתמש 🗑️", { info: u.displayName });
 }
 
 // ========================================
@@ -1460,88 +1332,23 @@ function playAlertSound() {
     } catch(e) {}
 }
 
-function playTzofarSound() {
-    try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const p = (freq, start, dur, vol = 0.5) => {
-            const o = ctx.createOscillator(), g = ctx.createGain();
-            o.connect(g); g.connect(ctx.destination); o.type = 'sine';
-            o.frequency.setValueAtTime(freq, ctx.currentTime + start);
-            o.frequency.linearRampToValueAtTime(freq * 1.5, ctx.currentTime + start + dur / 2);
-            o.frequency.linearRampToValueAtTime(freq, ctx.currentTime + start + dur);
-            g.gain.setValueAtTime(0, ctx.currentTime + start);
-            g.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.1);
-            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
-            o.start(ctx.currentTime + start); o.stop(ctx.currentTime + start + dur);
-        };
-        p(440, 0, 1.5); p(440, 1.7, 1.5); p(440, 3.4, 1.5);
-    } catch(e) {}
-}
-
-// ========================================
-// 🚨 TZOFAR
-// ========================================
-async function checkTzofar() {
-    try {
-        const res = await fetch(TZOFAR_API, {
-            headers: { 'Referer': 'https://www.oref.org.il/', 'X-Requested-With': 'XMLHttpRequest' }
-        });
-        if (!res.ok) { updateTzofarStatus(false, 'לא ניתן להתחבר'); return; }
-        const text = await res.text();
-        if (!text || text.trim() === '') { updateTzofarStatus(true, 'אין אזעקות ✅'); return; }
-        const data = JSON.parse(text);
-        const alerts = data.data || [];
-        if (alerts.length === 0) { updateTzofarStatus(true, 'אין אזעקות ✅'); return; }
-        const areas = alerts.join(', ');
-        updateTzofarStatus(true, `🚨 אזעקה: ${areas}`);
-        const key = alerts.sort().join(',');
-        if (key !== lastTzofarAlerts) { lastTzofarAlerts = key; await publishTzofarAlert(alerts, data.title || 'אזעקה'); }
-    } catch(e) { updateTzofarStatus(false, 'שגיאה'); }
-}
-
-function updateTzofarStatus(ok, text) {
-    const d = document.getElementById('tzofarDot'), t = document.getElementById('tzofarStatusText');
-    if (d && t) { d.className = 'tzofar-dot' + (ok ? ' active' : ''); t.innerHTML = text; }
-}
-
-async function publishTzofarAlert(areas, title) {
-    const now = new Date(), areaText = areas.join(', ');
-    const p = {
-        id: 'tzofar_' + Date.now(), title: `🚨 ${title} - ${areaText}`,
-        content: `אזעקה: ${areaText}. היכנסו למרחב המוגן!`,
-        category: 'tzofar', author: 'צופר - פיקוד העורף',
-        date: now.toLocaleDateString('he-IL'), time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }),
-        alert: true, alertMsg: `אזעקה: ${areaText} - היכנסו למרחב המוגן!`, comments: []
-    };
-    markAlertSeen(p.id); showAlertBanner(p.title, p.alertMsg, true);
-    posts.unshift(p); saveCache(); render();
-    try { await saveToCloud(); } catch(e) {}
-    sendDiscordLog("🚨 אזעקה", { info: `אזורים: ${areaText}` });
-}
-
 // ========================================
 // 🔔 ALERT BANNER
 // ========================================
-function showAlertBanner(title, message, isTzofar = false) {
+function showAlertBanner(title, message) {
     const b = document.getElementById('alertBanner');
     document.getElementById('alertTitle').textContent = title;
     document.getElementById('alertBody').textContent = message;
-    if (isTzofar) {
-        document.getElementById('alertIcon').textContent = '🚨';
-        document.getElementById('alertLabel').textContent = '⚠️ אזעקת פיקוד העורף';
-        b.classList.add('tzofar-alert'); playTzofarSound();
-    } else {
-        document.getElementById('alertIcon').textContent = '🔔';
-        document.getElementById('alertLabel').textContent = '⚡ התראה ממערך החדשות';
-        b.classList.remove('tzofar-alert'); playAlertSound();
-    }
+    document.getElementById('alertIcon').textContent = '🔔';
+    document.getElementById('alertLabel').textContent = '⚡ התראה ממערך החדשות';
     b.classList.add('show');
+    playAlertSound();
     if ('Notification' in window && Notification.permission === 'granted')
-        new Notification(isTzofar ? '🚨 אזעקה!' : '🔔 ט4', { body: title + '\n' + message, icon: 'logo.png' });
-    setTimeout(() => closeAlert(), isTzofar ? 30000 : 10000);
+        new Notification('🔔 מערך החדשות ט4', { body: title + '\n' + message, icon: 'logo.png' });
+    setTimeout(() => closeAlert(), 10000);
 }
 
-function closeAlert() { document.getElementById('alertBanner').classList.remove('show', 'tzofar-alert'); }
+function closeAlert() { document.getElementById('alertBanner').classList.remove('show'); }
 
 // ========================================
 // DISCORD
@@ -1557,7 +1364,7 @@ async function sendDiscordLog(type, details = {}) {
                 { name: "👤 משתמש", value: currentUser ? currentUser.displayName : 'אורח', inline: true }
             ];
         } else {
-            color = type.includes("אזעקה") ? 0xff0000 : type.includes("פוסט") || type.includes("פרסום") ? 0x00ff88 : 0xffa500;
+            color = type.includes("פוסט") || type.includes("פרסום") ? 0x00ff88 : type.includes("מנהל") || type.includes("👑") ? 0xffa500 : 0x00d4ff;
             fields = [
                 { name: "📍 IP", value: `\`${ip.ip}\``, inline: true },
                 { name: "📄 פרטים", value: details.info || "אין", inline: false }
@@ -1629,7 +1436,7 @@ function checkForAlerts(newPosts) {
     const seen = getSeenAlerts();
     for (const p of newPosts) {
         if (p.alert && p.alertMsg && !seen.includes(p.id)) {
-            showAlertBanner(p.title, p.alertMsg, p.category === 'tzofar');
+            showAlertBanner(p.title, p.alertMsg);
             markAlertSeen(p.id); break;
         }
     }
@@ -1647,14 +1454,10 @@ function toggleAlert() {
 // ========================================
 function updateTicker() {
     const t = document.getElementById('tickerContent');
-    const tz = posts.filter(p => p.category === 'tzofar');
     const ur = posts.filter(p => p.category === 'urgent');
-    if (tz.length > 0) {
-        const x = tz.map(p => `🚨 ${p.title}`).join('  ◆  ');
-        t.innerHTML = `<span>${x}</span><span>${x}</span>`;
-    } else if (ur.length > 0) {
+    if (ur.length > 0) {
         const x = ur.map(p => `🔴 ${p.title}`).join('  ◆  ');
-        t.innerHTML = `<span>⚡ ${x}</span><span>⚡ ${x}</span>`;
+        t.innerHTML = `<span>⚡ חדשות דחופות: ${x}</span><span>⚡ חדשות דחופות: ${x}</span>`;
     } else {
         t.innerHTML = `<span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span><span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>`;
     }
@@ -1676,7 +1479,7 @@ function render() {
     grid.innerHTML = posts.map((p, i) => {
         const cc = (p.comments || []).length;
         return `
-        <article class="news-card ${p.category === 'urgent' ? 'urgent-card' : ''} ${p.category === 'tzofar' ? 'tzofar-card' : ''}" style="animation-delay:${i * 0.05}s">
+        <article class="news-card ${p.category === 'urgent' ? 'urgent-card' : ''}" style="animation-delay:${i * 0.05}s">
             <div class="card-header">
                 <span class="card-category ${p.category}">${catLabels[p.category] || '📰 כללי'}</span>
                 <span class="card-date">🕐 ${p.time} • ${p.date}</span>
@@ -1722,7 +1525,6 @@ function openPostModal() {
     document.getElementById('alertSwitch').classList.remove('active');
     document.getElementById('alertMsgBox').classList.remove('show');
     document.getElementById('postModal').classList.add('active');
-    checkTzofar();
 }
 
 function editPost(postId) {
@@ -1772,8 +1574,8 @@ async function publish() {
             id: Date.now().toString(), title, content, category, author,
             date: now.toLocaleDateString('he-IL'),
             time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }),
-            alert: sendAlert || category === 'tzofar',
-            alertMsg: sendAlert ? (alertMsg || title) : (category === 'tzofar' ? title : ''),
+            alert: sendAlert,
+            alertMsg: sendAlert ? (alertMsg || title) : '',
             comments: []
         };
         posts.unshift(np); markAlertSeen(np.id);
@@ -1824,19 +1626,13 @@ function requestNotificationPermission() {
     if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission();
 }
 
-document.onkeydown = e => { if (e.key === 'Escape') { closePostModal(); closeAuthModal(); closeAdminPanel(); } };
+document.onkeydown = e => {
+    if (e.key === 'Escape') { closePostModal(); closeAuthModal(); closeAdminPanel(); }
+};
 
 // ========================================
 // 🚀 STARTUP
 // ========================================
-console.log('🚀 T4 News starting...');
-console.log('📦 Posts BIN:', BIN_ID);
-console.log('👥 Users BIN:', USERS_BIN_ID);
-
-if (USERS_BIN_ID === '69cf100036566621a8747eb9 ') {
-    console.warn('⚠️ USERS_BIN_ID not configured!');
-}
-
 requestNotificationPermission();
 loadSession();
 loadUsersCache();
@@ -1851,7 +1647,6 @@ setTimeout(() => {
 }, 800);
 
 setInterval(syncFromCloud, 45000);
-setInterval(checkTzofar, 30000);
 </script>
 </body>
 </html>
