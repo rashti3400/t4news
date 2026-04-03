@@ -428,8 +428,9 @@
 
 <script>
 // ========================================
+// ========================================
 const BIN_ID = '69cece9436566621a873a3a2';
-const USERS_BIN_ID = 'PUT_YOUR_USERS_BIN_ID_HERE';
+const USERS_BIN_ID = '69cf100036566621a8747eb9';
 const API_KEY = '$2a$10$vb0rw5j/7dIM.sZrbGmjbuS8kVJsAqUtiFlHZL07M2qzvyLzzCETO';
 const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1489379629457346840/Fi5Jgu2r_5ll0nSCYXxMVo5JcIqWRa6__TslDN0e8XSbJuNuWeXubMjhTYlKPNkbSIQ9';
 const MASTER_PASSWORD = '123456';
@@ -504,9 +505,11 @@ function updateAuthUI() {
 }
 
 // ========================================
-// 👥 USERS DB - תיקון מרכזי!
+// 👥 USERS DB - תיקון מלא!
 // ========================================
-function getRealUsers() { return users.filter(u => u && u.id && u.username && u.username !== 'init'); }
+function getRealUsers() {
+    return users.filter(u => u && u.id && u.username && u.username !== 'init' && u.id !== 'init');
+}
 
 function loadUsersCache() {
     try { const c = localStorage.getItem(USERS_CACHE_KEY); if (c) { const p = JSON.parse(c); if (Array.isArray(p)) { users = p; return true; } } } catch(e) {}
@@ -517,44 +520,75 @@ function saveUsersCache() { try { localStorage.setItem(USERS_CACHE_KEY, JSON.str
 
 async function loadUsersFromCloud() {
     try {
+        console.log('📡 טוען משתמשים מהענן...');
         const res = await fetch(USERS_API + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-        if (!res.ok) { loadUsersCache(); return false; }
+        if (!res.ok) { console.error('❌ שגיאה:', res.status); loadUsersCache(); return false; }
+
         const data = await res.json();
+        console.log('📦 תשובה מהענן:', data);
+
         let raw = null;
-        if (data && data.record) raw = data.record;
-        else if (Array.isArray(data)) raw = data;
-        else if (data && typeof data === 'object') { for (const k of Object.keys(data)) { if (Array.isArray(data[k])) { raw = data[k]; break; } } }
+        if (data && data.record) {
+            raw = data.record;
+        } else if (Array.isArray(data)) {
+            raw = data;
+        }
+
         if (!raw) raw = [];
         if (!Array.isArray(raw)) raw = [raw];
-        users = raw.filter(u => u && typeof u === 'object' && u.id);
+
+        // סנן רק אובייקטים תקינים
+        const cloudUsers = raw.filter(u => u && typeof u === 'object' && u.id && u.username);
+
+        console.log('✅ משתמשים מהענן:', cloudUsers.length, cloudUsers.map(u => u.username));
+
+        // מיזוג: הענן הוא המקור האמיתי, אבל אם יש משתמש מקומי שלא בענן - הוסף אותו
+        const localOnly = users.filter(localU =>
+            localU && localU.id && localU.username !== 'init' &&
+            !cloudUsers.find(cloudU => cloudU.id === localU.id)
+        );
+
+        if (localOnly.length > 0) {
+            console.log('🔀 מוסיף משתמשים מקומיים שלא בענן:', localOnly.map(u => u.username));
+            users = [...cloudUsers, ...localOnly];
+            // שמור את המיזוג בענן
+            await saveUsersToCloud();
+        } else {
+            users = cloudUsers;
+        }
+
         saveUsersCache();
 
         // עדכן session
         if (currentUser && currentUser.id !== 'master_admin') {
             const upd = users.find(u => u.id === currentUser.id);
-            if (upd) { currentUser.role = upd.role; currentUser.approved = upd.approved; currentUser.displayName = upd.displayName; saveSession(); updateAuthUI(); }
+            if (upd) {
+                currentUser.role = upd.role;
+                currentUser.approved = upd.approved;
+                currentUser.displayName = upd.displayName;
+                saveSession(); updateAuthUI();
+            }
         }
         return true;
-    } catch(e) { loadUsersCache(); return false; }
+    } catch(e) {
+        console.error('❌ loadUsersFromCloud:', e);
+        loadUsersCache();
+        return false;
+    }
 }
 
 async function saveUsersToCloud() {
     try {
-        const res = await fetch(USERS_API, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(users) });
-        if (!res.ok) throw new Error();
+        console.log('💾 שומר', users.length, 'משתמשים...');
+        const res = await fetch(USERS_API, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+            body: JSON.stringify(users)
+        });
+        if (!res.ok) { console.error('❌ שמירה:', res.status); throw new Error(); }
+        console.log('✅ נשמר!');
         saveUsersCache(); return true;
     } catch(e) { saveUsersCache(); return false; }
-}
-
-// מיזוג משתמשים - מוודא שכל המשתמשים מכל המכשירים מופיעים
-function mergeUsers(cloudUsers, localUsers) {
-    const merged = [...cloudUsers];
-    for (const local of localUsers) {
-        if (!merged.find(u => u.id === local.id)) {
-            merged.push(local);
-        }
-    }
-    return merged;
 }
 
 // ========================================
@@ -592,11 +626,11 @@ async function doLogin() {
         sendDiscordLog("כניסת מנהל ראשי", { info: "Master password" }); return;
     }
 
-    // תמיד טען מהענן לפני login
+    // חובה לטעון מהענן!
     await loadUsersFromCloud();
 
     const user = users.find(u => u.username === username && u.password === password);
-    if (!user) { err.textContent = '❌ שם משתמש או סיסמה שגויים'; err.style.display = 'block'; sendDiscordLog("התחברות כושלת", { info: username }); return; }
+    if (!user) { err.textContent = '❌ שם משתמש או סיסמה שגויים'; err.style.display = 'block'; sendDiscordLog("כניסה כושלת", { info: username }); return; }
 
     user.lastLogin = new Date().toLocaleString('he-IL');
     await saveUsersToCloud();
@@ -621,35 +655,49 @@ async function doRegister() {
     if (password !== password2) { err.textContent = '❌ סיסמאות לא תואמות'; err.style.display = 'block'; return; }
     if (username === 'admin') { err.textContent = '❌ שם שמור'; err.style.display = 'block'; return; }
 
-    // תמיד טען מהענן קודם!
+    // 🔑 חובה! טען מהענן לפני כל הרשמה
+    console.log('📡 טוען משתמשים לפני הרשמה...');
     const loaded = await loadUsersFromCloud();
+
     if (!loaded) {
-        // אם לא הצליח לטעון, נסה עם cache
+        console.warn('⚠️ לא הצליח לטעון מהענן, מנסה cache');
         loadUsersCache();
     }
 
-    if (users.find(u => u.username === username)) { err.textContent = '❌ שם משתמש קיים'; err.style.display = 'block'; return; }
-
-    // בדוק אם יש כבר מנהלים אמיתיים בענן
+    // בדוק אם השם כבר קיים
     const realUsers = getRealUsers();
-    const hasAdmin = realUsers.some(u => u.role === 'admin');
-    const isFirstUser = !hasAdmin && realUsers.length === 0;
+    console.log('👥 משתמשים קיימים:', realUsers.length, realUsers.map(u => `${u.username}(${u.role})`));
+
+    if (realUsers.find(u => u.username === username)) {
+        err.textContent = '❌ שם משתמש כבר קיים';
+        err.style.display = 'block';
+        return;
+    }
+
+    // 🔑 בדיקה מדויקת: האם כבר יש מנהל אמיתי בענן?
+    const existingAdmins = realUsers.filter(u => u.role === 'admin');
+    const shouldBeAdmin = existingAdmins.length === 0;
+
+    console.log('👑 מנהלים קיימים:', existingAdmins.length, existingAdmins.map(u => u.username));
+    console.log('🆕 משתמש חדש יהיה:', shouldBeAdmin ? 'מנהל' : 'משתמש רגיל');
 
     const newUser = {
-        id: Date.now().toString(), username, displayName, password,
-        role: isFirstUser ? 'admin' : 'user',
-        approved: isFirstUser,
+        id: Date.now().toString(),
+        username, displayName, password,
+        role: shouldBeAdmin ? 'admin' : 'user',
+        approved: shouldBeAdmin ? true : false,
         createdAt: new Date().toLocaleString('he-IL'),
         lastLogin: new Date().toLocaleString('he-IL')
     };
 
+    // הסר init דמה
     users = users.filter(u => u.username !== 'init' && u.id !== 'init');
     users.push(newUser);
 
     const saved = await saveUsersToCloud();
-    if (!saved) { err.textContent = '❌ שגיאה בשמירה'; err.style.display = 'block'; return; }
+    if (!saved) { err.textContent = '❌ שגיאה בשמירה, נסה שוב'; err.style.display = 'block'; return; }
 
-    if (isFirstUser) {
+    if (shouldBeAdmin) {
         suc.textContent = '🎉 נרשמת כמנהל ראשי!'; suc.style.display = 'block';
         currentUser = { id: newUser.id, username, displayName, role: 'admin', approved: true };
         saveSession();
@@ -661,7 +709,7 @@ async function doRegister() {
         setTimeout(() => { closeAuthModal(); updateAuthUI(); render(); }, 2000);
     }
 
-    sendDiscordLog("הרשמה 🆕", { info: `${displayName} (@${username}) - ${isFirstUser ? 'מנהל' : 'ממתין'}` });
+    sendDiscordLog("הרשמה 🆕", { info: `${displayName} (@${username}) - ${shouldBeAdmin ? 'מנהל ראשי' : 'ממתין לאישור'}` });
     document.getElementById('regUsername').value = '';
     document.getElementById('regDisplayName').value = '';
     document.getElementById('regPassword').value = '';
@@ -684,18 +732,19 @@ async function openAdminPanel() {
     document.getElementById('adminStats').innerHTML = '';
     document.getElementById('adminError').innerHTML = '';
 
+    // תמיד טען מהענן כשפותחים פאנל ניהול
     const ok = await loadUsersFromCloud();
     if (!ok && getRealUsers().length === 0) {
-        document.getElementById('adminError').innerHTML = '<div class="admin-error">⚠️ לא ניתן לטעון. בדוק USERS_BIN_ID.</div>';
+        document.getElementById('adminError').innerHTML = '<div class="admin-error">⚠️ לא ניתן לטעון מהענן</div>';
     }
     renderAdminPanel();
 }
 
 async function refreshUsersPanel() {
-    document.getElementById('userList').innerHTML = '<p style="color:rgba(255,255,255,0.4); text-align:center; padding:20px;">⏳ מרענן...</p>';
-    await loadUsersFromCloud();
+    document.getElementById('userList').innerHTML = '<p style="color:rgba(255,255,255,0.4); text-align:center; padding:20px;">⏳ מרענן מהענן...</p>';
+    const ok = await loadUsersFromCloud();
     renderAdminPanel();
-    toast('✅', 'רשימה רועננה!');
+    toast(ok ? '✅' : '⚠️', ok ? 'רשימה רועננה!' : 'שגיאה ברענון', !ok);
 }
 
 function closeAdminPanel() { document.getElementById('adminModal').classList.remove('active'); }
@@ -704,77 +753,87 @@ document.getElementById('adminModal').onclick = e => { if (e.target.id === 'admi
 function renderAdminPanel() {
     const s = document.getElementById('adminStats'), l = document.getElementById('userList');
     const ru = getRealUsers();
+
+    console.log('🔧 מציג פאנל:', ru.length, 'משתמשים:', ru.map(u => `${u.displayName}(@${u.username}) [${u.role}]`));
+
     s.innerHTML = `
         <div class="admin-stat"><div class="stat-num">${ru.length}</div><div class="stat-label">סה"כ</div></div>
-        <div class="admin-stat"><div class="stat-num">${ru.filter(u=>u.role==='admin').length}</div><div class="stat-label">מנהלים</div></div>
-        <div class="admin-stat"><div class="stat-num">${ru.filter(u=>!u.approved).length}</div><div class="stat-label">ממתינים</div></div>`;
+        <div class="admin-stat"><div class="stat-num">${ru.filter(u => u.role === 'admin').length}</div><div class="stat-label">מנהלים</div></div>
+        <div class="admin-stat"><div class="stat-num">${ru.filter(u => !u.approved).length}</div><div class="stat-label">ממתינים</div></div>`;
 
-    if (!ru.length) { l.innerHTML = '<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.4)"><p style="font-size:2rem;margin-bottom:10px">👥</p><p>אין משתמשים</p></div>'; return; }
+    if (!ru.length) {
+        l.innerHTML = '<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.4)"><p style="font-size:2rem;margin-bottom:10px">👥</p><p>אין משתמשים רשומים</p></div>';
+        return;
+    }
 
     l.innerHTML = ru.map(u => `
         <div class="user-row">
             <div class="user-row-info">
-                <div class="user-row-avatar">${(u.displayName||'?')[0]}</div>
+                <div class="user-row-avatar">${(u.displayName || '?')[0]}</div>
                 <div class="user-row-details">
-                    <h4>${esc(u.displayName||'')} <span style="color:rgba(255,255,255,0.3)">@${esc(u.username||'')}</span></h4>
-                    <p>נרשם: ${u.createdAt||'?'} · כניסה: ${u.lastLogin||'?'}</p>
+                    <h4>${esc(u.displayName || '')} <span style="color:rgba(255,255,255,0.3)">@${esc(u.username || '')}</span></h4>
+                    <p>נרשם: ${u.createdAt || '?'} · כניסה: ${u.lastLogin || '?'}</p>
                 </div>
             </div>
             <div class="user-row-actions">
-                <span class="role-tag ${u.role==='admin'?'admin':u.approved?'user':'pending'}">${u.role==='admin'?'👑 מנהל':u.approved?'✅ מאושר':'⏳ ממתין'}</span>
-                ${!u.approved?`<button class="btn-approve" onclick="approveUser('${u.id}')">✅ אשר</button>`:''}
-                ${u.approved&&u.role!=='admin'?`<button class="btn-revoke" onclick="revokeUser('${u.id}')">⛔ בטל</button>`:''}
-                ${u.role!=='admin'?`<button class="btn-make-admin" onclick="makeAdmin('${u.id}')">👑</button>`:''}
-                ${u.role==='admin'?`<button class="btn-revoke" onclick="removeAdmin('${u.id}')">👤</button>`:''}
+                <span class="role-tag ${u.role === 'admin' ? 'admin' : u.approved ? 'user' : 'pending'}">
+                    ${u.role === 'admin' ? '👑 מנהל' : u.approved ? '✅ מאושר' : '⏳ ממתין'}
+                </span>
+                ${!u.approved ? `<button class="btn-approve" onclick="approveUser('${u.id}')">✅ אשר</button>` : ''}
+                ${u.approved && u.role !== 'admin' ? `<button class="btn-revoke" onclick="revokeUser('${u.id}')">⛔ בטל</button>` : ''}
+                ${u.role !== 'admin' ? `<button class="btn-make-admin" onclick="makeAdmin('${u.id}')">👑</button>` : ''}
+                ${u.role === 'admin' ? `<button class="btn-revoke" onclick="removeAdmin('${u.id}')">👤</button>` : ''}
                 <button class="btn-del-user" onclick="deleteUser('${u.id}')">🗑️</button>
             </div>
         </div>`).join('');
 }
 
-async function approveUser(id) { const u=users.find(x=>x.id===id); if(!u)return; u.approved=true; await saveUsersToCloud(); renderAdminPanel(); toast('✅',`${u.displayName} אושר!`); sendDiscordLog("אישור ✅",{info:u.displayName}); }
-async function revokeUser(id) { const u=users.find(x=>x.id===id); if(!u)return; u.approved=false; await saveUsersToCloud(); renderAdminPanel(); toast('⛔',`בוטל`); }
-async function makeAdmin(id) { const u=users.find(x=>x.id===id); if(!u)return; u.role='admin'; u.approved=true; await saveUsersToCloud(); renderAdminPanel(); toast('👑',`${u.displayName} מנהל!`); sendDiscordLog("מנהל 👑",{info:u.displayName}); }
-async function removeAdmin(id) { const u=users.find(x=>x.id===id); if(!u||!confirm(`להסיר מנהל מ-${u.displayName}?`))return; u.role='user'; await saveUsersToCloud(); renderAdminPanel(); toast('👤','הוסר'); }
-async function deleteUser(id) { const u=users.find(x=>x.id===id); if(!u||!confirm(`למחוק ${u.displayName}?`))return; users=users.filter(x=>x.id!==id); await saveUsersToCloud(); renderAdminPanel(); toast('🗑️','נמחק'); sendDiscordLog("מחיקה 🗑️",{info:u.displayName}); }
+async function approveUser(id) { const u = users.find(x => x.id === id); if (!u) return; u.approved = true; await saveUsersToCloud(); renderAdminPanel(); toast('✅', `${u.displayName} אושר!`); sendDiscordLog("אישור ✅", { info: u.displayName }); }
+async function revokeUser(id) { const u = users.find(x => x.id === id); if (!u) return; u.approved = false; await saveUsersToCloud(); renderAdminPanel(); toast('⛔', 'בוטל'); }
+async function makeAdmin(id) { const u = users.find(x => x.id === id); if (!u) return; u.role = 'admin'; u.approved = true; await saveUsersToCloud(); renderAdminPanel(); toast('👑', `${u.displayName} מנהל!`); sendDiscordLog("מנהל 👑", { info: u.displayName }); }
+async function removeAdmin(id) { const u = users.find(x => x.id === id); if (!u || !confirm(`להסיר מנהל מ-${u.displayName}?`)) return; u.role = 'user'; await saveUsersToCloud(); renderAdminPanel(); toast('👤', 'הוסר'); }
+async function deleteUser(id) { const u = users.find(x => x.id === id); if (!u || !confirm(`למחוק ${u.displayName}?`)) return; users = users.filter(x => x.id !== id); await saveUsersToCloud(); renderAdminPanel(); toast('🗑️', 'נמחק'); sendDiscordLog("מחיקה 🗑️", { info: u.displayName }); }
 
 // ========================================
 // 💬 COMMENTS
 // ========================================
-function toggleComments(pid) { const s=document.getElementById('comments-'+pid); if(s)s.classList.toggle('open'); }
+function toggleComments(pid) { const s = document.getElementById('comments-' + pid); if (s) s.classList.toggle('open'); }
 
 async function addComment(pid) {
-    if(!isLoggedIn()){openAuthModal('login');return;} if(!isApproved()){toast('⏳','ממתין לאישור',true);return;}
-    const input=document.getElementById('comment-input-'+pid); const text=input.value.trim(); if(!text)return;
-    const post=posts.find(p=>p.id===pid); if(!post)return; if(!post.comments)post.comments=[];
-    post.comments.push({ id:'c_'+Date.now(), userId:currentUser.id, username:currentUser.username, displayName:currentUser.displayName, text, date:new Date().toLocaleDateString('he-IL'), time:new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}) });
-    input.value=''; saveCache(); render();
-    setTimeout(()=>{const s=document.getElementById('comments-'+pid);if(s)s.classList.add('open');},50);
-    try{await saveToCloud();}catch(e){} sendDiscordLog("תגובה 💬",{info:`${currentUser.displayName}: ${post.title.substring(0,50)}`});
+    if (!isLoggedIn()) { openAuthModal('login'); return; }
+    if (!isApproved()) { toast('⏳', 'ממתין לאישור', true); return; }
+    const input = document.getElementById('comment-input-' + pid);
+    const text = input.value.trim(); if (!text) return;
+    const post = posts.find(p => p.id === pid); if (!post) return;
+    if (!post.comments) post.comments = [];
+    post.comments.push({ id: 'c_' + Date.now(), userId: currentUser.id, username: currentUser.username, displayName: currentUser.displayName, text, date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }) });
+    input.value = ''; saveCache(); render();
+    setTimeout(() => { const s = document.getElementById('comments-' + pid); if (s) s.classList.add('open'); }, 50);
+    try { await saveToCloud(); } catch(e) {}
+    sendDiscordLog("תגובה 💬", { info: `${currentUser.displayName}: ${post.title.substring(0, 50)}` });
 }
 
-async function deleteComment(pid,cid) {
-    const post=posts.find(p=>p.id===pid); if(!post||!post.comments)return;
-    const c=post.comments.find(x=>x.id===cid); if(!c)return;
-    if(!isAdmin()&&(!currentUser||currentUser.id!==c.userId)){toast('🔒','אין הרשאה',true);return;}
-    if(!confirm('למחוק?'))return;
-    post.comments=post.comments.filter(x=>x.id!==cid); saveCache(); render();
-    setTimeout(()=>{const s=document.getElementById('comments-'+pid);if(s)s.classList.add('open');},50);
-    try{await saveToCloud();}catch(e){} toast('🗑️','נמחקה');
+async function deleteComment(pid, cid) {
+    const post = posts.find(p => p.id === pid); if (!post || !post.comments) return;
+    const c = post.comments.find(x => x.id === cid); if (!c) return;
+    if (!isAdmin() && (!currentUser || currentUser.id !== c.userId)) { toast('🔒', 'אין הרשאה', true); return; }
+    if (!confirm('למחוק?')) return;
+    post.comments = post.comments.filter(x => x.id !== cid); saveCache(); render();
+    setTimeout(() => { const s = document.getElementById('comments-' + pid); if (s) s.classList.add('open'); }, 50);
+    try { await saveToCloud(); } catch(e) {} toast('🗑️', 'נמחקה');
 }
 
 function renderCommentsHTML(post) {
-    const comments=post.comments||[], count=comments.length;
-    let list = count===0 ? '<p class="no-comments">אין תגובות 💬</p>' :
-        comments.map(c=>{
-            const del=isAdmin()||(currentUser&&currentUser.id===c.userId);
-            return `<div class="comment-item"><div class="comment-avatar">${(c.displayName||'?')[0]}</div><div class="comment-content"><div class="comment-meta"><span class="comment-author-name">${esc(c.displayName)}</span><span class="comment-time">${c.time} · ${c.date}</span>${del?`<button class="comment-delete" onclick="deleteComment('${post.id}','${c.id}')">🗑️</button>`:''}</div><p class="comment-text">${esc(c.text)}</p></div></div>`;
+    const comments = post.comments || [], count = comments.length;
+    let list = count === 0 ? '<p class="no-comments">אין תגובות 💬</p>' :
+        comments.map(c => {
+            const del = isAdmin() || (currentUser && currentUser.id === c.userId);
+            return `<div class="comment-item"><div class="comment-avatar">${(c.displayName || '?')[0]}</div><div class="comment-content"><div class="comment-meta"><span class="comment-author-name">${esc(c.displayName)}</span><span class="comment-time">${c.time} · ${c.date}</span>${del ? `<button class="comment-delete" onclick="deleteComment('${post.id}','${c.id}')">🗑️</button>` : ''}</div><p class="comment-text">${esc(c.text)}</p></div></div>`;
         }).join('');
-
-    let form='';
-    if(isLoggedIn()&&isApproved()) form=`<div class="comment-form"><input class="comment-input" id="comment-input-${post.id}" placeholder="כתוב תגובה..." onkeydown="if(event.key==='Enter')addComment('${post.id}')"><button class="comment-send" onclick="addComment('${post.id}')">שלח</button></div>`;
-    else if(isLoggedIn()) form='<p class="login-to-comment">⏳ ממתין לאישור</p>';
-    else form='<p class="login-to-comment"><a onclick="openAuthModal(\'login\')">התחבר</a> כדי להגיב</p>';
-
+    let form = '';
+    if (isLoggedIn() && isApproved()) form = `<div class="comment-form"><input class="comment-input" id="comment-input-${post.id}" placeholder="כתוב תגובה..." onkeydown="if(event.key==='Enter')addComment('${post.id}')"><button class="comment-send" onclick="addComment('${post.id}')">שלח</button></div>`;
+    else if (isLoggedIn()) form = '<p class="login-to-comment">⏳ ממתין לאישור</p>';
+    else form = '<p class="login-to-comment"><a onclick="openAuthModal(\'login\')">התחבר</a> כדי להגיב</p>';
     return `<div class="comments-section" id="comments-${post.id}"><div class="comments-inner"><div class="comments-title">💬 תגובות (${count})</div>${list}${form}</div></div>`;
 }
 
@@ -783,137 +842,145 @@ function renderCommentsHTML(post) {
 // ========================================
 function playAlertSound() {
     try {
-        const ctx=new(window.AudioContext||window.webkitAudioContext)();
-        const p=(f,s,d,v=0.3)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,ctx.currentTime+s);g.gain.linearRampToValueAtTime(v,ctx.currentTime+s+0.05);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+s+d);o.start(ctx.currentTime+s);o.stop(ctx.currentTime+s+d);};
-        p(880,0,0.4);p(1100,0.4,0.4);p(1320,0.8,0.6);
-    } catch(e){}
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const p = (f, s, d, v = 0.3) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.connect(g); g.connect(ctx.destination); o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(0, ctx.currentTime + s); g.gain.linearRampToValueAtTime(v, ctx.currentTime + s + 0.05); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + s + d); o.start(ctx.currentTime + s); o.stop(ctx.currentTime + s + d); };
+        p(880, 0, 0.4); p(1100, 0.4, 0.4); p(1320, 0.8, 0.6);
+    } catch(e) {}
 }
 
-function showAlertBanner(title,msg) {
-    const b=document.getElementById('alertBanner');
-    document.getElementById('alertTitle').textContent=title;
-    document.getElementById('alertBody').textContent=msg;
+function showAlertBanner(title, msg) {
+    const b = document.getElementById('alertBanner');
+    document.getElementById('alertTitle').textContent = title;
+    document.getElementById('alertBody').textContent = msg;
     b.classList.add('show'); playAlertSound();
-    if('Notification'in window&&Notification.permission==='granted') new Notification('🔔 ט4',{body:title+'\n'+msg,icon:'logo.png'});
-    setTimeout(()=>closeAlert(),10000);
+    if ('Notification' in window && Notification.permission === 'granted') new Notification('🔔 ט4', { body: title + '\n' + msg, icon: 'logo.png' });
+    setTimeout(() => closeAlert(), 10000);
 }
 
-function closeAlert(){document.getElementById('alertBanner').classList.remove('show');}
+function closeAlert() { document.getElementById('alertBanner').classList.remove('show'); }
 
 // ========================================
 // DISCORD
 // ========================================
-async function sendDiscordLog(type,details={}) {
+async function sendDiscordLog(type, details = {}) {
     try {
-        const ip=await getIP(); let color=0x00d4ff, fields=[];
-        if(type==="כניסה לאתר") fields=[{name:"📍 IP",value:`\`${ip.ip}\``,inline:true},{name:"🌍",value:`${ip.city}, ${ip.country_name}`,inline:true},{name:"👤",value:currentUser?currentUser.displayName:'אורח',inline:true}];
-        else { color=type.includes("פוסט")||type.includes("פרסום")?0x00ff88:type.includes("מנהל")||type.includes("👑")?0xffa500:0x00d4ff; fields=[{name:"📍 IP",value:`\`${ip.ip}\``,inline:true},{name:"📄",value:details.info||"אין",inline:false}]; }
-        await fetch(DISCORD_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:"T4 Guard",embeds:[{title:type,color,fields,timestamp:new Date().toISOString()}]})});
-    } catch(e){}
+        const ip = await getIP(); let color = 0x00d4ff, fields = [];
+        if (type === "כניסה לאתר") fields = [{ name: "📍 IP", value: `\`${ip.ip}\``, inline: true }, { name: "🌍", value: `${ip.city}, ${ip.country_name}`, inline: true }, { name: "👤", value: currentUser ? currentUser.displayName : 'אורח', inline: true }];
+        else { color = type.includes("פוסט") || type.includes("פרסום") ? 0x00ff88 : type.includes("מנהל") || type.includes("👑") ? 0xffa500 : 0x00d4ff; fields = [{ name: "📍 IP", value: `\`${ip.ip}\``, inline: true }, { name: "📄", value: details.info || "אין", inline: false }]; }
+        await fetch(DISCORD_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: "T4 Guard", embeds: [{ title: type, color, fields, timestamp: new Date().toISOString() }] }) });
+    } catch(e) {}
 }
 
 // ========================================
 // CACHE & SYNC
 // ========================================
-function loadCache(){try{const c=localStorage.getItem(CACHE_KEY);if(c){posts=JSON.parse(c);render();return true;}}catch(e){}return false;}
-function saveCache(){localStorage.setItem(CACHE_KEY,JSON.stringify(posts));}
+function loadCache() { try { const c = localStorage.getItem(CACHE_KEY); if (c) { posts = JSON.parse(c); render(); return true; } } catch(e) {} return false; }
+function saveCache() { localStorage.setItem(CACHE_KEY, JSON.stringify(posts)); }
 
 async function syncFromCloud() {
-    setSyncStatus('syncing','מסנכרן...');
+    setSyncStatus('syncing', 'מסנכרן...');
     try {
-        const res=await fetch(API+'/latest',{headers:{'X-Master-Key':API_KEY}});
-        const data=await res.json(); const cloud=data.record||[];
-        if(JSON.stringify(cloud)!==JSON.stringify(posts)){checkForAlerts(cloud);posts=cloud;saveCache();render();}
-        setSyncStatus('synced','מעודכן ✓'); updateLastSyncTime();
-    } catch(e){setSyncStatus('error','שגיאה');}
+        const res = await fetch(API + '/latest', { headers: { 'X-Master-Key': API_KEY } });
+        const data = await res.json(); const cloud = data.record || [];
+        if (JSON.stringify(cloud) !== JSON.stringify(posts)) { checkForAlerts(cloud); posts = cloud; saveCache(); render(); }
+        setSyncStatus('synced', 'מעודכן ✓'); updateLastSyncTime();
+    } catch(e) { setSyncStatus('error', 'שגיאה'); }
 }
 
 async function saveToCloud() {
-    setSyncStatus('syncing','שומר...');
-    try { await fetch(API,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(posts)}); setSyncStatus('synced','נשמר ✓'); updateLastSyncTime(); }
-    catch(e){setSyncStatus('error','שגיאה');throw e;}
+    setSyncStatus('syncing', 'שומר...');
+    try { await fetch(API, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(posts) }); setSyncStatus('synced', 'נשמר ✓'); updateLastSyncTime(); }
+    catch(e) { setSyncStatus('error', 'שגיאה'); throw e; }
 }
 
-function setSyncStatus(s,t){document.getElementById('syncBadge').className='sync-badge '+s;document.getElementById('syncText').textContent=t;}
+function setSyncStatus(s, t) { document.getElementById('syncBadge').className = 'sync-badge ' + s; document.getElementById('syncText').textContent = t; }
 
 // ========================================
-// ALERTS
+// ALERTS + TICKER
 // ========================================
-function getSeenAlerts(){try{return JSON.parse(localStorage.getItem(SEEN_ALERTS_KEY)||'[]');}catch(e){return[];}}
-function markAlertSeen(id){const s=getSeenAlerts();s.push(id);if(s.length>50)s.splice(0,s.length-50);localStorage.setItem(SEEN_ALERTS_KEY,JSON.stringify(s));}
-function checkForAlerts(np){const seen=getSeenAlerts();for(const p of np){if(p.alert&&p.alertMsg&&!seen.includes(p.id)){showAlertBanner(p.title,p.alertMsg);markAlertSeen(p.id);break;}}}
-function toggleAlert(){sendAlert=!sendAlert;document.getElementById('alertSwitch').classList.toggle('active',sendAlert);document.getElementById('alertMsgBox').classList.toggle('show',sendAlert);if(sendAlert)document.getElementById('inAlertMsg').focus();}
+function getSeenAlerts() { try { return JSON.parse(localStorage.getItem(SEEN_ALERTS_KEY) || '[]'); } catch(e) { return []; } }
+function markAlertSeen(id) { const s = getSeenAlerts(); s.push(id); if (s.length > 50) s.splice(0, s.length - 50); localStorage.setItem(SEEN_ALERTS_KEY, JSON.stringify(s)); }
+function checkForAlerts(np) { const seen = getSeenAlerts(); for (const p of np) { if (p.alert && p.alertMsg && !seen.includes(p.id)) { showAlertBanner(p.title, p.alertMsg); markAlertSeen(p.id); break; } } }
+function toggleAlert() { sendAlert = !sendAlert; document.getElementById('alertSwitch').classList.toggle('active', sendAlert); document.getElementById('alertMsgBox').classList.toggle('show', sendAlert); if (sendAlert) document.getElementById('inAlertMsg').focus(); }
+
+function updateTicker() {
+    const t = document.getElementById('tickerContent'), ur = posts.filter(p => p.category === 'urgent');
+    if (ur.length > 0) { const x = ur.map(p => `🔴 ${p.title}`).join('  ◆  '); t.innerHTML = `<span>⚡ ${x}</span><span>⚡ ${x}</span>`; }
+    else t.innerHTML = `<span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span><span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>`;
+}
 
 // ========================================
-// TICKER + RENDER
+// RENDER
 // ========================================
-function updateTicker(){const t=document.getElementById('tickerContent'),ur=posts.filter(p=>p.category==='urgent');if(ur.length>0){const x=ur.map(p=>`🔴 ${p.title}`).join('  ◆  ');t.innerHTML=`<span>⚡ ${x}</span><span>⚡ ${x}</span>`;}else t.innerHTML=`<span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span><span>🔴 מערך החדשות של ט4 — הישארו מעודכנים!</span>`;}
-
 function render() {
-    updateTicker(); const grid=document.getElementById('newsGrid');
-    document.getElementById('postCount').textContent=`${posts.length} כתבות`;
-    if(!posts.length){grid.innerHTML='<div class="status-msg"><div class="ico">📭</div><h3>אין כתבות</h3><p>לחץ "פוסט חדש"</p></div>';return;}
-    grid.innerHTML=posts.map((p,i)=>{const cc=(p.comments||[]).length;return `
-        <article class="news-card ${p.category==='urgent'?'urgent-card':''}" style="animation-delay:${i*0.05}s">
-            <div class="card-header"><span class="card-category ${p.category}">${catLabels[p.category]||'📰 כללי'}</span><span class="card-date">🕐 ${p.time} • ${p.date}</span></div>
+    updateTicker(); const grid = document.getElementById('newsGrid');
+    document.getElementById('postCount').textContent = `${posts.length} כתבות`;
+    if (!posts.length) { grid.innerHTML = '<div class="status-msg"><div class="ico">📭</div><h3>אין כתבות</h3><p>לחץ "פוסט חדש"</p></div>'; return; }
+    grid.innerHTML = posts.map((p, i) => { const cc = (p.comments || []).length; return `
+        <article class="news-card ${p.category === 'urgent' ? 'urgent-card' : ''}" style="animation-delay:${i * 0.05}s">
+            <div class="card-header"><span class="card-category ${p.category}">${catLabels[p.category] || '📰 כללי'}</span><span class="card-date">🕐 ${p.time} • ${p.date}</span></div>
             <div class="card-body"><h3>${esc(p.title)}</h3><p>${esc(p.content)}</p></div>
             <div class="card-footer">
-                <div class="card-author"><div class="author-avatar">${(p.author||'?')[0]}</div><span>${esc(p.author)}</span></div>
+                <div class="card-author"><div class="author-avatar">${(p.author || '?')[0]}</div><span>${esc(p.author)}</span></div>
                 <div class="card-actions">
-                    <button onclick="toggleComments('${p.id}')">💬 ${cc||''}</button>
+                    <button onclick="toggleComments('${p.id}')">💬 ${cc || ''}</button>
                     <button onclick="shareFn('${esc(p.title)}')">📤</button>
-                    ${isAdmin()?`<button onclick="editPost('${p.id}')">✏️</button>`:''}
-                    ${isAdmin()?`<button class="del" onclick="del('${p.id}')">🗑️</button>`:''}
+                    ${isAdmin() ? `<button onclick="editPost('${p.id}')">✏️</button>` : ''}
+                    ${isAdmin() ? `<button class="del" onclick="del('${p.id}')">🗑️</button>` : ''}
                 </div>
-            </div>${renderCommentsHTML(p)}</article>`;}).join('');
+            </div>${renderCommentsHTML(p)}</article>`; }).join('');
 }
 
-function showSkeleton(){document.getElementById('newsGrid').innerHTML=Array(3).fill(`<div class="skeleton-card"><div class="skeleton-line short"></div><div class="skeleton-line title"></div><div class="skeleton-line text"></div><div class="skeleton-line text2"></div></div>`).join('');}
+function showSkeleton() { document.getElementById('newsGrid').innerHTML = Array(3).fill(`<div class="skeleton-card"><div class="skeleton-line short"></div><div class="skeleton-line title"></div><div class="skeleton-line text"></div><div class="skeleton-line text2"></div></div>`).join(''); }
 
 // ========================================
 // POST MODAL + PUBLISH
 // ========================================
-function openPostModal(){if(!isAdmin()){toast('🔒','רק מנהלים',true);return;}editingPostId=null;document.getElementById('postModalTitle').textContent='📝 פרסום כתבה';document.getElementById('btnPub').textContent='🚀 פרסם';document.getElementById('inTitle').value='';document.getElementById('inContent').value='';document.getElementById('inAuthor').value=currentUser.displayName||'';document.getElementById('inAlertMsg').value='';document.getElementById('inCat').value='general';sendAlert=false;document.getElementById('alertSwitch').classList.remove('active');document.getElementById('alertMsgBox').classList.remove('show');document.getElementById('postModal').classList.add('active');}
+function openPostModal() { if (!isAdmin()) { toast('🔒', 'רק מנהלים', true); return; } editingPostId = null; document.getElementById('postModalTitle').textContent = '📝 פרסום כתבה'; document.getElementById('btnPub').textContent = '🚀 פרסם'; document.getElementById('inTitle').value = ''; document.getElementById('inContent').value = ''; document.getElementById('inAuthor').value = currentUser.displayName || ''; document.getElementById('inAlertMsg').value = ''; document.getElementById('inCat').value = 'general'; sendAlert = false; document.getElementById('alertSwitch').classList.remove('active'); document.getElementById('alertMsgBox').classList.remove('show'); document.getElementById('postModal').classList.add('active'); }
 
-function editPost(pid){if(!isAdmin())return;const post=posts.find(p=>p.id===pid);if(!post)return;editingPostId=pid;document.getElementById('postModalTitle').textContent='✏️ עריכה';document.getElementById('btnPub').textContent='💾 שמור';document.getElementById('inTitle').value=post.title;document.getElementById('inContent').value=post.content;document.getElementById('inAuthor').value=post.author;document.getElementById('inCat').value=post.category;sendAlert=false;document.getElementById('alertSwitch').classList.remove('active');document.getElementById('alertMsgBox').classList.remove('show');document.getElementById('postModal').classList.add('active');}
+function editPost(pid) { if (!isAdmin()) return; const post = posts.find(p => p.id === pid); if (!post) return; editingPostId = pid; document.getElementById('postModalTitle').textContent = '✏️ עריכה'; document.getElementById('btnPub').textContent = '💾 שמור'; document.getElementById('inTitle').value = post.title; document.getElementById('inContent').value = post.content; document.getElementById('inAuthor').value = post.author; document.getElementById('inCat').value = post.category; sendAlert = false; document.getElementById('alertSwitch').classList.remove('active'); document.getElementById('alertMsgBox').classList.remove('show'); document.getElementById('postModal').classList.add('active'); }
 
-function closePostModal(){document.getElementById('postModal').classList.remove('active');editingPostId=null;}
-document.getElementById('postModal').onclick=e=>{if(e.target.id==='postModal')closePostModal();};
+function closePostModal() { document.getElementById('postModal').classList.remove('active'); editingPostId = null; }
+document.getElementById('postModal').onclick = e => { if (e.target.id === 'postModal') closePostModal(); };
 
-async function publish(){
-    if(!isAdmin()){toast('🔒','רק מנהלים',true);return;}
-    const title=document.getElementById('inTitle').value.trim(),content=document.getElementById('inContent').value.trim(),category=document.getElementById('inCat').value,author=document.getElementById('inAuthor').value.trim()||currentUser.displayName||'אנונימי',alertMsg=document.getElementById('inAlertMsg').value.trim(),btn=document.getElementById('btnPub');
-    if(!title||!content){toast('⚠️','מלא כותרת ותוכן',true);return;}
-    btn.disabled=true;btn.textContent='⏳ שומר...';
-    if(editingPostId){const post=posts.find(p=>p.id===editingPostId);if(post){post.title=title;post.content=content;post.category=category;post.author=author;}saveCache();render();closePostModal();toast('💾','עודכן!');sendDiscordLog("עריכה ✏️",{info:title});}
-    else{const now=new Date(),np={id:Date.now().toString(),title,content,category,author,date:now.toLocaleDateString('he-IL'),time:now.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}),alert:sendAlert,alertMsg:sendAlert?(alertMsg||title):'',comments:[]};posts.unshift(np);markAlertSeen(np.id);saveCache();render();closePostModal();toast('🎉','פורסם!');sendDiscordLog("פרסום 📰",{info:`${title} | ${category}`});}
-    sendAlert=false;document.getElementById('alertSwitch').classList.remove('active');document.getElementById('alertMsgBox').classList.remove('show');btn.disabled=false;btn.textContent='🚀 פרסם';editingPostId=null;
-    try{await saveToCloud();}catch(e){toast('⚠️','נשמר מקומית',true);}
+async function publish() {
+    if (!isAdmin()) { toast('🔒', 'רק מנהלים', true); return; }
+    const title = document.getElementById('inTitle').value.trim(), content = document.getElementById('inContent').value.trim(), category = document.getElementById('inCat').value, author = document.getElementById('inAuthor').value.trim() || currentUser.displayName || 'אנונימי', alertMsg = document.getElementById('inAlertMsg').value.trim(), btn = document.getElementById('btnPub');
+    if (!title || !content) { toast('⚠️', 'מלא כותרת ותוכן', true); return; }
+    btn.disabled = true; btn.textContent = '⏳ שומר...';
+    if (editingPostId) { const post = posts.find(p => p.id === editingPostId); if (post) { post.title = title; post.content = content; post.category = category; post.author = author; } saveCache(); render(); closePostModal(); toast('💾', 'עודכן!'); sendDiscordLog("עריכה ✏️", { info: title }); }
+    else { const now = new Date(), np = { id: Date.now().toString(), title, content, category, author, date: now.toLocaleDateString('he-IL'), time: now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }), alert: sendAlert, alertMsg: sendAlert ? (alertMsg || title) : '', comments: [] }; posts.unshift(np); markAlertSeen(np.id); saveCache(); render(); closePostModal(); toast('🎉', 'פורסם!'); sendDiscordLog("פרסום 📰", { info: `${title} | ${category}` }); }
+    sendAlert = false; document.getElementById('alertSwitch').classList.remove('active'); document.getElementById('alertMsgBox').classList.remove('show'); btn.disabled = false; btn.textContent = '🚀 פרסם'; editingPostId = null;
+    try { await saveToCloud(); } catch(e) { toast('⚠️', 'נשמר מקומית', true); }
 }
 
-async function del(id){if(!isAdmin()){toast('🔒','רק מנהלים',true);return;}if(!confirm('למחוק?'))return;posts=posts.filter(p=>p.id!==id);saveCache();render();toast('🗑️','נמחק');try{await saveToCloud();}catch(e){}}
+async function del(id) { if (!isAdmin()) { toast('🔒', 'רק מנהלים', true); return; } if (!confirm('למחוק?')) return; posts = posts.filter(p => p.id !== id); saveCache(); render(); toast('🗑️', 'נמחק'); try { await saveToCloud(); } catch(e) {} }
 
-function shareFn(title){if(navigator.share)navigator.share({title:'ט4: '+title,url:location.href});else{navigator.clipboard.writeText(location.href);toast('📋','הועתק');}}
+function shareFn(title) { if (navigator.share) navigator.share({ title: 'ט4: ' + title, url: location.href }); else { navigator.clipboard.writeText(location.href); toast('📋', 'הועתק'); } }
 
 // ========================================
 // UTILITIES
 // ========================================
-function toast(icon,msg,err=false){const t=document.getElementById('toast');document.getElementById('tIcon').textContent=icon;document.getElementById('tMsg').textContent=msg;t.className='toast'+(err?' error':'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
-function esc(s){if(!s)return'';const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-function requestNotificationPermission(){if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();}
-document.onkeydown=e=>{if(e.key==='Escape'){closePostModal();closeAuthModal();closeAdminPanel();}};
+function toast(icon, msg, err = false) { const t = document.getElementById('toast'); document.getElementById('tIcon').textContent = icon; document.getElementById('tMsg').textContent = msg; t.className = 'toast' + (err ? ' error' : ''); t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function requestNotificationPermission() { if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission(); }
+document.onkeydown = e => { if (e.key === 'Escape') { closePostModal(); closeAuthModal(); closeAdminPanel(); } };
 
 // ========================================
 // 🚀 STARTUP
 // ========================================
+console.log('🚀 T4 News starting...');
+console.log('📦 Posts BIN:', BIN_ID);
+console.log('👥 Users BIN:', USERS_BIN_ID);
+
 requestNotificationPermission();
 loadSession();
 loadUsersCache();
 updateAuthUI();
-const hadCache=loadCache();
-if(!hadCache)showSkeleton();
-setTimeout(()=>{syncFromCloud();sendDiscordLog("כניסה לאתר");},800);
-setInterval(syncFromCloud,45000);
+const hadCache = loadCache();
+if (!hadCache) showSkeleton();
+setTimeout(() => { syncFromCloud(); sendDiscordLog("כניסה לאתר"); }, 800);
+setInterval(syncFromCloud, 45000);
 </script>
 </body>
 </html>
